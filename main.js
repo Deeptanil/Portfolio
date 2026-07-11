@@ -33,6 +33,24 @@ if (dateBadge) {
   dateBadge.textContent = `${day} ${month}`;
 }
 
+/* --- Dynamic B.Tech Status --- */
+const btechStatus = document.getElementById('btech-status');
+if (btechStatus) {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth(); // 0-indexed: 5 is June
+  
+  let statusText = '3rd Year';
+  
+  if (currentYear > 2028 || (currentYear === 2028 && currentMonth >= 5)) {
+    statusText = 'Complete';
+  } else if (currentYear > 2027 || (currentYear === 2027 && currentMonth >= 5)) {
+    statusText = '4th Year';
+  }
+  
+  btechStatus.textContent = statusText;
+}
+
 /* --- Custom Trailing Cursor --- */
 const cursorOuter = document.getElementById('custom-cursor');
 const cursorInner = document.getElementById('custom-cursor-dot');
@@ -298,7 +316,7 @@ const projectsData = {
     title: 'STRAYED',
     category: 'Fashion E-Commerce',
     role: 'Founder & Digital Director',
-    year: '2025',
+    year: '2026',
     stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
     desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
     link: 'https://strayed.in',
