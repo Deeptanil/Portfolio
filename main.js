@@ -268,79 +268,52 @@ if (document.querySelector('.hero')) {
 
 /* --- Modals for Selected Cases & Credits --- */
 
-// Case Studies Mock Data (No placeholders, utilizing real Unsplash links)
+// Case Studies Data
 const projectsData = {
-  'beatrice-cortese': {
-    title: 'Beatrice Cortese',
-    category: 'Portfolio Site / Art Direction',
-    role: 'Lead UX/UI Designer & Developer',
+  'strayed': {
+    title: 'STRAYED',
+    category: 'Fashion E-Commerce',
+    role: 'Co-Founder & Lead Developer',
     year: '2025',
-    stack: 'HTML, Vanilla CSS, GSAP, Lenis, WebGL',
-    desc: 'A highly aesthetic, minimalist portfolio designed for fashion photographer Beatrice Cortese. The website highlights her editorial collections using full-screen horizontal sliders, smooth WebGL page transitions, and strict typographic grids.',
-    link: 'https://www.behance.net',
-    index: '01 / 05',
+    stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
+    desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
+    link: 'https://strayed.in',
+    index: '01 / 03',
     images: [
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=1000'
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000',
+      'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1000'
     ]
   },
-  'barbara-scerbo': {
-    title: 'Barbara Scerbo',
-    category: 'E-Commerce / Fashion',
-    role: 'Lead Designer & Webflow Developer',
-    year: '2024',
-    stack: 'Webflow, GSAP ScrollTrigger, Custom CSS',
-    desc: 'An online storefront and digital archive built for artist Barbara Scerbo. The site bridges high-fashion collections with architectural grid frameworks, implementing lazy-loaded assets and custom cart micro-interactions.',
-    link: 'https://www.behance.net',
-    index: '02 / 05',
+  'prettiva': {
+    title: 'Prettiva & Co.',
+    category: 'Fashion E-Commerce',
+    role: 'Co-Founder & Full-Stack Developer',
+    year: '2025',
+    stack: 'Odoo, JavaScript, CSS, HTML, Razorpay, SEO',
+    desc: 'Built and optimized an online fashion store focused on delivering a premium shopping experience. Responsible for website design, frontend customization, performance optimization, SEO, payment integration, and overall digital experience.',
+    link: 'https://prettiva.co',
+    index: '02 / 03',
     images: [
       'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&q=80&w=1000'
+      'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000'
     ]
   },
-  'viceversa': {
-    title: 'Viceversa',
-    category: 'Fintech Platform / Brand Identity',
-    role: 'Senior Digital Art Director',
-    year: '2024',
-    stack: 'Figma, NextJS, TailwindCSS, WebGL',
-    desc: 'Redesign and branding for Viceversa, a revenue-based growth platform for digital businesses. Designed a clear, structured analytical dashboard that visualizes data points through interactive WebGL financial growth graphics.',
-    link: 'https://www.behance.net',
-    index: '03 / 05',
+  'food-delivery': {
+    title: 'Food Delivery Platform',
+    category: 'Full-Stack Web Application',
+    role: 'Full-Stack Developer',
+    year: '2026',
+    stack: 'Next.js, React, Node.js, PostgreSQL, Tailwind CSS',
+    desc: 'Developing a modern food ordering platform inspired by leading delivery applications, with a focus on intuitive user experience, performance, scalable architecture, and clean interface design.',
+    link: '#',
+    index: '03 / 03',
     images: [
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000'
-    ]
-  },
-  'codeway-ch': {
-    title: 'Codeway CH',
-    category: 'Software Agency / NextJS Dev',
-    role: 'Lead Frontend Engineer',
-    year: '2023',
-    stack: 'React, NextJS, Framer Motion, Tailwind',
-    desc: 'Bespoke corporate website and digital catalog for Swiss technical firm Codeway CH. Highlighting their engineering solutions through custom developer dashboards and interactive API simulation cards.',
-    link: 'https://www.behance.net',
-    index: '04 / 05',
-    images: [
-      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1000'
-    ]
-  },
-  'miranda': {
-    title: 'Miranda',
-    category: 'Creative Studio / Typography Design',
-    role: 'Branding Designer & Web Developer',
-    year: '2023',
-    stack: 'WordPress, Custom CSS, GSAP',
-    desc: 'Typographic portfolio and design presentation for Milanese studio Miranda. Replicating paper editorial layouts using fluid column systems, massive letter-spacing effects, and CSS blend modes.',
-    link: 'https://www.behance.net',
-    index: '05 / 05',
-    images: [
-      'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&q=80&w=1000'
+      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=1000',
+      'https://images.unsplash.com/photo-1526367790999-015078648c7e?auto=format&fit=crop&q=80&w=1000'
     ]
   }
 };
+
 
 const projectModal = document.getElementById('project-modal');
 const modalOverlay = document.getElementById('modal-overlay');
