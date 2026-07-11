@@ -945,6 +945,30 @@ body.hover-link-inverse .custom-cursor-dot {
     display: inline-block;
     margin-top: 2px;
   }
+  
+  /* Sticky View Project Action bar for Mobile Modals */
+  #modal-project-link {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: 1px solid var(--color-border);
+    padding: 1.5rem !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    z-index: 2000;
+  }
+  
+  .modal__body {
+    padding-bottom: 120px !important; /* Prevent items from getting hidden behind fixed action bar */
+  }
 }
 
 @media (max-width: 480px) {
