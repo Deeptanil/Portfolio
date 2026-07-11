@@ -371,7 +371,7 @@ body.hover-link-inverse .custom-cursor-dot {
 }
 
 .hero__title {
-  font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+  font-size: clamp(2.5rem, 8.5vw, 7.5rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
   margin-bottom: 2.5rem;
@@ -879,6 +879,17 @@ body.hover-link-inverse .custom-cursor-dot {
   color: #000;
 }
 
+/* --- Mobile and Responsive Media Queries --- */
+@media (max-width: 1024px) {
+  /* Disable custom cursor on touch/mobile screens to prevent scroll interference and hover loops */
+  .custom-cursor, .custom-cursor-dot {
+    display: none !important;
+  }
+  html, body, a, button, .case-item, .credits-btn, .btn, .tag, .social-link {
+    cursor: auto !important;
+  }
+}
+
 @media (max-width: 991px) {
   .footer__links-grid {
     grid-template-columns: 1fr;
@@ -899,6 +910,80 @@ body.hover-link-inverse .custom-cursor-dot {
 @media (max-width: 768px) {
   .footer__container {
     padding: 4rem 2rem 2rem 2rem;
+  }
+  
+  /* Cases List Mobile Scaling */
+  .case-item {
+    padding: 1.75rem 0;
+  }
+  .case-item__title {
+    font-size: clamp(1.4rem, 5.5vw, 2.2rem) !important;
+  }
+  
+  /* Milestones Table - Stacked list items for narrow screens */
+  .awards__row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-light-gray);
+  }
+  .awards__row.header-row {
+    display: none;
+  }
+  .awards__row span:nth-child(2) {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+  }
+  .awards__row span:nth-child(3) {
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    background-color: var(--color-light-gray);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-container {
+    padding: 3.5rem 1rem;
+  }
+  .header {
+    padding: 0 1rem;
+  }
+  .header__name {
+    font-size: 0.95rem;
+  }
+  .nav-link {
+    font-size: 0.75rem;
+  }
+  
+  /* Stack mailto buttons full-width */
+  .mailto-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .mailto-buttons .btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+  }
+  
+  /* Modal responsive spacing */
+  .modal__header {
+    padding: 0 1rem;
+    height: 70px;
+  }
+  .modal__body {
+    padding: 2.5rem 1rem;
+  }
+  .modal__grid {
+    gap: 2.5rem;
+  }
+  .modal__title {
+    font-size: 2.2rem;
   }
 }
 
