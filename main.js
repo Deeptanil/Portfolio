@@ -221,6 +221,30 @@ gsap.utils.toArray('.item-fade').forEach(item => {
   });
 });
 
+/* --- About Section Text Scrub Reveal --- */
+const splitTextElements = document.querySelectorAll('.reveal-text');
+splitTextElements.forEach(el => {
+  const text = el.innerText;
+  const words = text.split(' ');
+  el.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
+
+  const spans = el.querySelectorAll('span');
+  gsap.fromTo(spans, 
+    { opacity: 0.15 },
+    {
+      opacity: 1,
+      stagger: 0.05,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        end: 'bottom 45%',
+        scrub: true
+      }
+    }
+  );
+});
+
 // Scroll-triggered skew and translation effects for the Hero Title
 if (document.querySelector('.hero')) {
   gsap.to('.hero__title .font-display:first-child', {

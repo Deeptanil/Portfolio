@@ -1158,7 +1158,9 @@ body.hover-link-inverse .custom-cursor-dot {
   border-radius: 30px;
   background-color: transparent;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .tag:hover {
@@ -1167,10 +1169,22 @@ body.hover-link-inverse .custom-cursor-dot {
   transform: translateY(-2px);
 }
 
+.tag-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.tag:hover .tag-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
 @media (max-width: 991px) {
   .philosophy__grid {
     grid-template-columns: 1fr;
     gap: 4rem;
   }
 }
+
 
