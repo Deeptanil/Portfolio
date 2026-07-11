@@ -31,7 +31,9 @@ html, body {
   font-size: 16px;
   line-height: 1.5;
   overflow-x: hidden;
-  cursor: none; /* Hide default cursor to show custom trailing cursor */
+  cursor: none;
+  /* Prevent horizontal scroll and fix iOS height */
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Smooth scrolling via Lenis */
@@ -343,12 +345,12 @@ body.hover-link-inverse .custom-cursor-dot {
 
 /* --- Hero Section --- */
 .hero {
-  min-height: 100vh;
+  min-height: 100svh; /* svh = small viewport height - accounts for mobile browser chrome */
   padding-top: var(--header-height);
   display: flex;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  /* Removed overflow:hidden which was preventing mobile scroll */
 }
 
 .hero__grid {
@@ -359,7 +361,7 @@ body.hover-link-inverse .custom-cursor-dot {
   max-width: 1440px;
   margin: 0 auto;
   padding: 4rem;
-  height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
   align-items: center;
 }
 
@@ -461,16 +463,35 @@ body.hover-link-inverse .custom-cursor-dot {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     height: auto;
+    min-height: auto;
     padding: 3rem 2rem;
-    gap: 3rem;
+    gap: 2rem;
   }
   .hero__canvas-container {
     grid-column: 1;
-    height: 350px;
+    height: 280px;
   }
   .hero__status-badge {
     grid-column: 1;
     align-self: start;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__grid {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
+  .hero__canvas-container {
+    height: 220px;
+  }
+  .hero__bio p {
+    font-size: 0.95rem;
+  }
+  .badge__status {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+    gap: 0.3rem;
   }
 }
 
@@ -945,31 +966,37 @@ body.hover-link-inverse .custom-cursor-dot {
     display: inline-block;
     margin-top: 2px;
   }
-  
-  /* Sticky View Project Action bar for Mobile Modals */
-  #modal-project-link {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100% !important;
-    margin: 0 !important;
-    border-radius: 0;
+
+  /* --- Mobile Modal: full-width panel, native scroll --- */
+  .modal__content {
+    width: 100%; /* Full width on mobile, no partial panel */
+    height: 100dvh; /* Fill true visible area */
     border-left: none;
-    border-right: none;
-    border-bottom: none;
     border-top: 1px solid var(--color-border);
-    padding: 1.5rem !important;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    background-color: #000;
-    color: #fff;
-    z-index: 2000;
   }
-  
+
+  .modal__header {
+    padding: 0 1.25rem;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
   .modal__body {
-    padding-bottom: 120px !important; /* Prevent items from getting hidden behind fixed action bar */
+    padding: 2rem 1.25rem 4rem; /* no extra bottom padding — no fixed overlay button */
+  }
+
+  .modal__grid {
+    grid-template-columns: 1fr; /* stack info + images vertically */
+    gap: 2rem;
+  }
+
+  .modal__title {
+    font-size: clamp(2rem, 8vw, 3rem);
   }
 }
+
 
 @media (max-width: 480px) {
   .section-container {
@@ -1017,7 +1044,7 @@ body.hover-link-inverse .custom-cursor-dot {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh; /* dvh = dynamic viewport height, accounts for mobile browser chrome */
   z-index: 2000;
   pointer-events: none;
   visibility: hidden;
@@ -1058,7 +1085,10 @@ body.hover-link-inverse .custom-cursor-dot {
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y; /* tell browser: vertical swipe = scroll, not something else */
 }
 
 .modal.active .modal__content {

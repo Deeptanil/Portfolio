@@ -360,6 +360,7 @@ const projectsData = {
 const projectModal = document.getElementById('project-modal');
 const modalOverlay = document.getElementById('modal-overlay');
 const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalContent = projectModal?.querySelector('.modal__content');
 
 const modalIndex = document.getElementById('modal-project-index');
 const modalTitle = document.getElementById('modal-project-title');
@@ -370,6 +371,16 @@ const modalStack = document.getElementById('modal-project-stack');
 const modalDesc = document.getElementById('modal-project-desc');
 const modalLink = document.getElementById('modal-project-link');
 const modalImagesContainer = document.getElementById('modal-project-images');
+
+// Lock body scroll when modal open — only prevent html-level scroll,
+// do NOT set position:fixed which breaks native touch scroll inside modal
+const lockBodyScroll = () => {
+  document.documentElement.style.overflow = 'hidden';
+};
+
+const unlockBodyScroll = () => {
+  document.documentElement.style.overflow = '';
+};
 
 // Function to open project modal
 const openProjectModal = (projId) => {
@@ -386,24 +397,41 @@ const openProjectModal = (projId) => {
   modalDesc.textContent = data.desc;
   modalLink.href = data.link;
 
+  // Handle "Coming Soon" links
+  if (data.link === '#') {
+    modalLink.textContent = 'Coming Soon';
+    modalLink.style.opacity = '0.5';
+    modalLink.style.pointerEvents = 'none';
+  } else {
+    modalLink.textContent = 'View Project';
+    modalLink.style.opacity = '1';
+    modalLink.style.pointerEvents = 'auto';
+  }
+
   // Populate images
   modalImagesContainer.innerHTML = '';
   data.images.forEach(imgUrl => {
     const img = document.createElement('img');
     img.src = imgUrl;
     img.alt = data.title;
+    img.loading = 'lazy';
     modalImagesContainer.appendChild(img);
   });
 
+  // Reset modal scroll to top
+  if (modalContent) modalContent.scrollTop = 0;
+
   // Activate Modal
   projectModal.classList.add('active');
-  lenis.stop(); // Lock main page scrolling
+  lenis.stop();
+  lockBodyScroll();
 };
 
 // Function to close project modal
 const closeProjectModal = () => {
   projectModal.classList.remove('active');
-  lenis.start(); // Unlock main page scrolling
+  lenis.start();
+  unlockBodyScroll();
 };
 
 // Bind Project Clicks
@@ -420,23 +448,35 @@ if (modalOverlay) modalOverlay.addEventListener('click', closeProjectModal);
 
 // Credits Modal triggers
 const creditsModal = document.getElementById('credits-modal');
+const creditsModalContent = creditsModal?.querySelector('.modal__content');
 const creditsTrigger = document.getElementById('credits-trigger');
 const creditsClose = document.getElementById('credits-close-btn');
 const creditsOverlay = document.getElementById('credits-overlay');
 
 const openCredits = () => {
+  if (creditsModalContent) creditsModalContent.scrollTop = 0;
   creditsModal.classList.add('active');
   lenis.stop();
+  lockBodyScroll();
 };
 
 const closeCredits = () => {
   creditsModal.classList.remove('active');
   lenis.start();
+  unlockBodyScroll();
 };
 
 if (creditsTrigger) creditsTrigger.addEventListener('click', openCredits);
 if (creditsClose) creditsClose.addEventListener('click', closeCredits);
 if (creditsOverlay) creditsOverlay.addEventListener('click', closeCredits);
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (projectModal?.classList.contains('active')) closeProjectModal();
+    if (creditsModal?.classList.contains('active')) closeCredits();
+  }
+});
 
 // Recalculate event listeners on window resize/dom edits if cursor hover class is needed
 window.addEventListener('resize', addCursorHoverListeners);
