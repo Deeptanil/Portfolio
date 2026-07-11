@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patrick David | UX/UI Designer & Developer</title>
+  <meta name="description" content="Portfolio of Patrick David, freelance UX/UI Designer and Frontend Developer. Bridge between creative design and robust implementation.">
+  
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600;1,700&family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Custom Trailing Cursor elements -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+  <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
+
+  <!-- Sticky Navigation Header -->
+  <header class="header">
+    <div class="header__logo">
+      <span class="header__name">Patrick David</span>
+      <span class="header__role">UX/UI Designer, Developer</span>
+    </div>
+    <nav class="header__nav">
+      <a href="#cases" class="nav-link">works</a>
+      <a href="#intro" class="nav-link">about</a>
+      <a href="#footer" class="nav-link">contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__grid">
+      <!-- Typography / Left Side -->
+      <div class="hero__title-container">
+        <h1 class="hero__title">
+          <span class="font-display item-fade">creative</span><br>
+          <span class="font-serif-italic item-fade">Designer</span><br>
+          <span class="font-display item-fade">developer</span>
+        </h1>
+        <div class="hero__bio item-fade">
+          <p>I am a UX/UI designer and frontend developer who bridges the gap between high-end digital art direction and solid development engineering. Crafting digital products for startups, companies, and agencies worldwide.</p>
+          <a href="#footer" class="btn btn--primary btn--md--extra--border--animation">Contact me</a>
+        </div>
+      </div>
+      
+      <!-- WebGL Canvas Container -->
+      <div class="hero__canvas-container item-fade">
+        <canvas id="webgl-canvas"></canvas>
+      </div>
+
+      <!-- Availability status badge -->
+      <div class="hero__status-badge item-fade">
+        <div class="badge__date" id="badge-date">11 jul</div>
+        <div class="badge__status">
+          <span class="status-dot"></span>
+          available for work
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="intro" class="intro section-border">
+    <div class="section-container">
+      <h2 class="section-title item-fade">about</h2>
+      <div class="intro__grid">
+        <div class="intro__large-text item-fade">
+          <p>Over the years, I've worked as a freelance designer and developer, serving as a bridge between pure design and complex logic. I help startups and agencies turn ideas into bespoke, award-winning digital solutions.</p>
+          <p class="intro__highlight">Currently serving as a Jury Member at <strong>CSS Design Awards</strong> &amp; <strong>The Webby Awards</strong>.</p>
+        </div>
+        <div class="intro__details item-fade">
+          <div class="detail-block">
+            <h3>Services</h3>
+            <ul>
+              <li>UX/UI Design</li>
+              <li>Frontend Development</li>
+              <li>WebGL &amp; Creative Coding</li>
+              <li>Brand Identity</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h3>Location</h3>
+            <p>Italy / Remote Worldwide</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Cases Section -->
+  <section id="cases" class="cases section-border">
+    <div class="section-container">
+      <h2 class="section-title item-fade">Selected Cases</h2>
+      <div class="cases__list">
+        <!-- Project 1: Beatrice Cortese -->
+        <div class="case-item item-fade" data-project="beatrice-cortese" id="case-beatrice">
+          <div class="case-item__content">
+            <span class="case-item__number">01</span>
+            <h3 class="case-item__title">Beatrice Cortese</h3>
+            <span class="case-item__category">Portfolio Site / Art Direction</span>
+          </div>
+          <div class="case-item__arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+        <!-- Project 2: Barbara Scerbo -->
+        <div class="case-item item-fade" data-project="barbara-scerbo" id="case-barbara">
+          <div class="case-item__content">
+            <span class="case-item__number">02</span>
+            <h3 class="case-item__title">Barbara Scerbo</h3>
+            <span class="case-item__category">E-Commerce / Fashion</span>
+          </div>
+          <div class="case-item__arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+        <!-- Project 3: Viceversa -->
+        <div class="case-item item-fade" data-project="viceversa" id="case-viceversa">
+          <div class="case-item__content">
+            <span class="case-item__number">03</span>
+            <h3 class="case-item__title">Viceversa</h3>
+            <span class="case-item__category">Fintech Platform / Brand Identity</span>
+          </div>
+          <div class="case-item__arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+        <!-- Project 4: Codeway CH -->
+        <div class="case-item item-fade" data-project="codeway-ch" id="case-codeway">
+          <div class="case-item__content">
+            <span class="case-item__number">04</span>
+            <h3 class="case-item__title">Codeway CH</h3>
+            <span class="case-item__category">Software Agency / NextJS Dev</span>
+          </div>
+          <div class="case-item__arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+        <!-- Project 5: Miranda -->
+        <div class="case-item item-fade" data-project="miranda" id="case-miranda">
+          <div class="case-item__content">
+            <span class="case-item__number">05</span>
+            <h3 class="case-item__title">Miranda</h3>
+            <span class="case-item__category">Creative Studio / Typography Design</span>
+          </div>
+          <div class="case-item__arrow">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards Section -->
+  <section class="awards section-border">
+    <div class="section-container">
+      <h2 class="section-title item-fade">Awards</h2>
+      <div class="awards__table item-fade">
+        <div class="awards__row header-row">
+          <span>Award / Site</span>
+          <span>Category</span>
+          <span>Year</span>
+        </div>
+        <div class="awards__row">
+          <span>Beatrice Cortese Portfolio</span>
+          <span>CSSDA - Best UI/UX Design</span>
+          <span>2025</span>
+        </div>
+        <div class="awards__row">
+          <span>Bepatrickdavid v2</span>
+          <span>Awwwards - Honorable Mention</span>
+          <span>2024</span>
+        </div>
+        <div class="awards__row">
+          <span>Viceversa Fintech</span>
+          <span>CSSDA - Website of the Day</span>
+          <span>2024</span>
+        </div>
+        <div class="awards__row">
+          <span>Barbara Scerbo Shop</span>
+          <span>The Webby Awards - Nominee</span>
+          <span>2023</span>
+        </div>
+        <div class="awards__row">
+          <span>Bepatrickdavid v1</span>
+          <span>CSSDA - Special Kudos</span>
+          <span>2023</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications Infinite Marquee -->
+  <section class="marquee section-border">
+    <div class="marquee__inner" id="marquee-inner">
+      <span>SHOPIFY</span>
+      <span class="marquee__dot"></span>
+      <span>CAREER FOUNDRY</span>
+      <span class="marquee__dot"></span>
+      <span>AWWWARDS</span>
+      <span class="marquee__dot"></span>
+      <span>CSSDA</span>
+      <span class="marquee__dot"></span>
+      <span>DRIBBBLE</span>
+      <span class="marquee__dot"></span>
+      <span>BEHANCE</span>
+      <span class="marquee__dot"></span>
+      <!-- Repeated for infinite scroll seamless effect -->
+      <span>SHOPIFY</span>
+      <span class="marquee__dot"></span>
+      <span>CAREER FOUNDRY</span>
+      <span class="marquee__dot"></span>
+      <span>AWWWARDS</span>
+      <span class="marquee__dot"></span>
+      <span>CSSDA</span>
+      <span class="marquee__dot"></span>
+      <span>DRIBBBLE</span>
+      <span class="marquee__dot"></span>
+      <span>BEHANCE</span>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer id="footer" class="footer">
+    <div class="footer__container">
+      <div class="footer__headline item-fade">
+        <span class="font-serif-italic">Let's</span><br>
+        <span class="font-display">Connect</span>
+      </div>
+      
+      <div class="footer__links-grid">
+        <div class="footer__col item-fade">
+          <h4>Enquiries</h4>
+          <div class="mailto-buttons">
+            <a href="mailto:hello@patrickdavid.com?subject=UX/UI%20DESIGN" class="btn btn--secondary btn-mailto">UX/UI DESIGN</a>
+            <a href="mailto:hello@patrickdavid.com?subject=FRONTEND%20DEVELOPMENT" class="btn btn--secondary btn-mailto">FRONTEND DEVELOPMENT</a>
+            <a href="mailto:hello@patrickdavid.com?subject=WEBFLOW%20DEVELOPMENT" class="btn btn--secondary btn-mailto">WEBFLOW DEVELOPMENT</a>
+            <a href="mailto:hello@patrickdavid.com?subject=STARTUPS" class="btn btn--secondary btn-mailto">STARTUPS</a>
+            <a href="mailto:hello@patrickdavid.com?subject=PIZZA" class="btn btn--secondary btn-mailto">PIZZA 🍕</a>
+          </div>
+        </div>
+        <div class="footer__col item-fade">
+          <h4>Socials</h4>
+          <ul class="footer__socials-list">
+            <li><a href="#" class="social-link" target="_blank">Dribbble</a></li>
+            <li><a href="#" class="social-link" target="_blank">Behance</a></li>
+            <li><a href="#" class="social-link" target="_blank">LinkedIn</a></li>
+            <li><a href="#" class="social-link" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="footer__bottom-left">
+          <span>&copy; 2026 Patrick David. All rights reserved.</span>
+          <span class="footer__version-links">
+            <a href="#" class="v-link">v1</a>
+            <a href="#" class="v-link">v2</a>
+            <a href="#" class="v-link active">v3</a>
+          </span>
+        </div>
+        <div class="footer__bottom-right">
+          <button id="credits-trigger" class="credits-btn">credits</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Detail Modal -->
+  <div id="project-modal" class="modal">
+    <div class="modal__overlay" id="modal-overlay"></div>
+    <div class="modal__content">
+      <div class="modal__header">
+        <button class="btn btn--close modal__close-btn" id="modal-close-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg>
+          Go Back
+        </button>
+        <span class="modal__project-index" id="modal-project-index">01 / 05</span>
+      </div>
+      <div class="modal__body">
+        <div class="modal__grid">
+          <div class="modal__info">
+            <h2 class="modal__title" id="modal-project-title">Beatrice Cortese</h2>
+            <p class="modal__category" id="modal-project-category">Portfolio Site / Art Direction</p>
+            
+            <div class="info-group">
+              <h4>Role</h4>
+              <p id="modal-project-role">Lead UX/UI Designer &amp; Developer</p>
+            </div>
+            <div class="info-group">
+              <h4>Year</h4>
+              <p id="modal-project-year">2025</p>
+            </div>
+            <div class="info-group">
+              <h4>Stack</h4>
+              <p id="modal-project-stack">HTML, Tailwind CSS, GSAP, Vite</p>
+            </div>
+            <div class="info-group">
+              <h4>About</h4>
+              <p id="modal-project-desc">A highly aesthetic, minimalist portfolio designed for photographer and art director Beatrice Cortese. The website highlights her editorial portfolio with smooth scrolling transitions and dynamic grid overlays.</p>
+            </div>
+            <a href="#" target="_blank" class="btn btn--primary" id="modal-project-link">View Full Case Study</a>
+          </div>
+          <div class="modal__visuals" id="modal-project-images">
+            <!-- Images will be injected dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credits Modal -->
+  <div id="credits-modal" class="modal">
+    <div class="modal__overlay" id="credits-overlay"></div>
+    <div class="modal__content credits-content">
+      <div class="modal__header">
+        <button class="btn btn--close credits-close-btn" id="credits-close-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg>
+          Close
+        </button>
+      </div>
+      <div class="modal__body">
+        <h2 class="credits-title">Credits</h2>
+        <div class="credits__grid">
+          <div class="credits__section">
+            <h3>Typography</h3>
+            <ul>
+              <li><strong>Oswald</strong> &amp; <strong>Syne</strong> via Google Fonts (for Display Headers)</li>
+              <li><strong>Cormorant Garamond</strong> via Google Fonts (for Elegant Serif Italics)</li>
+              <li><strong>Plus Jakarta Sans</strong> via Google Fonts (for Modern Grotesque Sans-Serif Body)</li>
+            </ul>
+          </div>
+          <div class="credits__section">
+            <h3>Libraries</h3>
+            <ul>
+              <li><strong>Three.js</strong> for interactive WebGL 3D scene rendering</li>
+              <li><strong>GSAP (GreenSock)</strong> for hardware-accelerated animations</li>
+              <li><strong>Lenis</strong> for smooth momentum physics scrolling</li>
+            </ul>
+          </div>
+          <div class="credits__section">
+            <h3>3D Artwork</h3>
+            <ul>
+              <li><strong>Interactive WebGL Morphing Blob</strong> - Procedural mathematical mesh with dynamic normals and custom mouse vector tracking.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
