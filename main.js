@@ -297,7 +297,7 @@ const projectsData = {
   'strayed': {
     title: 'STRAYED',
     category: 'Fashion E-Commerce',
-    role: 'Co-Founder & Lead Developer',
+    role: 'Founder & Digital Director',
     year: '2025',
     stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
     desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
@@ -311,7 +311,7 @@ const projectsData = {
   'prettiva': {
     title: 'Prettiva & Co.',
     category: 'Fashion E-Commerce',
-    role: 'Co-Founder & Full-Stack Developer',
+    role: 'Co-Founder & Digital Director',
     year: '2025',
     stack: 'Odoo, JavaScript, CSS, HTML, Razorpay, SEO',
     desc: 'Built and optimized an online fashion store focused on delivering a premium shopping experience. Responsible for website design, frontend customization, performance optimization, SEO, payment integration, and overall digital experience.',
