@@ -308,6 +308,61 @@ if (document.querySelector('.hero')) {
   });
 }
 
+/* --- Horizontal Scroll for Selected Cases (Desktop Only) --- */
+const casesWrapper = document.querySelector('.cases__scroll-wrapper');
+const casesTrack = document.querySelector('.cases__track');
+const casePanels = gsap.utils.toArray('.case-panel');
+const navDots = document.querySelectorAll('.nav-dot');
+
+if (casesWrapper && casesTrack && casePanels.length > 0) {
+  let mm = gsap.matchMedia();
+
+  mm.add("(min-width: 992px)", () => {
+    const scrollAmount = casesTrack.scrollWidth - window.innerWidth;
+    
+    const scrollTween = gsap.to(casesTrack, {
+      x: -scrollAmount,
+      ease: "none",
+      scrollTrigger: {
+        trigger: casesWrapper,
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        end: () => `+=${scrollAmount}`,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const activeIndex = Math.min(
+            Math.floor(progress * casePanels.length),
+            casePanels.length - 1
+          );
+          
+          navDots.forEach((dot, idx) => {
+            if (idx === activeIndex) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+        }
+      }
+    });
+
+    // Clicking dots scrolls to corresponding panel
+    navDots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        const scrollAmountVal = casesTrack.scrollWidth - window.innerWidth;
+        const targetScroll = casesWrapper.offsetTop + (scrollAmountVal * (idx / (casePanels.length - 1)));
+        lenis.scrollTo(targetScroll, { duration: 1.2 });
+      });
+    });
+
+    return () => {
+      if (scrollTween.scrollTrigger) scrollTween.scrollTrigger.kill();
+    };
+  });
+}
+
 /* --- Modals for Selected Cases & Credits --- */
 
 // Case Studies Data
@@ -435,8 +490,8 @@ const closeProjectModal = () => {
 };
 
 // Bind Project Clicks
-document.querySelectorAll('.case-item').forEach(item => {
-  item.addEventListener('click', () => {
+document.querySelectorAll('.case-panel').forEach(item => {
+  item.addEventListener('click', (e) => {
     const projId = item.getAttribute('data-project');
     openProjectModal(projId);
   });
