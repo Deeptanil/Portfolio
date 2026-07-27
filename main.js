@@ -39,15 +39,15 @@ if (btechStatus) {
   const now = new Date();
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth(); // 0-indexed: 5 is June
-  
+
   let statusText = '3rd Year';
-  
+
   if (currentYear > 2028 || (currentYear === 2028 && currentMonth >= 5)) {
     statusText = 'Complete';
   } else if (currentYear > 2027 || (currentYear === 2027 && currentMonth >= 5)) {
     statusText = '4th Year';
   }
-  
+
   btechStatus.textContent = statusText;
 }
 
@@ -61,7 +61,7 @@ let cursor = { x: 0, y: 0 };
 document.addEventListener('mousemove', (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
-  
+
   if (cursorInner) {
     cursorInner.style.left = `${mouse.x}px`;
     cursorInner.style.top = `${mouse.y}px`;
@@ -73,7 +73,7 @@ const animateCursor = () => {
   const lerpFactor = 0.15;
   cursor.x += (mouse.x - cursor.x) * lerpFactor;
   cursor.y += (mouse.y - cursor.y) * lerpFactor;
-  
+
   if (cursorOuter) {
     cursorOuter.style.left = `${cursor.x}px`;
     cursorOuter.style.top = `${cursor.y}px`;
@@ -93,7 +93,7 @@ const addCursorHoverListeners = () => {
         document.body.classList.add('hover-link');
       }
     });
-    
+
     el.addEventListener('mouseleave', () => {
       document.body.classList.remove('hover-link');
       document.body.classList.remove('hover-link-inverse');
@@ -146,7 +146,7 @@ if (canvas) {
   // Meshes
   const innerMesh = new THREE.Mesh(innerGeometry, innerMaterial);
   const outerMesh = new THREE.Mesh(outerGeometry, outerMaterial);
-  
+
   const meshGroup = new THREE.Group();
   meshGroup.add(innerMesh);
   meshGroup.add(outerMesh);
@@ -172,21 +172,21 @@ if (canvas) {
     // Normalize coordinates
     const nx = (e.clientX / window.innerWidth) * 2 - 1;
     const ny = -(e.clientY / window.innerHeight) * 2 + 1;
-    
+
     targetRotation.y = nx * 0.7; // horizontal movement maps to Y axis rotation
     targetRotation.x = -ny * 0.7; // vertical movement maps to X axis rotation
   });
 
   // Render Loop with mathematical vertex morphing (sine displacement)
   const clock = new THREE.Clock();
-  
+
   const tick = () => {
     const elapsedTime = clock.getElapsedTime();
 
     // Rotational lerp toward mouse target
     currentRotation.x += (targetRotation.x - currentRotation.x) * 0.08;
     currentRotation.y += (targetRotation.y - currentRotation.y) * 0.08;
-    
+
     meshGroup.rotation.x = currentRotation.x + elapsedTime * 0.08;
     meshGroup.rotation.y = currentRotation.y + elapsedTime * 0.12;
 
@@ -198,11 +198,11 @@ if (canvas) {
 
     for (let i = 0; i < positionAttribute.count; i++) {
       vertex.fromBufferAttribute(originalPositions, i);
-      
+
       // Compute displacement using sine waves
-      const wave = Math.sin(vertex.x * 2.5 + elapsedTime * 1.5) * 
-                   Math.cos(vertex.y * 2.5 + elapsedTime * 1.5) * 0.12;
-                   
+      const wave = Math.sin(vertex.x * 2.5 + elapsedTime * 1.5) *
+        Math.cos(vertex.y * 2.5 + elapsedTime * 1.5) * 0.12;
+
       vertex.addScaledVector(vertex.clone().normalize(), wave);
       positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
     }
@@ -247,7 +247,7 @@ splitTextElements.forEach(el => {
   el.innerHTML = words.map(word => `<span>${word}</span>`).join(' ');
 
   const spans = el.querySelectorAll('span');
-  gsap.fromTo(spans, 
+  gsap.fromTo(spans,
     { opacity: 0.15 },
     {
       opacity: 1,
@@ -274,7 +274,7 @@ if (document.querySelector('.hero')) {
       scrub: true
     }
   });
-  
+
   gsap.to('.hero__title .font-serif-italic', {
     x: 60,
     scrollTrigger: {
@@ -284,7 +284,7 @@ if (document.querySelector('.hero')) {
       scrub: true
     }
   });
-  
+
   gsap.to('.hero__title .font-display:last-child', {
     x: -30,
     scrollTrigger: {
@@ -319,7 +319,7 @@ if (casesWrapper && casesTrack && casePanels.length > 0) {
 
   mm.add("(min-width: 992px)", () => {
     const scrollAmount = casesTrack.scrollWidth - window.innerWidth;
-    
+
     const scrollTween = gsap.to(casesTrack, {
       x: -scrollAmount,
       ease: "none",
@@ -336,7 +336,7 @@ if (casesWrapper && casesTrack && casePanels.length > 0) {
             Math.floor(progress * casePanels.length),
             casePanels.length - 1
           );
-          
+
           navDots.forEach((dot, idx) => {
             if (idx === activeIndex) {
               dot.classList.add('active');
@@ -370,7 +370,7 @@ const projectsData = {
   'strayed': {
     title: 'STRAYED',
     category: 'Fashion E-Commerce',
-    role: 'Founder & Digital Director',
+    role: 'Co-Founder & Digital Director',
     year: '2026',
     stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
     desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
