@@ -315,7 +315,7 @@ button {
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 0.95fr);
   grid-template-rows: 1fr auto;
   width: 100%;
   max-width: 1440px;
@@ -323,6 +323,7 @@ button {
   padding: 4rem;
   min-height: calc(100svh - var(--header-height));
   align-items: center;
+  gap: 2rem;
 }
 
 .hero__title-container {
@@ -330,16 +331,6 @@ button {
   flex-direction: column;
   justify-content: center;
   grid-column: 1;
-}
-
-.hero__eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-gray);
-  margin-bottom: 1.25rem;
 }
 
 .hero__title {
@@ -350,30 +341,26 @@ button {
 }
 
 .hero__bio {
-  max-width: 560px;
+  max-width: 480px;
 }
 
 .hero__bio p {
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   color: var(--color-gray);
-  margin-bottom: 2rem;
-  line-height: 1.7;
-}
-
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
 }
 
 .hero__canvas-container {
   grid-column: 2;
-  height: 500px;
+  height: clamp(420px, 58vh, 640px);
   width: 100%;
+  max-width: 560px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  justify-self: end;
 }
 
 #webgl-canvas {
@@ -384,37 +371,51 @@ button {
   left: 0;
 }
 
-.hero__proofs {
+.hero__status-badge {
   grid-column: 1 / span 2;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  display: flex;
+  align-items: center;
   align-self: end;
   border-top: 1px solid var(--color-border);
   padding-top: 2rem;
   margin-top: auto;
 }
 
-.hero__proof {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  padding-right: 1rem;
-}
-
-.hero__proof-label {
+.badge__date {
   font-family: var(--font-display);
-  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-gray);
+  font-size: 0.85rem;
+  background-color: #000;
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  margin-right: 1.25rem;
+  letter-spacing: 0.05em;
 }
 
-.hero__proof strong {
-  font-size: 1rem;
+.badge__status {
+  font-size: 0.8rem;
   font-weight: 600;
-  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 @media (max-width: 991px) {
@@ -432,11 +433,12 @@ button {
   .hero__canvas-container {
     grid-column: 1;
     height: 280px;
+    max-width: none;
+    justify-self: stretch;
   }
-  .hero__proofs {
+  .hero__status-badge {
     grid-column: 1;
     align-self: start;
-    grid-template-columns: 1fr;
   }
 }
 
@@ -451,8 +453,10 @@ button {
   .hero__bio p {
     font-size: 0.95rem;
   }
-  .hero__actions .btn {
-    width: 100%;
+  .badge__status {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+    gap: 0.3rem;
   }
 }
 
@@ -576,7 +580,7 @@ button {
 
 .cases__track {
   display: flex;
-  width: 200vw; /* 2 panels */
+  width: 300vw; /* 3 panels */
   height: 100%;
   will-change: transform;
 }
@@ -635,31 +639,6 @@ button {
   line-height: 1.6;
   color: var(--color-gray);
   max-width: 480px;
-}
-
-.case-panel__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  max-width: 580px;
-}
-
-.case-panel__meta span {
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: var(--color-gray);
-  border-top: 1px solid var(--color-light-gray);
-  padding-top: 0.8rem;
-}
-
-.case-panel__meta strong {
-  display: inline-block;
-  min-width: 82px;
-  color: #000;
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .case-panel__btn {
@@ -869,15 +848,7 @@ button {
   font-size: clamp(4.5rem, 12vw, 10.5rem);
   line-height: 0.85;
   letter-spacing: -0.04em;
-  margin-bottom: 2rem;
-}
-
-.footer__lead {
-  max-width: 760px;
-  font-size: 1.15rem;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.72);
-  margin-bottom: 5rem;
+  margin-bottom: 6rem;
 }
 
 .footer__links-grid {

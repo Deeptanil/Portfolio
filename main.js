@@ -23,6 +23,16 @@ requestAnimationFrame(raf);
 // Link Lenis to ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
 
+/* --- Dynamic Date Badge --- */
+const dateBadge = document.getElementById('badge-date');
+if (dateBadge) {
+  const today = new Date();
+  const day = today.getDate();
+  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  const month = months[today.getMonth()];
+  dateBadge.textContent = `${day} ${month}`;
+}
+
 /* --- Dynamic B.Tech Status --- */
 const btechStatus = document.getElementById('btech-status');
 if (btechStatus) {
@@ -308,13 +318,13 @@ if (casesWrapper && casesTrack && casePanels.length > 0) {
 const projectsData = {
   'strayed': {
     title: 'STRAYED',
-    category: 'Fashion E-Commerce / Product + Engineering',
+    category: 'Fashion E-Commerce',
     role: 'Co-Founder & Digital Director',
     year: '2026',
     stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
-    desc: 'Built STRAYED from a founder and product-builder perspective, shaping the brand feel, storefront interaction, and e-commerce architecture together. I led the digital experience from concept to launch with a focus on clarity, polish, and a premium fashion identity.',
+    desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
     link: 'https://strayed.in',
-    index: '01 / 02',
+    index: '01 / 03',
     images: [
       'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000',
       'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1000'
@@ -322,16 +332,30 @@ const projectsData = {
   },
   'prettiva': {
     title: 'Prettiva & Co.',
-    category: 'Online Fashion Store / Technical Direction',
-    role: 'Co-Founder & Technical Director',
+    category: 'Fashion E-Commerce',
+    role: 'Co-Founder & Digital Director',
     year: '2025',
     stack: 'Odoo, JavaScript, CSS, HTML, Razorpay, SEO',
-    desc: 'Led the product and technical side of prettiva.co, focusing on storefront customization, payment integration, SEO, and a premium retail experience that felt credible for real customers. The work balanced brand presentation with the operational needs of a live business.',
+    desc: 'Built and optimized an online fashion store focused on delivering a premium shopping experience. Responsible for website design, frontend customization, performance optimization, SEO, payment integration, and overall digital experience.',
     link: 'https://prettiva.co',
-    index: '02 / 02',
+    index: '02 / 03',
     images: [
       'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1000',
       'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000'
+    ]
+  },
+  'food-delivery': {
+    title: 'Food Delivery Platform',
+    category: 'Full-Stack Web Application',
+    role: 'Full-Stack Developer',
+    year: '2026',
+    stack: 'Next.js, React, Node.js, PostgreSQL, Tailwind CSS',
+    desc: 'Developing a modern food ordering platform inspired by leading delivery applications, with a focus on intuitive user experience, performance, scalable architecture, and clean interface design.',
+    link: '#',
+    index: '03 / 03',
+    images: [
+      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=1000',
+      'https://images.unsplash.com/photo-1526367790999-015078648c7e?auto=format&fit=crop&q=80&w=1000'
     ]
   }
 };
