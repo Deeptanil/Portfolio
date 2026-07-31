@@ -375,10 +375,12 @@ button {
   grid-column: 1 / span 2;
   display: flex;
   align-items: center;
+  gap: 1.25rem;
   align-self: end;
   border-top: 1px solid var(--color-border);
   padding-top: 2rem;
   margin-top: auto;
+  flex-wrap: wrap;
 }
 
 .badge__date {
@@ -389,18 +391,44 @@ button {
   background-color: #000;
   color: #fff;
   padding: 0.35rem 0.75rem;
-  margin-right: 1.25rem;
   letter-spacing: 0.05em;
 }
 
-.badge__status {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.badge__content {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.badge__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-border);
+  background-color: rgba(255, 255, 255, 0.5);
+  min-height: 48px;
+}
+
+.badge__label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gray);
+}
+
+.badge__item strong {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge__item--status strong {
+  color: #000;
 }
 
 .status-dot {
@@ -453,10 +481,25 @@ button {
   .hero__bio p {
     font-size: 0.95rem;
   }
-  .badge__status {
-    font-size: 0.7rem;
+  .hero__status-badge {
+    gap: 0.75rem;
+  }
+  .badge__date {
+    margin-right: 0;
+  }
+  .badge__content {
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .badge__item {
+    width: 100%;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 0.3rem;
+    padding: 0.75rem 0.9rem;
+  }
+  .footer__headline {
+    font-size: clamp(3.6rem, 16vw, 6rem);
+    line-height: 0.9;
   }
 }
 
@@ -849,6 +892,7 @@ button {
   line-height: 0.85;
   letter-spacing: -0.04em;
   margin-bottom: 6rem;
+  padding-right: 0.08em;
 }
 
 .footer__links-grid {
