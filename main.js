@@ -23,16 +23,6 @@ requestAnimationFrame(raf);
 // Link Lenis to ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
 
-/* --- Dynamic Date Badge --- */
-const dateBadge = document.getElementById('badge-date');
-if (dateBadge) {
-  const today = new Date();
-  const day = today.getDate();
-  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-  const month = months[today.getMonth()];
-  dateBadge.textContent = `${day} ${month}`;
-}
-
 /* --- Dynamic B.Tech Status --- */
 const btechStatus = document.getElementById('btech-status');
 if (btechStatus) {
@@ -50,57 +40,6 @@ if (btechStatus) {
 
   btechStatus.textContent = statusText;
 }
-
-/* --- Custom Trailing Cursor --- */
-const cursorOuter = document.getElementById('custom-cursor');
-const cursorInner = document.getElementById('custom-cursor-dot');
-
-let mouse = { x: 0, y: 0 };
-let cursor = { x: 0, y: 0 };
-
-document.addEventListener('mousemove', (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-
-  if (cursorInner) {
-    cursorInner.style.left = `${mouse.x}px`;
-    cursorInner.style.top = `${mouse.y}px`;
-  }
-});
-
-// Animate outer cursor with lag (LERP)
-const animateCursor = () => {
-  const lerpFactor = 0.15;
-  cursor.x += (mouse.x - cursor.x) * lerpFactor;
-  cursor.y += (mouse.y - cursor.y) * lerpFactor;
-
-  if (cursorOuter) {
-    cursorOuter.style.left = `${cursor.x}px`;
-    cursorOuter.style.top = `${cursor.y}px`;
-  }
-  requestAnimationFrame(animateCursor);
-};
-animateCursor();
-
-// Set cursor hover status
-const addCursorHoverListeners = () => {
-  const hovers = document.querySelectorAll('a, button, .case-item, .credits-btn, .btn');
-  hovers.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if (el.closest('.footer') || el.closest('.marquee')) {
-        document.body.classList.add('hover-link-inverse');
-      } else {
-        document.body.classList.add('hover-link');
-      }
-    });
-
-    el.addEventListener('mouseleave', () => {
-      document.body.classList.remove('hover-link');
-      document.body.classList.remove('hover-link-inverse');
-    });
-  });
-};
-addCursorHoverListeners();
 
 /* --- WebGL 3D Canvas (Three.js) --- */
 const canvas = document.getElementById('webgl-canvas');
@@ -369,13 +308,13 @@ if (casesWrapper && casesTrack && casePanels.length > 0) {
 const projectsData = {
   'strayed': {
     title: 'STRAYED',
-    category: 'Fashion E-Commerce',
+    category: 'Fashion E-Commerce / Product + Engineering',
     role: 'Co-Founder & Digital Director',
     year: '2026',
     stack: 'Medusa.js, Supabase, PostgreSQL, Tailwind CSS, JavaScript, GitHub',
-    desc: 'Designed and developed the complete digital experience for STRAYED, creating a modern fashion platform that combines immersive interactions with a scalable e-commerce architecture. Led both the technical implementation and overall product experience from concept to launch.',
+    desc: 'Built STRAYED from a founder and product-builder perspective, shaping the brand feel, storefront interaction, and e-commerce architecture together. I led the digital experience from concept to launch with a focus on clarity, polish, and a premium fashion identity.',
     link: 'https://strayed.in',
-    index: '01 / 03',
+    index: '01 / 02',
     images: [
       'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000',
       'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1000'
@@ -383,30 +322,16 @@ const projectsData = {
   },
   'prettiva': {
     title: 'Prettiva & Co.',
-    category: 'Fashion E-Commerce',
-    role: 'Co-Founder & Digital Director',
+    category: 'Online Fashion Store / Technical Direction',
+    role: 'Co-Founder & Technical Director',
     year: '2025',
     stack: 'Odoo, JavaScript, CSS, HTML, Razorpay, SEO',
-    desc: 'Built and optimized an online fashion store focused on delivering a premium shopping experience. Responsible for website design, frontend customization, performance optimization, SEO, payment integration, and overall digital experience.',
+    desc: 'Led the product and technical side of prettiva.co, focusing on storefront customization, payment integration, SEO, and a premium retail experience that felt credible for real customers. The work balanced brand presentation with the operational needs of a live business.',
     link: 'https://prettiva.co',
-    index: '02 / 03',
+    index: '02 / 02',
     images: [
       'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1000',
       'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000'
-    ]
-  },
-  'food-delivery': {
-    title: 'Food Delivery Platform',
-    category: 'Full-Stack Web Application',
-    role: 'Full-Stack Developer',
-    year: '2026',
-    stack: 'Next.js, React, Node.js, PostgreSQL, Tailwind CSS',
-    desc: 'Developing a modern food ordering platform inspired by leading delivery applications, with a focus on intuitive user experience, performance, scalable architecture, and clean interface design.',
-    link: '#',
-    index: '03 / 03',
-    images: [
-      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=1000',
-      'https://images.unsplash.com/photo-1526367790999-015078648c7e?auto=format&fit=crop&q=80&w=1000'
     ]
   }
 };
@@ -532,6 +457,3 @@ document.addEventListener('keydown', (e) => {
     if (creditsModal?.classList.contains('active')) closeCredits();
   }
 });
-
-// Recalculate event listeners on window resize/dom edits if cursor hover class is needed
-window.addEventListener('resize', addCursorHoverListeners);

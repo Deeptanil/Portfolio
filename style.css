@@ -12,9 +12,6 @@
   --font-brutal: 'Syne', sans-serif;
   
   --header-height: 80px;
-  
-  --cursor-size-outer: 30px;
-  --cursor-size-inner: 6px;
 }
 
 /* --- Base & Reset --- */
@@ -31,7 +28,6 @@ html, body {
   font-size: 16px;
   line-height: 1.5;
   overflow-x: hidden;
-  cursor: none;
   /* Prevent horizontal scroll and fix iOS height */
   -webkit-text-size-adjust: 100%;
 }
@@ -65,56 +61,20 @@ html.lenis {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: none;
 }
 
 button {
   background: none;
   border: none;
   font: inherit;
-  cursor: none;
+  cursor: pointer;
   outline: none;
 }
 
-/* --- Custom Trailing Cursor --- */
-.custom-cursor {
-  width: var(--cursor-size-outer);
-  height: var(--cursor-size-outer);
-  border: 1px solid #ffffff; /* Base color white for difference blending */
-  border-radius: 50%;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+.case-panel,
+.nav-dot {
+  cursor: pointer;
 }
-
-.custom-cursor-dot {
-  width: var(--cursor-size-inner);
-  height: var(--cursor-size-inner);
-  background-color: #ffffff; /* Base color white for difference blending */
-  border-radius: 50%;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10001;
-  mix-blend-mode: difference;
-}
-
-/* Cursor Hover states */
-body.hover-link .custom-cursor,
-body.hover-link-inverse .custom-cursor {
-  width: 55px;
-  height: 55px;
-  background-color: rgba(255, 255, 255, 0.25);
-  border-color: #ffffff;
-}
-body.hover-link .custom-cursor-dot,
-body.hover-link-inverse .custom-cursor-dot {
-  background-color: #ffffff;
-}
-
 
 /* --- Layout Utilities --- */
 .section-border {
@@ -372,6 +332,16 @@ body.hover-link-inverse .custom-cursor-dot {
   grid-column: 1;
 }
 
+.hero__eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  margin-bottom: 1.25rem;
+}
+
 .hero__title {
   font-size: clamp(2.5rem, 8.5vw, 7.5rem);
   line-height: 0.9;
@@ -380,14 +350,20 @@ body.hover-link-inverse .custom-cursor-dot {
 }
 
 .hero__bio {
-  max-width: 480px;
+  max-width: 560px;
 }
 
 .hero__bio p {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   color: var(--color-gray);
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .hero__canvas-container {
@@ -408,51 +384,37 @@ body.hover-link-inverse .custom-cursor-dot {
   left: 0;
 }
 
-.hero__status-badge {
+.hero__proofs {
   grid-column: 1 / span 2;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
   align-self: end;
   border-top: 1px solid var(--color-border);
   padding-top: 2rem;
   margin-top: auto;
 }
 
-.badge__date {
+.hero__proof {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-right: 1rem;
+}
+
+.hero__proof-label {
   font-family: var(--font-display);
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.85rem;
-  background-color: #000;
-  color: #fff;
-  padding: 0.35rem 0.75rem;
-  margin-right: 1.25rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
+  color: var(--color-gray);
 }
 
-.badge__status {
-  font-size: 0.8rem;
+.hero__proof strong {
+  font-size: 1rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #10b981; /* Green available indicator */
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  line-height: 1.5;
 }
 
 @media (max-width: 991px) {
@@ -471,9 +433,10 @@ body.hover-link-inverse .custom-cursor-dot {
     grid-column: 1;
     height: 280px;
   }
-  .hero__status-badge {
+  .hero__proofs {
     grid-column: 1;
     align-self: start;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -488,10 +451,8 @@ body.hover-link-inverse .custom-cursor-dot {
   .hero__bio p {
     font-size: 0.95rem;
   }
-  .badge__status {
-    font-size: 0.7rem;
-    flex-wrap: wrap;
-    gap: 0.3rem;
+  .hero__actions .btn {
+    width: 100%;
   }
 }
 
@@ -615,7 +576,7 @@ body.hover-link-inverse .custom-cursor-dot {
 
 .cases__track {
   display: flex;
-  width: 300vw; /* 3 panels */
+  width: 200vw; /* 2 panels */
   height: 100%;
   will-change: transform;
 }
@@ -674,6 +635,31 @@ body.hover-link-inverse .custom-cursor-dot {
   line-height: 1.6;
   color: var(--color-gray);
   max-width: 480px;
+}
+
+.case-panel__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 580px;
+}
+
+.case-panel__meta span {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-gray);
+  border-top: 1px solid var(--color-light-gray);
+  padding-top: 0.8rem;
+}
+
+.case-panel__meta strong {
+  display: inline-block;
+  min-width: 82px;
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .case-panel__btn {
@@ -883,7 +869,15 @@ body.hover-link-inverse .custom-cursor-dot {
   font-size: clamp(4.5rem, 12vw, 10.5rem);
   line-height: 0.85;
   letter-spacing: -0.04em;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
+}
+
+.footer__lead {
+  max-width: 760px;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 5rem;
 }
 
 .footer__links-grid {
@@ -1013,16 +1007,6 @@ body.hover-link-inverse .custom-cursor-dot {
 }
 
 /* --- Mobile and Responsive Media Queries --- */
-@media (max-width: 1024px) {
-  /* Disable custom cursor on touch/mobile screens to prevent scroll interference and hover loops */
-  .custom-cursor, .custom-cursor-dot {
-    display: none !important;
-  }
-  html, body, a, button, .case-panel, .credits-btn, .btn, .tag, .social-link {
-    cursor: auto !important;
-  }
-}
-
 @media (max-width: 991px) {
   .footer__links-grid {
     grid-template-columns: 1fr;
@@ -1437,5 +1421,3 @@ body.hover-link-inverse .custom-cursor-dot {
     gap: 4rem;
   }
 }
-
-
