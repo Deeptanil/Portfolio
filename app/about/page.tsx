@@ -3,6 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+function preventOrphans(str: string): string {
+  const lastSpaceIndex = str.lastIndexOf(' ');
+  if (lastSpaceIndex === -1) return str;
+  return str.slice(0, lastSpaceIndex) + '\u00A0' + str.slice(lastSpaceIndex + 1);
+}
+
 const ABOUT_SECTIONS = [
   {
     title: "ABOUT DEEPTANIL",
@@ -55,7 +61,7 @@ export default function AboutPage() {
 
   return (
     <main
-      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white select-none scroll-smooth"
+      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white select-none scroll-smooth [text-wrap:pretty]"
       style={{
         backgroundColor: "#3b2716",
         backgroundImage: "url('/minecraft_dirt.webp')",
@@ -75,7 +81,7 @@ export default function AboutPage() {
           style={{ imageRendering: 'pixelated' }}
         >
           <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)] text-center">
-            Return to World
+            {preventOrphans("Return to World")}
           </span>
         </Link>
       </div>
@@ -88,27 +94,27 @@ export default function AboutPage() {
       >
         {/* Header */}
         <div className="space-y-3 sm:space-y-4 pt-10 sm:pt-12">
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-widest text-[#ffff55] font-mono uppercase drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-            ABOUT ME
+          <h1 className="text-2xl sm:text-4xl font-bold tracking-widest text-[#ffff55] font-mono uppercase drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+            {preventOrphans("ABOUT ME")}
           </h1>
-          <p className="text-[#55ff55] font-mono text-xs sm:text-base tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            The Journey of Deeptanil Sinha
+          <p className="text-[#55ff55] font-mono text-xs sm:text-base tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+            {preventOrphans("The Journey of Deeptanil Sinha")}
           </p>
         </div>
 
         {/* About Cards */}
         {ABOUT_SECTIONS.map((item, idx) => (
           <div key={idx} className="w-full space-y-3 sm:space-y-4 max-w-lg bg-black/60 p-4 sm:p-6 rounded-lg border border-[#8b653a]/60 shadow-2xl backdrop-blur-xs">
-            <h2 className="text-lg sm:text-2xl font-mono text-[#ffff55] uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              {item.title}
+            <h2 className="text-lg sm:text-2xl font-mono text-[#ffff55] uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+              {preventOrphans(item.title)}
             </h2>
-            <h3 className="text-sm sm:text-base font-mono text-[#55ffff] uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              {item.subtitle}
+            <h3 className="text-sm sm:text-base font-mono text-[#55ffff] uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+              {preventOrphans(item.subtitle)}
             </h3>
             <div className="space-y-2 pt-1 sm:pt-2">
               {item.text.map((line, lIdx) => (
-                <p key={lIdx} className="text-xs sm:text-sm font-mono text-[#ffffff] leading-relaxed tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                  {line}
+                <p key={lIdx} className="text-xs sm:text-sm font-mono text-[#ffffff] leading-relaxed tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+                  {preventOrphans(line)}
                 </p>
               ))}
             </div>
@@ -117,8 +123,8 @@ export default function AboutPage() {
 
         {/* End Credits Footer Note */}
         <div className="pt-12 sm:pt-16 space-y-4 text-center pb-12">
-          <p className="text-[#55ff55] font-mono text-xs sm:text-sm tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-            And the universe said you are the daylight. And the universe said you are the night.
+          <p className="text-[#55ff55] font-mono text-xs sm:text-sm tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+            {preventOrphans("And the universe said you are the daylight. And the universe said you are the night.")}
           </p>
           <p className="text-[#aaaaaa] font-mono text-[10px] sm:text-xs tracking-widest uppercase">
             [End of Document]
