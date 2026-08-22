@@ -9,7 +9,7 @@ import { useThemeStore } from "@stores";
 const TextWindow = () => {
   const data = useScroll();
   const windowRef = useRef<THREE.Group>(null);
-  const isDay = useThemeStore((state) => state.theme.type === 'day');
+  const isDay = useThemeStore((state) => state.theme.type === 'light');
 
   const textColor = isDay ? '#1a0933' : '#ffffff';
 
@@ -30,12 +30,13 @@ const TextWindow = () => {
 
   return (
     <group position={[0, -0.3, 0]} ref={windowRef}>
+      {/* Bottom Wall Text: Centered along bottom window frame */}
       <Text
         color={textColor}
-        anchorX="left"
+        anchorX="center"
         anchorY="middle"
         fontSize={1.2}
-        position={[0.12, 0, 0]}
+        position={[0.12, 0, -0.7]}
         {...fontProps}
         scale={[1, -1, 1]}
         rotation={[0, 0, -Math.PI / 2]}
@@ -43,19 +44,21 @@ const TextWindow = () => {
         PRODUCT ENGINEER
       </Text>
 
+      {/* Top Wall Text: Centered along top window frame, gap eliminated */}
       <Text
         color={textColor}
-        anchorX="right"
+        anchorX="center"
         anchorY="middle"
         {...fontProps}
         scale={[-1, -1, 1]}
         fontSize={1.2}
-        position={[0.12, 0, -1.4]}
+        position={[0.12, 0, -0.7]}
         rotation={[0, 0, -Math.PI / 2]}
       >
         UI/UX & E-COMMERCE
       </Text>
 
+      {/* Left Wall Text */}
       <group position={[-0.45, 0, -0.3]}>
         <Text
           color={textColor}
@@ -83,6 +86,7 @@ const TextWindow = () => {
         </Text>
       </group>
 
+      {/* Right Wall Text */}
       <group position={[0.45, 0, -0.3]}>
         <Text
           color={textColor}

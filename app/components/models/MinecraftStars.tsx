@@ -36,6 +36,9 @@ const MinecraftStars = () => {
   useFrame((state) => {
     if (!meshRef.current || !isDarkTheme) return;
 
+    // Track camera position so starfield remains surrounding camera at ALL scroll positions!
+    meshRef.current.position.copy(state.camera.position);
+
     const time = state.clock.getElapsedTime();
     meshRef.current.rotation.y = time * 0.01;
 
@@ -61,7 +64,7 @@ const MinecraftStars = () => {
         color="#ffffff"
         side={THREE.DoubleSide}
         transparent
-        opacity={0.9}
+        opacity={0.95}
       />
     </instancedMesh>
   );
