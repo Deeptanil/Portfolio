@@ -6,21 +6,14 @@ import { ComponentProps, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 
-const SingleCloudLayer = ({
-  isBottom = false,
-}: {
-  isBottom?: boolean;
-}) => {
+const TopCloudLayer = () => {
   const { scene } = useGLTF('models/minecraft_sky.glb');
   const isNight = useThemeStore((state) => state.theme.type === 'night');
 
-  // Clone scene and accurately center its 3D geometry bounding box
   const preparedScene = useMemo(() => {
     const cloned = scene.clone(true);
     const box = new THREE.Box3().setFromObject(cloned);
     const center = box.getCenter(new THREE.Vector3());
-    
-    // Offset cloned scene so geometry origin is at (0, 0, 0)
     cloned.position.set(-center.x, -center.y, -center.z);
 
     cloned.traverse((child) => {
@@ -28,49 +21,26 @@ const SingleCloudLayer = ({
         const mesh = child as THREE.Mesh;
         mesh.castShadow = false;
         mesh.receiveShadow = false;
-
         if (mesh.material) {
           const mat = (Array.isArray(mesh.material) ? mesh.material[0] : mesh.material) as THREE.MeshStandardMaterial;
           if (mat) {
-            if (!isNight) {
-              mat.color = new THREE.Color('#ffffff');
-              mat.emissive = new THREE.Color('#ffffff');
-              mat.emissiveIntensity = 0.45;
-              mat.roughness = 0.9;
-            } else {
-              mat.color = new THREE.Color('#d0d5e8');
-              mat.emissive = new THREE.Color('#101828');
-              mat.emissiveIntensity = 0.1;
-              mat.roughness = 0.9;
-            }
+            mat.color = new THREE.Color(isNight ? '#d0d5e8' : '#ffffff');
+            mat.emissive = new THREE.Color(isNight ? '#101828' : '#ffffff');
+            mat.emissiveIntensity = isNight ? 0.1 : 0.45;
+            mat.roughness = 0.9;
           }
         }
       }
     });
-
     return cloned;
   }, [scene, isNight]);
 
-  if (isBottom) {
-    return (
-      <group dispose={null}>
-        {/* BOTTOM LAYER: Shifted slightly lower to Y = -68 with X = 35 offset */}
-        <primitive
-          object={preparedScene}
-          position={[35, -68, -6]}
-          scale={[5.2, 1.8, 5.2]}
-          rotation={[0, Math.PI, 0]}
-        />
-      </group>
-    );
-  }
-
   return (
     <group dispose={null}>
-      {/* TOP LAYER: Positioned above text at Y = 12 */}
+      {/* TOP LAYER: Positioned far into screen (Z = -28) */}
       <primitive
         object={preparedScene}
-        position={[0, 12, -6]}
+        position={[0, 12, -28]}
         scale={[4.2, 1.8, 4.2]}
         rotation={[0, 0, 0]}
       />
@@ -78,17 +48,57 @@ const SingleCloudLayer = ({
   );
 };
 
+const BottomCloudLayer = () => {
+  const { scene } = useGLTF('models/minecraft_sky.glb');
+  const isNight = useThemeStore((state) => state.theme.type === 'night');
+
+  const preparedScene = useMemo(() => {
+    const cloned = scene.clone(true);
+    const box = new THREE.Box3().setFromObject(cloned);
+    const center = box.getCenter(new THREE.Vector3());
+    cloned.position.set(-center.x, -center.y, -center.z);
+
+    cloned.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        mesh.castShadow = false;
+        mesh.receiveShadow = false;
+        if (mesh.material) {
+          const mat = (Array.isArray(mesh.material) ? mesh.material[0] : mesh.material) as THREE.MeshStandardMaterial;
+          if (mat) {
+            mat.color = new THREE.Color(isNight ? '#d0d5e8' : '#ffffff');
+            mat.emissive = new THREE.Color(isNight ? '#101828' : '#ffffff');
+            mat.emissiveIntensity = isNight ? 0.1 : 0.45;
+            mat.roughness = 0.9;
+          }
+        }
+      }
+    });
+    return cloned;
+  }, [scene, isNight]);
+
+  return (
+    <group dispose={null}>
+      {/* BOTTOM LAYER: Shifted further down in Y (Y = -90, Z = 24 closer to user) */}
+      <primitive
+        object={preparedScene}
+        position={[35, -90, 24]}
+        scale={[5.2, 1.8, 5.2]}
+        rotation={[0, Math.PI, 0]}
+      />
+    </group>
+  );
+};
+
 const MinecraftSky = (props: ComponentProps<'group'>) => {
-  // Top Layer Track Refs (Increased Speed: 0.95)
   const topTrack1 = useRef<THREE.Group>(null);
   const topTrack2 = useRef<THREE.Group>(null);
 
-  // Bottom Layer Track Refs (Speed: 1.6)
   const bottomTrack1 = useRef<THREE.Group>(null);
   const bottomTrack2 = useRef<THREE.Group>(null);
 
   const TRACK_WIDTH = 100;
-  const TOP_SPEED = 0.95;     // Increased top clouds speed
+  const TOP_SPEED = 0.95;     // Top clouds speed
   const BOTTOM_SPEED = 1.6;   // Bottom clouds speed
 
   useFrame((_, delta) => {
@@ -123,20 +133,20 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
 
   return (
     <group {...props}>
-      {/* Top Layer Tracks (Increased Speed = 0.95) */}
+      {/* Top Layer Tracks (Z = -28) */}
       <group ref={topTrack1} position={[0, 0, 0]}>
-        <SingleCloudLayer isBottom={false} />
+        <TopCloudLayer />
       </group>
       <group ref={topTrack2} position={[-TRACK_WIDTH, 0, 0]}>
-        <SingleCloudLayer isBottom={false} />
+        <TopCloudLayer />
       </group>
 
-      {/* Bottom Layer Tracks (Position Y = -68, Speed = 1.6) */}
+      {/* Bottom Layer Tracks (Y = -90, Z = 24) */}
       <group ref={bottomTrack1} position={[0, 0, 0]}>
-        <SingleCloudLayer isBottom={true} />
+        <BottomCloudLayer />
       </group>
       <group ref={bottomTrack2} position={[-TRACK_WIDTH, 0, 0]}>
-        <SingleCloudLayer isBottom={true} />
+        <BottomCloudLayer />
       </group>
     </group>
   );
