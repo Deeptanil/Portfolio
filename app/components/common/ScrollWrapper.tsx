@@ -5,12 +5,23 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 
+import { useEffect } from 'react';
 import { useScrollStore } from "@stores";
 
 const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] }) => {
   const { camera } = useThree();
   const data = useScroll();
   const setScrollProgress = useScrollStore((state) => state.setScrollProgress);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
+      if (data && data.el) {
+        setTimeout(() => {
+          data.el.scrollTop = data.el.scrollHeight;
+        }, 100);
+      }
+    }
+  }, [data]);
 
   useFrame((state, delta) => {
     if (data) {

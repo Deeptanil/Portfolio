@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { FOOTER_LINKS } from "@constants";
 import { FooterLink } from "@types";
 
-const FooterLinkItem = ({ link }: { link: FooterLink }) => {
+const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string) => void }) => {
   const textRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const onPointerOver = () => setHovered(true);
@@ -17,11 +17,10 @@ const FooterLinkItem = ({ link }: { link: FooterLink }) => {
 
   const onClick = () => {
     if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
-      // 1. Copy email to user's clipboard
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+        onToast('Copied deeptanilsinha27@gmail.com to clipboard!');
       }
-      // 2. Open default mail application prefilled with your email address
       window.location.href = 'mailto:deeptanilsinha27@gmail.com';
       return;
     }
@@ -123,6 +122,14 @@ const FooterLinkItem = ({ link }: { link: FooterLink }) => {
 const Footer = () => {
   const groupRef = useRef<THREE.Group>(null);
   const data = useScroll();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const handleToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3500);
+  };
 
   useFrame(() => {
     if (!data) return;
@@ -136,18 +143,29 @@ const Footer = () => {
     return FOOTER_LINKS.map((link, i) => {
       return (
         <group key={i} position={[i * (isMobile ? 1.5 : 2.5), 0, 0]}>
-          <FooterLinkItem link={link} />
+          <FooterLinkItem link={link} onToast={handleToast} />
         </group>
       );
     });
   };
 
   return (
-    <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-      <group position={[isMobile ? -2.5 : -3.75, 0, 0]}>
-        {getLinks()}
+    <>
+      <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
+        <group position={[isMobile ? -2.5 : -3.75, 0, 0]}>
+          {getLinks()}
+        </group>
       </group>
-    </group>
+
+      {/* Minecraft-styled Toast Popup for Clipboard Feedback */}
+      {toastMessage && (
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-mono text-xs sm:text-sm tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] transition-all">
+          <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
+            {toastMessage}
+          </span>
+        </div>
+      )}
+    </>
   );
 };
 
