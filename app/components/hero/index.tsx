@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import CloudContainer from "../models/Cloud";
+import MinecraftSky from "../models/MinecraftSky";
 import StarsContainer from "../models/Stars";
 import WindowModel from "../models/WindowModel";
 import TextWindow from "./TextWindow";
@@ -32,6 +33,7 @@ const Hero = () => {
 
   return (
     <>
+      <MinecraftSky />
       <Text position={[0, 2, -10]} {...fontProps} ref={titleRef}>
         Hi, I am Deeptanil Sinha.
       </Text>
