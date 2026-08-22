@@ -47,12 +47,20 @@ const WORK_EXPERIENCE = [
 
 export default function WorkPage() {
   const [manualScroll, setManualScroll] = useState(false);
+  const [startScrolling, setStartScrolling] = useState(false);
 
   useEffect(() => {
+    // 20 second delay before autoscroll begins
+    const timer = setTimeout(() => {
+      setStartScrolling(true);
+    }, 20000);
+
     const handleInteract = () => setManualScroll(true);
     window.addEventListener('wheel', handleInteract, { passive: true });
     window.addEventListener('touchstart', handleInteract, { passive: true });
+
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('wheel', handleInteract);
       window.removeEventListener('touchstart', handleInteract);
     };
@@ -85,10 +93,10 @@ export default function WorkPage() {
         </Link>
       </div>
 
-      {/* End Credits Roll — Starts instantly at bottom (translateY 100vh) */}
+      {/* End Credits Roll — Starts visible right on screen, begins scrolling after 20s */}
       <div
         className={`w-full max-w-[92vw] sm:max-w-2xl px-4 sm:px-6 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-12 sm:space-y-16 ${
-          manualScroll ? '' : 'animate-[minecraftCredits_45s_linear_forwards]'
+          manualScroll ? '' : startScrolling ? 'animate-[minecraftCreditsScroll_45s_linear_forwards]' : ''
         }`}
       >
         {/* Header */}
@@ -136,12 +144,12 @@ export default function WorkPage() {
       </div>
 
       <style jsx global>{`
-        @keyframes minecraftCredits {
+        @keyframes minecraftCreditsScroll {
           0% {
-            transform: translateY(100vh);
+            transform: translateY(0);
           }
           100% {
-            transform: translateY(-40%);
+            transform: translateY(-80%);
           }
         }
       `}</style>
