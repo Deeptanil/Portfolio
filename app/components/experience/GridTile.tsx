@@ -5,7 +5,9 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
 import { useEffect, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
+import { TriangleGeometry } from './Triangle';
 
 interface GridTileProps {
   id: string;
@@ -21,31 +23,29 @@ const GridTile = (props: GridTileProps) => {
   const gridRef = useRef<THREE.Group>(null);
   const hoverBoxRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef(null);
-  const { title, children, color, position, id } = props;
-  const { camera, viewport } = useThree();
+  const { title, textAlign, children, color, position, id } = props;
+  const { camera } = useThree();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
   const activePortalId = usePortalStore((state) => state.activePortalId);
   const data = useScroll();
 
-  const isMobile = viewport.width < 6.5;
-
   useEffect(() => {
     if (isMobile && titleRef.current) {
+      const isWork = id === 'work';
       gsap.to(titleRef.current, {
-        fontSize: 0.22,
-        maxWidth: 2.2,
-        color: '#FFF',
-        fillOpacity: 1,
+        fontSize: 0.13,
+        maxWidth: 4,
+        color: isWork ? '#FFF' : '#888',
+        letterSpacing: 0.4,
       });
       gsap.to(titleRef.current.position, {
-        x: 0,
-        y: 0,
-        z: 0.4,
+        x: isWork ? 1 : -1,
+        y: isWork ? -1.7 : 1.5,
         duration: 0.5,
       });
     }
-  }, [id, isMobile]);
+  }, [id]);
 
   useFrame(() => {
     if (!data) return;
@@ -139,13 +139,13 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 2.2 : 2,
+    maxWidth: 2,
     anchorX: 'center',
-    anchorY: 'middle',
-    fontSize: isMobile ? 0.22 : 0.7,
+    anchorY: 'bottom',
+    fontSize: 0.7,
     color: 'white',
-    textAlign: 'center',
-    fillOpacity: isMobile ? 1 : 0,
+    textAlign: textAlign,
+    fillOpacity: 0,
   };
 
   const onPointerOver = () => {
@@ -173,11 +173,16 @@ const GridTile = (props: GridTileProps) => {
   };
 
   const getGeometry = () => {
-    if (isMobile) {
-      return <planeGeometry args={[2.4, 1.5, 1]} />;
+    if (!isMobile) {
+      return <planeGeometry args={[4, 4, 1]} />;
     }
 
-    return <planeGeometry args={[4, 4, 1]} />;
+    const isWork = id === 'work';
+    const points = isWork ?
+      [[-1, 2, 0], [-1, -2, 0], [3, -2, 0]] :
+      [[-3, 2, 0], [1, -2, 0], [1, 2, 0]];
+
+    return <primitive object={TriangleGeometry({ points })} attach="geometry" />;
   };
 
   return (
@@ -188,16 +193,16 @@ const GridTile = (props: GridTileProps) => {
       onPointerOut={onPointerOut}>
       { getGeometry() }
       <group>
-        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
-          <boxGeometry args={[isMobile ? 2.4 : 1.5, isMobile ? 1.5 : 4, 0.5]}/>
+        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
+          <boxGeometry args={[4, 4, 0.5]}/>
           <meshPhysicalMaterial
             color="#444"
             transparent={true}
             opacity={0.3}
           />
-          <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
+          <Edges color="white" lineWidth={3}/>
         </mesh>
-        <Text position={[0, isMobile ? 0 : -1.8, 0.4]} {...fontProps} ref={titleRef}>
+        <Text position={[0, -1.8, 0.4]} {...fontProps} ref={titleRef}>
           {title}
         </Text>
       </group>

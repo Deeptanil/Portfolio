@@ -1,9 +1,10 @@
 'use client';
 
 import { Text, useScroll } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { usePortalStore } from "@stores";
 import { useRef } from "react";
+import { isMobile } from "react-device-detect";
 import * as THREE from 'three';
 import GridTile from "./GridTile";
 import Projects from "./projects";
@@ -14,14 +15,10 @@ const Experience = () => {
   const groupRef = useRef<THREE.Group>(null);
   const data = useScroll();
   const isActive = usePortalStore((state) => !!state.activePortalId);
-  const { viewport } = useThree();
-
-  // Dynamic mobile viewport check in 3D world units (works on screen resize & all mobile devices)
-  const isMobile = viewport.width < 6.5;
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.25 : 0.4,
+    fontSize: isMobile ? 0.4 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -49,7 +46,7 @@ const Experience = () => {
   const getTitle = () => {
     if (isMobile) {
       return (
-        <Text {...fontProps} fontSize={0.25} position={[0, 2.3, 1]}>
+        <Text {...fontProps} position={[0, 2.2, 1]}>
           EXPERIENCE
         </Text>
       );
@@ -71,20 +68,19 @@ const Experience = () => {
           {getTitle()}
         </group>
 
-        {/* Vertical Up & Down List Layout for Mobile */}
         <group position={[0, -1, 0]} ref={groupRef}>
           <GridTile title='WORK AND EDUCATION'
             id="work"
             color='#b9c6d6'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.2 : 0, isMobile ? 0.2 : 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.3 : 0, isMobile ? 0.2 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.2 : 0, 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.3 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>
