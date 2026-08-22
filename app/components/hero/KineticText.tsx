@@ -83,21 +83,21 @@ const KineticText = () => {
         </Text>
       </group>
 
-      {/* Sub-header */}
+      {/* Sub-header matching resume */}
       <group ref={subtitleRef}>
         <Text
-          fontSize={0.65}
+          fontSize={0.7}
           color={subtitleColor}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.15}
           position={[0, 0.1, 0]}
         >
-          CREATIVE FULL-STACK DEVELOPER
+          PRODUCT ENGINEER
         </Text>
       </group>
 
-      {/* Narrative Bio snippet */}
+      {/* Narrative Bio snippet matching resume summary */}
       <group ref={subtextRef} position={[0, -1.2, 0]}>
         <Text
           fontSize={0.28}
@@ -108,9 +108,9 @@ const KineticText = () => {
           textAlign="center"
           lineHeight={1.4}
         >
-          Founder of STRAYED • Co-Founder of Prettiva & Co.
+          Bridging development, UX, and e-commerce.
           {"\n"}
-          Combining design aesthetics, engineering precision, and business strategy.
+          Co-founder of STRAYED & Prettiva & Co. • Bengaluru, India
         </Text>
       </group>
     </group>

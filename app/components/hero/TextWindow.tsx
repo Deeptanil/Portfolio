@@ -40,7 +40,7 @@ const TextWindow = () => {
         scale={[1, -1, 1]}
         rotation={[0, 0, -Math.PI / 2]}
       >
-        FULL-STACK DEVELOPER
+        PRODUCT ENGINEER
       </Text>
 
       <Text
@@ -53,7 +53,7 @@ const TextWindow = () => {
         position={[0.12, 0, -1.4]}
         rotation={[0, 0, -Math.PI / 2]}
       >
-        FOUNDER & DESIGNER
+        UI/UX & E-COMMERCE
       </Text>
 
       <group position={[-0.45, 0, -0.3]}>
@@ -66,7 +66,7 @@ const TextWindow = () => {
           fontSize={0.8}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
         >
-          THINK. DESIGN. BUILD.
+          STRAYED & PRETTIVA
         </Text>
 
         <Text
@@ -79,7 +79,7 @@ const TextWindow = () => {
           position={[0, 0, -0.6]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
         >
-          STRAYED & PRETTIVA
+          MIT BENGALURU '28
         </Text>
       </group>
 
@@ -93,7 +93,7 @@ const TextWindow = () => {
           fontSize={0.8}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
         >
-          CREATIVE ENGINEERING
+          DIGITAL PRODUCT DEV
         </Text>
         <Text
           color={textColor}
@@ -105,7 +105,7 @@ const TextWindow = () => {
           position={[0, 0, -0.6]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
         >
-          USER EXPERIENCES
+          WEB PERFORMANCE & SEO
         </Text>
       </group>
     </group>

@@ -23,27 +23,27 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://deeptanil.com/'),
-  title: "Deeptanil Sinha | Creative Full-Stack Developer",
-  description: "Portfolio of Deeptanil Sinha — Creative Full-Stack Developer, Founder of STRAYED, Co-Founder of Prettiva & Co. Combining design aesthetics, engineering precision, and business strategy.",
-  keywords: "Deeptanil Sinha, Creative Full-Stack Developer, STRAYED, Prettiva, React, Three.js, Next.js, WebGL, Design Engineering",
+  title: "Deeptanil Sinha | Product Engineer",
+  description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co. Hands-on experience building production websites, optimizing backends, and using AI-assisted development.",
+  keywords: "Deeptanil Sinha, Product Engineer, STRAYED, Prettiva, Full-Stack Developer, UI/UX Design, E-commerce, Web Performance, Bengaluru",
   authors: [{ name: "Deeptanil Sinha" }],
   creator: "Deeptanil Sinha",
   openGraph: {
-    title: "Deeptanil Sinha | Creative Full-Stack Developer",
-    description: "Combining design aesthetics, engineering precision, and business strategy.",
+    title: "Deeptanil Sinha | Product Engineer",
+    description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co.",
     siteName: "Deeptanil Sinha Portfolio",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Deeptanil Sinha | Creative Full-Stack Developer",
-    description: "Combining design aesthetics, engineering precision, and business strategy.",
+    title: "Deeptanil Sinha | Product Engineer",
+    description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0c",
+  themeColor: "#e65c00",
   initialScale: 1,
   minimumScale: 1,
   maximumScale: 1,
