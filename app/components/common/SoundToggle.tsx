@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
-// Exact C418 "Subwoofer Lullaby" main theme note sequence (frequencies in Hz)
+// C418 "Subwoofer Lullaby" main theme note sequence (frequencies in Hz)
 const SUBWOOFER_LULLABY_NOTES = [
   { freq: 311.13, duration: 0.8 }, // Eb4
   { freq: 392.00, duration: 0.8 }, // G4
@@ -23,7 +24,7 @@ const SUBWOOFER_LULLABY_NOTES = [
 ];
 
 const SoundToggle = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Sound enabled by default for new users
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -43,14 +44,12 @@ const SoundToggle = () => {
       const gain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
 
-      // Soft triangle tone for warm electric piano feel
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(950, ctx.currentTime);
 
-      // Subwoofer Lullaby soft attack & warm decay envelope
       gain.gain.setValueAtTime(0.001, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime + 0.04);
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.0);
@@ -65,6 +64,7 @@ const SoundToggle = () => {
   };
 
   const startSubwooferLullaby = () => {
+    if (audioCtxRef.current) return;
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       const ctx = new AudioCtx();
@@ -78,13 +78,11 @@ const SoundToggle = () => {
         const note = SUBWOOFER_LULLABY_NOTES[noteIdx % SUBWOOFER_LULLABY_NOTES.length];
         playSubwooferNote(ctx, note.freq);
         
-        // Play soft sub-bass harmony note occasionally
         if (noteIdx % 4 === 0) {
           playSubwooferNote(ctx, note.freq / 2);
         }
 
         noteIdx++;
-        // Subwoofer Lullaby tempo delay
         const delay = note.duration * 1000 + 400;
         timerRef.current = setTimeout(scheduleNextNote, delay);
       };
@@ -106,32 +104,61 @@ const SoundToggle = () => {
     }
   };
 
+  // Start sound on initial user interaction (due to browser autoplay policies)
   useEffect(() => {
+    const handleFirstUserInteraction = () => {
+      if (isPlaying && !audioCtxRef.current) {
+        startSubwooferLullaby();
+      }
+    };
+
+    window.addEventListener('click', handleFirstUserInteraction, { once: true });
+    window.addEventListener('scroll', handleFirstUserInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
+
     return () => {
       stopSubwooferLullaby();
+      window.removeEventListener('click', handleFirstUserInteraction);
+      window.removeEventListener('scroll', handleFirstUserInteraction);
+      window.removeEventListener('touchstart', handleFirstUserInteraction);
     };
-  }, []);
+  }, [isPlaying]);
+
+  const positionClass = isMobile ? 'top-2 right-10' : 'top-6 right-16';
 
   return (
-    <button
-      onClick={toggleSound}
-      className="fixed top-6 left-6 z-50 flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/20 bg-black/50 backdrop-blur-md text-xs font-sans tracking-wider text-white/90 hover:text-white hover:border-white/50 transition-all duration-300 shadow-xl group"
-      title="Toggle Subwoofer Lullaby Audio"
-    >
-      <div className="flex items-center gap-0.5 h-3.5 w-3.5 justify-center">
-        {isPlaying ? (
-          <>
-            <span className="w-0.5 bg-rose-400 rounded-full animate-bar-1" />
-            <span className="w-0.5 bg-amber-400 rounded-full animate-bar-2" />
-            <span className="w-0.5 bg-purple-400 rounded-full animate-bar-3" />
-            <span className="w-0.5 bg-pink-400 rounded-full animate-bar-4" />
-          </>
-        ) : (
-          <span className="w-2 h-2 rounded-full bg-white/60 group-hover:bg-white transition-colors" />
-        )}
-      </div>
-      <span>{isPlaying ? 'SOUND [ON]' : 'SOUND [OFF]'}</span>
-    </button>
+    <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }}>
+      <button
+        onClick={toggleSound}
+        className="flex items-center justify-center p-1 text-white hover:opacity-80 transition-opacity cursor-pointer focus:outline-none"
+        title={isPlaying ? "Mute Sound" : "Enable Sound"}
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-6 h-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+        >
+          {isPlaying ? (
+            <>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </>
+          ) : (
+            <>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+              <line x1="23" y1="1" x2="1" y2="23" stroke="#ff4d4d" strokeWidth="2.5" />
+            </>
+          )}
+        </svg>
+      </button>
+    </div>
   );
 };
 
