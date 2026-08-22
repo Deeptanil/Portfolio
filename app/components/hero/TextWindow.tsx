@@ -9,9 +9,9 @@ import { useThemeStore } from "@stores";
 const TextWindow = () => {
   const data = useScroll();
   const windowRef = useRef<THREE.Group>(null);
-  const isSunset = useThemeStore((state) => state.theme.type === 'sunset');
+  const isDay = useThemeStore((state) => state.theme.type === 'day');
 
-  const textColor = isSunset ? '#1a0933' : '#ffffff';
+  const textColor = isDay ? '#1a0933' : '#ffffff';
 
   useFrame(() => {
     if (!data) return;

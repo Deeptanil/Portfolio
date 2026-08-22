@@ -5,7 +5,6 @@ import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 const CloudTile = () => {
-  // Generate classic Minecraft flat cloud slabs matching image1.png
   const slabs = useMemo(() => {
     const items: { x: number; y: number; z: number; width: number; height: number; depth: number }[] = [];
     const gridSize = 12;
@@ -13,7 +12,6 @@ const CloudTile = () => {
 
     for (let gx = -gridSize; gx <= gridSize; gx++) {
       for (let gz = -gridSize; gz <= gridSize; gz++) {
-        // Pseudo-random cloud formation logic mimicking Minecraft cloud map
         const hash = Math.sin(gx * 12.9898 + gz * 78.233) * 43758.5453;
         const rand = hash - Math.floor(hash);
 
@@ -27,7 +25,7 @@ const CloudTile = () => {
             y: yOffset,
             z: gz * spacing,
             width,
-            height: 0.6, // Thin extruded slab shape from Minecraft image
+            height: 0.6,
             depth,
           });
         }
@@ -44,7 +42,7 @@ const CloudTile = () => {
           <meshStandardMaterial
             color="#ffffff"
             transparent
-            opacity={0.78}
+            opacity={0.82}
             roughness={0.9}
             metalness={0.0}
             flatShading={true}
@@ -59,8 +57,8 @@ const MinecraftClouds = () => {
   const track1Ref = useRef<THREE.Group>(null);
   const track2Ref = useRef<THREE.Group>(null);
 
-  const LOOP_WIDTH = 144; // Total grid span
-  const SPEED = 0.8; // Smooth drift speed
+  const LOOP_WIDTH = 144;
+  const SPEED = 0.25; // Slower, peaceful drift speed
 
   useFrame((_, delta) => {
     const moveAmount = delta * SPEED;
@@ -69,7 +67,6 @@ const MinecraftClouds = () => {
       track1Ref.current.position.x += moveAmount;
       track2Ref.current.position.x += moveAmount;
 
-      // Infinite continuous wrap: when track 1 moves past LOOP_WIDTH, wrap to -LOOP_WIDTH
       if (track1Ref.current.position.x >= LOOP_WIDTH) {
         track1Ref.current.position.x = track2Ref.current.position.x - LOOP_WIDTH;
       }
@@ -80,8 +77,9 @@ const MinecraftClouds = () => {
     }
   });
 
+  // Position clouds at the bottom of the screen (y: -7) instead of the top
   return (
-    <group position={[0, 4, -10]} rotation={[0.08, 0, 0]}>
+    <group position={[0, -7, -6]} rotation={[-0.05, 0, 0]}>
       <group ref={track1Ref} position={[0, 0, 0]}>
         <CloudTile />
       </group>

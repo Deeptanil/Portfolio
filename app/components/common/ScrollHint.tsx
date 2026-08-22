@@ -7,12 +7,12 @@ import { useScrollStore, useThemeStore } from "@stores";
 
 export const ScrollHint = () => {
   const scrollProgress = useScrollStore((state) => state.scrollProgress);
-  const isSunset = useThemeStore((state) => state.theme.type === 'sunset');
+  const isDay = useThemeStore((state) => state.theme.type === 'day');
 
   const hintText = 'SCROLL';
   const showScrollHint = scrollProgress === 0;
 
-  const textColor = isSunset ? 'text-[#1a0933]' : 'text-white';
+  const textColor = isDay ? 'text-[#1a0933]' : 'text-white';
 
   useEffect(() => {
     if (showScrollHint) {
@@ -39,7 +39,7 @@ export const ScrollHint = () => {
           height={18}
           alt="scroll hint"
           loading="lazy"
-          className={isSunset ? 'invert brightness-0' : ''}
+          className={isDay ? 'invert brightness-0' : ''}
         />
         <span className={`text-sm tracking-widest font-sans font-bold ${textColor}`}>{hintText}</span>
       </div>

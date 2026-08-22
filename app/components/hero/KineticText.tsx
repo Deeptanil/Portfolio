@@ -13,12 +13,12 @@ const KineticText = () => {
   const data = useScroll();
 
   const theme = useThemeStore((state) => state.theme);
-  const isSunset = theme.type === 'sunset';
+  const isDay = theme.type === 'day';
 
   // High-contrast dynamic colors based on theme
-  const titleColor = isSunset ? '#1a0933' : '#ffffff';
-  const subtitleColor = isSunset ? '#701a75' : '#a78bfa';
-  const subtextColor = isSunset ? '#3b0764' : '#94a3b8';
+  const titleColor = isDay ? '#1a0933' : '#ffffff';
+  const subtitleColor = isDay ? '#701a75' : '#a78bfa';
+  const subtextColor = isDay ? '#3b0764' : '#94a3b8';
 
   useFrame((state, delta) => {
     if (data) {

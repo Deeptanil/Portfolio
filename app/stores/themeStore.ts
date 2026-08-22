@@ -4,21 +4,18 @@ import { persist } from "zustand/middleware";
 interface Theme {
   type: string;
   name: string;
-  gradient: string;
   ambientIntensity: number;
 }
 
 const AvailableThemes: Theme[] = [
   {
-    type: 'sunset',
-    name: 'Sunset',
-    gradient: 'linear-gradient(180deg, #fce1d4 0%, #f39c80 30%, #d64679 60%, #581c4e 85%, #2e0c38 100%)',
+    type: 'day',
+    name: 'Day Sunset',
     ambientIntensity: 0.95,
   },
   {
     type: 'night',
     name: 'Starry Night',
-    gradient: 'linear-gradient(180deg, #0b1021 0%, #050814 100%)',
     ambientIntensity: 0.45,
   }
 ];
@@ -42,7 +39,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: "portfolio-sunset-theme-storage",
+      name: "portfolio-daynight-theme-storage",
       partialize: (state) => ({ theme: state.theme }),
     }
   )
