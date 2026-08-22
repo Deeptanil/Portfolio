@@ -18,7 +18,7 @@ const MinecraftBee = () => {
     }
   }, [actions]);
 
-  // Helper for Cubic Bezier Curve evaluation
+  // Helper for 4-point Cubic Bezier Curve evaluation
   const getCubicBezierPoint = (
     p0: THREE.Vector3,
     p1: THREE.Vector3,
@@ -37,40 +37,43 @@ const MinecraftBee = () => {
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
 
-    // Bee activates at cloud fade start (scroll 10%) and completes exit off screen bottom by 36% scroll
-    const t = scroll.range(0.10, 0.36);
+    // Bee activates as cloud fading starts (scroll 8% -> 48%)
+    const t = scroll.range(0.08, 0.48);
 
-    // Visible only while actively flying (0.001 < t < 0.995) — prevents freezing on screen when clamped at 1.0!
     const isVisible = t > 0.001 && t < 0.995;
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
-      const camY = state.camera.position.y;
+      // DEFINED IN CAMERA LOCAL SPACE — 100% invariant to camera rotation/position!
+      // +X = Screen Right, -X = Screen Left
+      // +Y = Screen Top,   -Y = Screen Bottom
+      // -Z = In front of camera lens (-3.5 units)
+      const p0 = new THREE.Vector3(7, 4.5, -3.5);     // Entry: Top-Right of screen
+      const p1 = new THREE.Vector3(5, 1.0, -3.5);     // Curve arc right-center
+      const p2 = new THREE.Vector3(-1, -2.5, -3.5);   // Swoop down-left
+      const p3 = new THREE.Vector3(-9, -6.0, -3.5);   // Exit: Bottom-Left off-screen
 
-      // Trajectory: Spawns in TOP-RIGHT corner, curves down across screen, flies DEEP DOWN off bottom edge
-      const p0 = new THREE.Vector3(22, camY + 12, 1);    // Top-Right corner spawn
-      const p1 = new THREE.Vector3(12, camY + 1, 3);     // Upper-right curve arc
-      const p2 = new THREE.Vector3(-4, camY - 14, 4);    // Center-left downward swoop
-      const p3 = new THREE.Vector3(-25, camY - 45, 6);   // Deep DOWN off bottom-left screen edge
+      const localPos = getCubicBezierPoint(p0, p1, p2, p3, t);
 
-      const pos = getCubicBezierPoint(p0, p1, p2, p3, t);
+      // Add gentle organic hovering oscillation
+      localPos.x += Math.sin(state.clock.elapsedTime * 5) * 0.05;
+      localPos.y += Math.cos(state.clock.elapsedTime * 4) * 0.05;
 
-      // Organic hovering oscillation
-      pos.x += Math.sin(state.clock.elapsedTime * 5) * 0.12;
-      pos.y += Math.cos(state.clock.elapsedTime * 4) * 0.15;
+      // Transform local camera position to world space for rendering
+      const worldPos = localPos.clone();
+      state.camera.localToWorld(worldPos);
+      groupRef.current.position.copy(worldPos);
 
-      groupRef.current.position.copy(pos);
-
-      // Tangent vector for head-first orientation
+      // Flight direction tangent vector in camera local space
       const nextT = Math.min(1, t + 0.02);
-      const nextPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
-      const dir = nextPos.sub(pos).normalize();
+      const nextLocalPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
+      const nextWorldPos = nextLocalPos.clone();
+      state.camera.localToWorld(nextWorldPos);
 
-      if (dir.lengthSq() > 0.001) {
-        groupRef.current.rotation.y = Math.atan2(dir.x, dir.z) + Math.PI;
-        groupRef.current.rotation.x = dir.y * 0.4;
-        groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 8) * 0.15;
-      }
+      // Orient bee to look head-first along movement path
+      groupRef.current.lookAt(nextWorldPos);
+      // Flip 180° around local Y if model default faces backwards
+      groupRef.current.rotateY(Math.PI);
     }
   });
 
@@ -78,8 +81,8 @@ const MinecraftBee = () => {
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={3.0} />
       <pointLight position={[0, 0, 5]} intensity={100} />
-      {/* 0.09 scale: compact, realistic Minecraft bee */}
-      <primitive object={scene} scale={[0.09, 0.09, 0.09]} />
+      {/* 0.04 scale: tiny, subtle, authentic Minecraft bee size */}
+      <primitive object={scene} scale={[0.04, 0.04, 0.04]} />
     </group>
   );
 };
