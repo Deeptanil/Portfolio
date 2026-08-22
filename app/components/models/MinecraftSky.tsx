@@ -1,10 +1,10 @@
 'use client';
 
 import { useGLTF } from '@react-three/drei';
-import { useRef } from 'react';
+import { ComponentProps, useRef } from 'react';
 import * as THREE from 'three';
 
-const MinecraftSky = (props: Partial<THREE.Object3D>) => {
+const MinecraftSky = (props: ComponentProps<'group'>) => {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('models/minecraft_sky.glb');
 

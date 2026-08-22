@@ -4,7 +4,7 @@ import { useThemeStore } from "@stores";
 import { Stars } from "@react-three/drei";
 
 const StarsContainer = () => {
-  const isDarkTheme = useThemeStore((state) => state.theme.type === 'night');
+  const isDarkTheme = useThemeStore((state) => state.theme.type === 'dark');
 
   if (!isDarkTheme) return null;
 
