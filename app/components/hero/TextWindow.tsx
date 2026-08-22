@@ -4,10 +4,14 @@ import { Text, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
+import { useThemeStore } from "@stores";
 
 const TextWindow = () => {
   const data = useScroll();
   const windowRef = useRef<THREE.Group>(null);
+  const isSunset = useThemeStore((state) => state.theme.type === 'sunset');
+
+  const textColor = isSunset ? '#1a0933' : '#ffffff';
 
   useFrame(() => {
     if (!data) return;
@@ -27,7 +31,7 @@ const TextWindow = () => {
   return (
     <group position={[0, -0.3, 0]} ref={windowRef}>
       <Text
-        color="white"
+        color={textColor}
         anchorX="left"
         anchorY="middle"
         fontSize={1.2}
@@ -40,7 +44,7 @@ const TextWindow = () => {
       </Text>
 
       <Text
-        color="white"
+        color={textColor}
         anchorX="right"
         anchorY="middle"
         {...fontProps}
@@ -54,7 +58,7 @@ const TextWindow = () => {
 
       <group position={[-0.45, 0, -0.3]}>
         <Text
-          color="white"
+          color={textColor}
           anchorX="left"
           anchorY="middle"
           {...fontProps}
@@ -66,7 +70,7 @@ const TextWindow = () => {
         </Text>
 
         <Text
-          color="white"
+          color={textColor}
           anchorX="left"
           anchorY="middle"
           {...fontProps}
@@ -81,7 +85,7 @@ const TextWindow = () => {
 
       <group position={[0.45, 0, -0.3]}>
         <Text
-          color="white"
+          color={textColor}
           anchorX="right"
           anchorY="middle"
           {...fontProps}
@@ -92,7 +96,7 @@ const TextWindow = () => {
           CREATIVE ENGINEERING
         </Text>
         <Text
-          color="white"
+          color={textColor}
           anchorX="right"
           anchorY="middle"
           {...fontProps}

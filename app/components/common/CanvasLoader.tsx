@@ -14,6 +14,26 @@ import { ScrollHint } from "./ScrollHint";
 import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
 
+const SunsetSun = () => {
+  const isSunset = useThemeStore((state) => state.theme.type === 'sunset');
+  if (!isSunset) return null;
+
+  return (
+    <group position={[0, -4.5, -25]}>
+      {/* Glowing Sunset Sun Sphere matching image0.png */}
+      <mesh>
+        <sphereGeometry args={[2.8, 32, 32]} />
+        <meshBasicMaterial color="#fff5ea" />
+      </mesh>
+      {/* Sun glow halo */}
+      <mesh scale={1.25}>
+        <sphereGeometry args={[2.8, 32, 32]} />
+        <meshBasicMaterial color="#ff4e50" transparent opacity={0.45} />
+      </mesh>
+    </group>
+  );
+};
+
 const CanvasLoader = (props: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -43,10 +63,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   }, [progress]);
 
   useGSAP(() => {
-    const isSunset = theme.type === 'sunset';
-    const bgStyle = isSunset
-      ? 'linear-gradient(135deg, #e65c00 0%, #f9d423 50%, #2c3e50 100%)'
-      : 'linear-gradient(135deg, #0b1021 0%, #050814 100%)';
+    const bgStyle = theme.gradient;
 
     if (ref.current) {
       gsap.to(ref.current, {
@@ -71,7 +88,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
 
   return (
     <div className="h-[100dvh] wrapper relative overflow-hidden" style={noiseOverlayStyle}>
-      <div className="h-[100dvh] relative transition-colors duration-1000" ref={ref}>
+      <div className="h-[100dvh] relative transition-all duration-1000" ref={ref}>
         <Canvas
           className="base-canvas"
           shadows
@@ -80,7 +97,8 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
           dpr={[1, 2]}
         >
           <Suspense fallback={null}>
-            <ambientLight intensity={theme.type === 'sunset' ? 0.9 : 0.4} />
+            <ambientLight intensity={theme.ambientIntensity} />
+            <SunsetSun />
 
             <ScrollControls pages={3} damping={0.4} maxSpeed={1} distance={1} style={{ zIndex: 1 }}>
               {props.children}

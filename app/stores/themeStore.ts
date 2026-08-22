@@ -3,26 +3,23 @@ import { persist } from "zustand/middleware";
 
 interface Theme {
   type: string;
-  color: string;
   name: string;
-  skyColor: string;
-  sunColor: string;
+  gradient: string;
+  ambientIntensity: number;
 }
 
 const AvailableThemes: Theme[] = [
   {
     type: 'sunset',
-    name: 'Minecraft Sunset',
-    color: '#e65c00',
-    skyColor: '#f9d423',
-    sunColor: '#ff4e50'
+    name: 'Sunset',
+    gradient: 'linear-gradient(180deg, #fce1d4 0%, #f39c80 30%, #d64679 60%, #581c4e 85%, #2e0c38 100%)',
+    ambientIntensity: 0.95,
   },
   {
     type: 'night',
-    name: 'Minecraft Starry Night',
-    color: '#0b1021',
-    skyColor: '#050814',
-    sunColor: '#818cf8'
+    name: 'Starry Night',
+    gradient: 'linear-gradient(180deg, #0b1021 0%, #050814 100%)',
+    ambientIntensity: 0.45,
   }
 ];
 
@@ -45,7 +42,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: "portfolio-minecraft-theme-storage",
+      name: "portfolio-sunset-theme-storage",
       partialize: (state) => ({ theme: state.theme }),
     }
   )

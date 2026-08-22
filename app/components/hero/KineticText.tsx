@@ -4,6 +4,7 @@ import { Text, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
+import { useThemeStore } from '@stores';
 
 const KineticText = () => {
   const mainTitleRef = useRef<THREE.Group>(null);
@@ -11,13 +12,18 @@ const KineticText = () => {
   const subtextRef = useRef<THREE.Group>(null);
   const data = useScroll();
 
-  useFrame((state, delta) => {
-    const time = state.clock.getElapsedTime();
+  const theme = useThemeStore((state) => state.theme);
+  const isSunset = theme.type === 'sunset';
 
+  // High-contrast dynamic colors based on theme
+  const titleColor = isSunset ? '#1a0933' : '#ffffff';
+  const subtitleColor = isSunset ? '#701a75' : '#a78bfa';
+  const subtextColor = isSunset ? '#3b0764' : '#94a3b8';
+
+  useFrame((state, delta) => {
     if (data) {
       const scrollVal = data.range(0, 0.4);
 
-      // Kinetic skewing and lateral motion on scroll
       if (mainTitleRef.current) {
         mainTitleRef.current.position.x = THREE.MathUtils.damp(
           mainTitleRef.current.position.x,
@@ -45,14 +51,13 @@ const KineticText = () => {
       if (subtextRef.current) {
         subtextRef.current.position.y = THREE.MathUtils.damp(
           subtextRef.current.position.y,
-          -2 - scrollVal * 3,
+          -1.2 - scrollVal * 3,
           5,
           delta
         );
       }
     }
 
-    // Subtle pointer parallax effect
     if (mainTitleRef.current) {
       mainTitleRef.current.rotation.y = THREE.MathUtils.lerp(
         mainTitleRef.current.rotation.y,
@@ -68,7 +73,7 @@ const KineticText = () => {
       <group ref={mainTitleRef}>
         <Text
           fontSize={1.4}
-          color="#ffffff"
+          color={titleColor}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.05}
@@ -78,11 +83,11 @@ const KineticText = () => {
         </Text>
       </group>
 
-      {/* Sub-header with italic contrast */}
+      {/* Sub-header */}
       <group ref={subtitleRef}>
         <Text
           fontSize={0.65}
-          color="#a78bfa"
+          color={subtitleColor}
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.15}
@@ -96,7 +101,7 @@ const KineticText = () => {
       <group ref={subtextRef} position={[0, -1.2, 0]}>
         <Text
           fontSize={0.28}
-          color="#94a3b8"
+          color={subtextColor}
           anchorX="center"
           anchorY="middle"
           maxWidth={7}

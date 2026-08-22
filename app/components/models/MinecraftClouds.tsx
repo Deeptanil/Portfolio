@@ -4,73 +4,90 @@ import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-const MinecraftClouds = () => {
-  const groupRef = useRef<THREE.Group>(null);
+const CloudTile = () => {
+  // Generate classic Minecraft flat cloud slabs matching image1.png
+  const slabs = useMemo(() => {
+    const items: { x: number; y: number; z: number; width: number; height: number; depth: number }[] = [];
+    const gridSize = 12;
+    const spacing = 6;
 
-  // Generate Minecraft blocky cloud clusters
-  const cloudBlocks = useMemo(() => {
-    const blocks: { x: number; y: number; z: number; width: number; height: number; depth: number }[] = [];
-    
-    // Cluster 1
-    for (let x = -15; x <= 15; x += 3) {
-      for (let z = -10; z <= 10; z += 3) {
-        if (Math.random() > 0.35) {
-          blocks.push({
-            x: x + (Math.random() - 0.5),
-            y: (Math.random() - 0.5) * 0.8,
-            z: z + (Math.random() - 0.5),
-            width: 3 + Math.floor(Math.random() * 2) * 2,
-            height: 1.2,
-            depth: 3 + Math.floor(Math.random() * 2) * 2,
+    for (let gx = -gridSize; gx <= gridSize; gx++) {
+      for (let gz = -gridSize; gz <= gridSize; gz++) {
+        // Pseudo-random cloud formation logic mimicking Minecraft cloud map
+        const hash = Math.sin(gx * 12.9898 + gz * 78.233) * 43758.5453;
+        const rand = hash - Math.floor(hash);
+
+        if (rand > 0.45) {
+          const width = 4 + Math.floor(rand * 3) * 3;
+          const depth = 4 + Math.floor((1 - rand) * 3) * 3;
+          const yOffset = (rand - 0.5) * 0.4;
+
+          items.push({
+            x: gx * spacing,
+            y: yOffset,
+            z: gz * spacing,
+            width,
+            height: 0.6, // Thin extruded slab shape from Minecraft image
+            depth,
           });
         }
       }
     }
-
-    // Cluster 2 (high clouds)
-    for (let x = -25; x <= 25; x += 4) {
-      for (let z = -20; z <= 20; z += 4) {
-        if (Math.random() > 0.5) {
-          blocks.push({
-            x: x,
-            y: 8 + (Math.random() - 0.5) * 1.5,
-            z: z,
-            width: 4,
-            height: 1.5,
-            depth: 4,
-          });
-        }
-      }
-    }
-
-    return blocks;
+    return items;
   }, []);
 
+  return (
+    <group>
+      {slabs.map((slab, idx) => (
+        <mesh key={idx} position={[slab.x, slab.y, slab.z]}>
+          <boxGeometry args={[slab.width, slab.height, slab.depth]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            transparent
+            opacity={0.78}
+            roughness={0.9}
+            metalness={0.0}
+            flatShading={true}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+const MinecraftClouds = () => {
+  const track1Ref = useRef<THREE.Group>(null);
+  const track2Ref = useRef<THREE.Group>(null);
+
+  const LOOP_WIDTH = 144; // Total grid span
+  const SPEED = 0.8; // Smooth drift speed
+
   useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.position.x += delta * 0.4;
-      // Loop clouds smoothly
-      if (groupRef.current.position.x > 30) {
-        groupRef.current.position.x = -30;
+    const moveAmount = delta * SPEED;
+
+    if (track1Ref.current && track2Ref.current) {
+      track1Ref.current.position.x += moveAmount;
+      track2Ref.current.position.x += moveAmount;
+
+      // Infinite continuous wrap: when track 1 moves past LOOP_WIDTH, wrap to -LOOP_WIDTH
+      if (track1Ref.current.position.x >= LOOP_WIDTH) {
+        track1Ref.current.position.x = track2Ref.current.position.x - LOOP_WIDTH;
+      }
+
+      if (track2Ref.current.position.x >= LOOP_WIDTH) {
+        track2Ref.current.position.x = track1Ref.current.position.x - LOOP_WIDTH;
       }
     }
   });
 
   return (
-    <group ref={groupRef} position={[0, -2, -5]}>
-      {cloudBlocks.map((block, idx) => (
-        <mesh key={idx} position={[block.x, block.y, block.z]}>
-          <boxGeometry args={[block.width, block.height, block.depth]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            transparent
-            opacity={0.88}
-            roughness={0.9}
-            metalness={0.1}
-            flatShading={true}
-          />
-        </mesh>
-      ))}
+    <group position={[0, 4, -10]} rotation={[0.08, 0, 0]}>
+      <group ref={track1Ref} position={[0, 0, 0]}>
+        <CloudTile />
+      </group>
+      <group ref={track2Ref} position={[-LOOP_WIDTH, 0, 0]}>
+        <CloudTile />
+      </group>
     </group>
   );
 };
