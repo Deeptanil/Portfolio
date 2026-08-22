@@ -7,15 +7,12 @@ import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 
 // Shared material setup for a cloned scene
-const prepareScene = (
-  scene: THREE.Group,
+const createSceneClone = (
+  baseScene: THREE.Group,
   isNight: boolean,
   materialsRef: React.MutableRefObject<THREE.MeshStandardMaterial[]>
 ) => {
-  const cloned = scene.clone(true);
-  const box = new THREE.Box3().setFromObject(cloned);
-  const center = box.getCenter(new THREE.Vector3());
-  cloned.position.set(-center.x, -center.y, -center.z);
+  const cloned = baseScene.clone(true);
   cloned.traverse((child) => {
     if ((child as THREE.Mesh).isMesh) {
       const mesh = child as THREE.Mesh;
@@ -40,12 +37,16 @@ const prepareScene = (
   return cloned;
 };
 
+// ─────────────────────────────────────────────────────────────
+// 3-Tile Seamless Ring Treadmill
+// Uses exact GLB bounding box width so tiles connect edge-to-edge
+// with ZERO gaps, ZERO breaks, and off-screen wrap.
+// ─────────────────────────────────────────────────────────────
 const CloudTreadmill = ({
   y,
   z = 0,
   scale,
   speed,
-  spacing,
   initialOffset = 0,
   rotationY = 0,
   materialsRef,
@@ -54,7 +55,6 @@ const CloudTreadmill = ({
   z?: number;
   scale: [number, number, number];
   speed: number;
-  spacing: number;
   initialOffset?: number;
   rotationY?: number;
   materialsRef: React.MutableRefObject<THREE.MeshStandardMaterial[]>;
@@ -62,29 +62,63 @@ const CloudTreadmill = ({
   const { scene } = useGLTF('models/minecraft_sky.glb');
   const isNight = useThemeStore((state) => state.theme.type === 'night');
 
-  const sceneA = useMemo(() => prepareScene(scene, isNight, materialsRef), [scene, isNight, materialsRef]);
-  const sceneB = useMemo(() => prepareScene(scene, isNight, materialsRef), [scene, isNight, materialsRef]);
+  // Compute exact model bounds and create 3 seamless clones
+  const { preparedSceneA, preparedSceneB, preparedSceneC, tileWidth } = useMemo(() => {
+    const centeredGroup = scene.clone(true);
+    const box = new THREE.Box3().setFromObject(centeredGroup);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+
+    // Center model at origin
+    centeredGroup.position.set(-center.x, -center.y, -center.z);
+
+    // Exact tile width scaled into world space (with 1% overlap to eliminate subpixel hairline gaps)
+    const w = size.x * scale[0] * 0.99;
+
+    const a = createSceneClone(centeredGroup, isNight, materialsRef);
+    const b = createSceneClone(centeredGroup, isNight, materialsRef);
+    const c = createSceneClone(centeredGroup, isNight, materialsRef);
+
+    return { preparedSceneA: a, preparedSceneB: b, preparedSceneC: c, tileWidth: w };
+  }, [scene, isNight, scale, materialsRef]);
 
   const refA = useRef<THREE.Group>(null);
   const refB = useRef<THREE.Group>(null);
+  const refC = useRef<THREE.Group>(null);
   const drift = useRef(0);
 
   useFrame((_, delta) => {
     drift.current += delta * speed;
-    const pos = drift.current % spacing;
-    if (refA.current) refA.current.position.x = initialOffset + pos;
-    if (refB.current) refB.current.position.x = initialOffset + pos - spacing;
+
+    const span = 3 * tileWidth;
+    const halfSpan = 1.5 * tileWidth;
+    const refs = [refA, refB, refC];
+
+    refs.forEach((ref, i) => {
+      if (!ref.current) return;
+      // Position each of the 3 tiles relative to accumulated drift
+      let posX = initialOffset + drift.current + (i - 1) * tileWidth;
+      
+      // Wrap smoothly around [-halfSpan, +halfSpan]
+      posX = ((posX + halfSpan) % span) - halfSpan;
+      if (posX < -halfSpan) posX += span;
+
+      ref.current.position.x = posX;
+    });
   });
 
   return (
-    <>
-      <group ref={refA} position={[initialOffset, y, z]}>
-        <primitive object={sceneA} scale={scale} rotation={[0, rotationY, 0]} />
+    <group position={[0, y, z]}>
+      <group ref={refA}>
+        <primitive object={preparedSceneA} scale={scale} rotation={[0, rotationY, 0]} />
       </group>
-      <group ref={refB} position={[initialOffset - spacing, y, z]}>
-        <primitive object={sceneB} scale={scale} rotation={[0, rotationY, 0]} />
+      <group ref={refB}>
+        <primitive object={preparedSceneB} scale={scale} rotation={[0, rotationY, 0]} />
       </group>
-    </>
+      <group ref={refC}>
+        <primitive object={preparedSceneC} scale={scale} rotation={[0, rotationY, 0]} />
+      </group>
+    </group>
   );
 };
 
@@ -131,25 +165,23 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
 
   return (
     <group ref={cloudGroupRef} {...props}>
-      {/* Top Cloud Layer — Single depth Z = 0 */}
+      {/* Top Cloud Layer — 3-tile seamless treadmill */}
       <CloudTreadmill
         y={12}
         z={0}
         scale={[4.2, 1.8, 4.2]}
-        speed={0.95}
-        spacing={90}
+        speed={1.2}
         initialOffset={0}
         rotationY={0}
         materialsRef={materialsRef}
       />
-      {/* Bottom Cloud Layer — Single depth Z = 0 */}
+      {/* Bottom Cloud Layer — 3-tile seamless treadmill */}
       <CloudTreadmill
         y={-90}
         z={0}
         scale={[5.2, 1.8, 5.2]}
-        speed={1.6}
-        spacing={90}
-        initialOffset={35}
+        speed={2.0}
+        initialOffset={25}
         rotationY={Math.PI}
         materialsRef={materialsRef}
       />
