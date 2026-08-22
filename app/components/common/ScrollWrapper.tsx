@@ -4,6 +4,7 @@ import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
+
 import { useScrollStore } from "@stores";
 
 const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] }) => {
@@ -23,7 +24,7 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
 
       setScrollProgress(data.range(0, 1));
 
-      // Move camera slightly on mouse movement
+      // Move camera slightly on mouse movement.
       if (!isMobile) {
         camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, -(state.pointer.x * Math.PI) / 90, 0.05);
       }

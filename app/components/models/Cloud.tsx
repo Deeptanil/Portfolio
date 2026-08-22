@@ -1,5 +1,3 @@
-'use client';
-
 import { Cloud, Clouds } from "@react-three/drei";
 import * as THREE from "three";
 

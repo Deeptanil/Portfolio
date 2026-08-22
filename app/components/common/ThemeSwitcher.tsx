@@ -14,9 +14,9 @@ const ThemeSwitcher = () => {
   useEffect(() => {
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', theme.type === 'sunset' ? '#e65c00' : '#0b1021');
+      metaThemeColor.setAttribute('content', theme.color);
     }
-  }, [theme.type]);
+  }, [theme.color]);
 
   return (
     <div className={`fixed ${positionClass}`} ref={themeSwitcherRef} style={{ opacity: 1, zIndex: 2 }}>
