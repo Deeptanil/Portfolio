@@ -23,17 +23,11 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
 
   const canvasStyle: React.CSSProperties = {
     position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    inset: 0,
+    width: "100%",
+    height: "100%",
     opacity: 0,
     overflow: "hidden",
-    ...(mounted && !isMobile && {
-      inset: '1rem',
-      width: 'calc(100% - 2rem)',
-      height: 'calc(100% - 2rem)',
-    }),
   };
 
   useGSAP(() => {
