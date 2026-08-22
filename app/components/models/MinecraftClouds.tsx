@@ -1,48 +1,48 @@
 'use client';
 
-import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import * as THREE from 'three';
 
-const CloudTile = () => {
-  const slabs = useMemo(() => {
-    const items: { x: number; y: number; z: number; width: number; height: number; depth: number }[] = [];
-    const gridSize = 12;
-    const spacing = 6;
+// Individual Minecraft voxel blocky cloud cluster
+const MinecraftVoxelCloudCluster = ({
+  seed = 1,
+  scale = 1.5,
+}: {
+  seed: number;
+  scale?: number;
+}) => {
+  const blocks = useMemo(() => {
+    const list: { x: number; y: number; z: number; width: number; height: number; depth: number }[] = [];
+    const numBlocks = 6 + Math.floor((seed % 4) * 2);
 
-    for (let gx = -gridSize; gx <= gridSize; gx++) {
-      for (let gz = -gridSize; gz <= gridSize; gz++) {
-        const hash = Math.sin(gx * 12.9898 + gz * 78.233) * 43758.5453;
-        const rand = hash - Math.floor(hash);
+    for (let i = 0; i < numBlocks; i++) {
+      const hash = Math.sin(seed * 100 + i * 17.3) * 43758.5453;
+      const randX = (hash - Math.floor(hash) - 0.5) * 6;
+      const randZ = (Math.sin(hash) - 0.5) * 6;
+      const width = 3 + Math.floor(Math.abs(randX)) * 2;
+      const depth = 3 + Math.floor(Math.abs(randZ)) * 2;
 
-        if (rand > 0.45) {
-          const width = 4 + Math.floor(rand * 3) * 3;
-          const depth = 4 + Math.floor((1 - rand) * 3) * 3;
-          const yOffset = (rand - 0.5) * 0.4;
-
-          items.push({
-            x: gx * spacing,
-            y: yOffset,
-            z: gz * spacing,
-            width,
-            height: 0.6,
-            depth,
-          });
-        }
-      }
+      list.push({
+        x: randX,
+        y: (i % 2 === 0 ? 0 : 0.4),
+        z: randZ,
+        width,
+        height: 0.8,
+        depth,
+      });
     }
-    return items;
-  }, []);
+    return list;
+  }, [seed]);
 
   return (
-    <group>
-      {slabs.map((slab, idx) => (
-        <mesh key={idx} position={[slab.x, slab.y, slab.z]}>
-          <boxGeometry args={[slab.width, slab.height, slab.depth]} />
+    <group scale={scale}>
+      {blocks.map((b, idx) => (
+        <mesh key={idx} position={[b.x, b.y, b.z]}>
+          <boxGeometry args={[b.width, b.height, b.depth]} />
           <meshStandardMaterial
             color="#ffffff"
             transparent
-            opacity={0.82}
+            opacity={0.85}
             roughness={0.9}
             metalness={0.0}
             flatShading={true}
@@ -53,38 +53,38 @@ const CloudTile = () => {
   );
 };
 
+// 3D Cloud Fly-Through positions matching original clevir.li cloud positions
 const MinecraftClouds = () => {
-  const track1Ref = useRef<THREE.Group>(null);
-  const track2Ref = useRef<THREE.Group>(null);
-
-  const LOOP_WIDTH = 144;
-  const SPEED = 0.25; // Slower, peaceful drift speed
-
-  useFrame((_, delta) => {
-    const moveAmount = delta * SPEED;
-
-    if (track1Ref.current && track2Ref.current) {
-      track1Ref.current.position.x += moveAmount;
-      track2Ref.current.position.x += moveAmount;
-
-      if (track1Ref.current.position.x >= LOOP_WIDTH) {
-        track1Ref.current.position.x = track2Ref.current.position.x - LOOP_WIDTH;
-      }
-
-      if (track2Ref.current.position.x >= LOOP_WIDTH) {
-        track2Ref.current.position.x = track1Ref.current.position.x - LOOP_WIDTH;
-      }
-    }
-  });
-
-  // Position clouds at the bottom of the screen (y: -7) instead of the top
   return (
-    <group position={[0, -7, -6]} rotation={[-0.05, 0, 0]}>
-      <group ref={track1Ref} position={[0, 0, 0]}>
-        <CloudTile />
+    <group>
+      {/* Cloud 1: Upper left */}
+      <group position={[-3, 1, 0]}>
+        <MinecraftVoxelCloudCluster seed={1} scale={1.8} />
       </group>
-      <group ref={track2Ref} position={[-LOOP_WIDTH, 0, 0]}>
-        <CloudTile />
+
+      {/* Cloud 2: Upper right */}
+      <group position={[4, 1, 2]}>
+        <MinecraftVoxelCloudCluster seed={3} scale={1.4} />
+      </group>
+
+      {/* Cloud 3: Mid-level left */}
+      <group position={[-12, -10, 4]}>
+        <MinecraftVoxelCloudCluster seed={4} scale={2.2} />
+      </group>
+
+      {/* Cloud 4: Mid-level right */}
+      <group position={[8, -3, 8]}>
+        <MinecraftVoxelCloudCluster seed={5} scale={2.0} />
+      </group>
+
+      {/* Cloud 5: Low deep cloud */}
+      <group position={[0, -20, 20]}>
+        <MinecraftVoxelCloudCluster seed={6} scale={3.5} />
+      </group>
+
+      {/* Cloud 6: Horizon side cloud */}
+      <group position={[12, -15, -5]}>
+        <MinecraftVoxelCloudCluster seed={7} scale={2.8} />
       </group>
     </group>
   );

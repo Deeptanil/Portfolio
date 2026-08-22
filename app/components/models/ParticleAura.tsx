@@ -3,9 +3,11 @@
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { useThemeStore } from '@stores';
 
 const ParticleAura = () => {
   const pointsRef = useRef<THREE.Points>(null);
+  const isNight = useThemeStore((state) => state.theme.type === 'night');
 
   const count = 1200;
 
@@ -39,11 +41,12 @@ const ParticleAura = () => {
       pointsRef.current.rotation.y = time * 0.03;
       pointsRef.current.rotation.x = Math.sin(time * 0.02) * 0.05;
 
-      // Mouse influence
       pointsRef.current.rotation.y += (state.pointer.x * 0.1 - pointsRef.current.rotation.y) * 0.02;
       pointsRef.current.rotation.x += (-state.pointer.y * 0.1 - pointsRef.current.rotation.x) * 0.02;
     }
   });
+
+  if (!isNight) return null;
 
   return (
     <points ref={pointsRef}>

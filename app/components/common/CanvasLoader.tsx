@@ -4,8 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { AdaptiveDpr, Preload, ScrollControls, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
-import { Suspense, useRef, useSyncExternalStore } from "react";
-import { isMobile } from "react-device-detect";
+import { Suspense, useRef } from "react";
 
 import { useScrollStore, useThemeStore } from "@stores";
 
@@ -14,29 +13,24 @@ import { ScrollHint } from "./ScrollHint";
 import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-
-
 const CanvasLoader = (props: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const theme = useThemeStore((state) => state.theme);
   const scrollProgress = useScrollStore((state) => state.scrollProgress);
   const { progress } = useProgress();
-  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
+  // Fullscreen 100% edge-to-edge canvas with zero margin/inset
   const canvasStyle: React.CSSProperties = {
     position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
+    width: "100%",
+    height: "100%",
     opacity: 0,
     overflow: "hidden",
-    ...(mounted && !isMobile && {
-      inset: '1rem',
-      width: 'calc(100% - 2rem)',
-      height: 'calc(100% - 2rem)',
-    }),
   };
 
   useGSAP(() => {
@@ -45,25 +39,21 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
     }
   }, [progress]);
 
-  // Scroll-driven dynamic gradient transition for Day mode
+  // Dynamic gradient transition for Day mode
   useGSAP(() => {
     if (theme.type === 'day') {
-      // Interpolate gradient based on scrollProgress (0 to 1)
       const p = Math.min(1, Math.max(0, scrollProgress));
       
-      // Top color: Orange -> Rich Coral -> Magenta
       const r1 = Math.round(255 - p * 30);
       const g1 = Math.round(126 - p * 56);
       const b1 = Math.round(95 + p * 26);
       const topColor = `rgb(${r1}, ${g1}, ${b1})`;
 
-      // Mid color: Orange-Yellow -> Coral Pink
       const r2 = Math.round(255 - p * 20);
       const g2 = Math.round(170 - p * 100);
       const b2 = Math.round(51 + p * 70);
       const midColor = `rgb(${r2}, ${g2}, ${b2})`;
 
-      // Bottom color: Bright Yellow (#ffe259) -> Deep Warm Sunset Dusk (#a83279)
       const r3 = Math.round(255 - p * 87);
       const g3 = Math.round(226 - p * 176);
       const b3 = Math.round(89 + p * 32);

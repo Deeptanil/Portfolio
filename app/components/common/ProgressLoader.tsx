@@ -65,7 +65,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
   return (
     <div
       className="fixed top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none z-50"
-      style={{ padding: '1rem', opacity: progress === 100 ? 0 : 1, transition: 'opacity 1s ease-out' }}
+      style={{ opacity: progress === 100 ? 0 : 1, transition: 'opacity 1s ease-out' }}
     >
       <svg
         width={svgWidth}
