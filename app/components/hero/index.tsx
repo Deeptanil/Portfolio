@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import MinecraftSky from "../models/MinecraftSky";
+import MinecraftBee from "../models/MinecraftBee";
 import StarsContainer from "../models/Stars";
 import WindowModel from "../models/WindowModel";
 import TextWindow from "./TextWindow";
@@ -39,6 +40,9 @@ const Hero = () => {
       
       {/* Minecraft Sky clouds centered and positioned BELOW the text */}
       <MinecraftSky />
+
+      {/* Flying Minecraft Bee appears when cloud fading starts */}
+      <MinecraftBee />
 
       <group position={[0, -25, 5.69]}>
         <pointLight castShadow position={[1, 1, -2.5]} intensity={60} distance={10} />
