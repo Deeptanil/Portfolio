@@ -17,7 +17,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 const CanvasLoader = (props: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const backgroundColor = useThemeStore((state) => state.theme.color);
+  const theme = useThemeStore((state) => state.theme);
   const { progress } = useProgress();
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
@@ -43,19 +43,24 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   }, [progress]);
 
   useGSAP(() => {
+    const isSunset = theme.type === 'sunset';
+    const bgStyle = isSunset
+      ? 'linear-gradient(135deg, #e65c00 0%, #f9d423 50%, #2c3e50 100%)'
+      : 'linear-gradient(135deg, #0b1021 0%, #050814 100%)';
+
     if (ref.current) {
       gsap.to(ref.current, {
-        backgroundColor: backgroundColor,
-        duration: 1,
+        background: bgStyle,
+        duration: 1.2,
       });
     }
     if (canvasRef.current) {
       gsap.to(canvasRef.current, {
-        backgroundColor: backgroundColor,
-        duration: 1,
+        background: bgStyle,
+        duration: 1.2,
       });
     }
-  }, [backgroundColor]);
+  }, [theme]);
 
   const noiseOverlayStyle = {
     backgroundBlendMode: "soft-light",
@@ -66,7 +71,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
 
   return (
     <div className="h-[100dvh] wrapper relative overflow-hidden" style={noiseOverlayStyle}>
-      <div className="h-[100dvh] relative" ref={ref}>
+      <div className="h-[100dvh] relative transition-colors duration-1000" ref={ref}>
         <Canvas
           className="base-canvas"
           shadows
@@ -75,7 +80,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
           dpr={[1, 2]}
         >
           <Suspense fallback={null}>
-            <ambientLight intensity={0.6} />
+            <ambientLight intensity={theme.type === 'sunset' ? 0.9 : 0.4} />
 
             <ScrollControls pages={3} damping={0.4} maxSpeed={1} distance={1} style={{ zIndex: 1 }}>
               {props.children}

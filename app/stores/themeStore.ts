@@ -4,22 +4,25 @@ import { persist } from "zustand/middleware";
 interface Theme {
   type: string;
   color: string;
-  accent: string;
   name: string;
+  skyColor: string;
+  sunColor: string;
 }
 
 const AvailableThemes: Theme[] = [
   {
-    type: 'monolith',
-    name: 'Monolithic Obsidian',
-    color: '#0a0a0c',
-    accent: '#ffffff'
+    type: 'sunset',
+    name: 'Minecraft Sunset',
+    color: '#e65c00',
+    skyColor: '#f9d423',
+    sunColor: '#ff4e50'
   },
   {
-    type: 'aether',
-    name: 'Aether Dusk',
-    color: '#120c24',
-    accent: '#a78bfa'
+    type: 'night',
+    name: 'Minecraft Starry Night',
+    color: '#0b1021',
+    skyColor: '#050814',
+    sunColor: '#818cf8'
   }
 ];
 
@@ -42,7 +45,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: "portfolio-theme-storage",
+      name: "portfolio-minecraft-theme-storage",
       partialize: (state) => ({ theme: state.theme }),
     }
   )

@@ -2,98 +2,122 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+// Iconic C418 Sweden / Subwoofer Lullaby pentatonic note sequence (frequencies in Hz)
+// D4, E4, F#4, A4, B4, D5, E5, F#5
+const C418_MELODY_NOTES = [
+  293.66, 329.63, 369.99, 440.00, 493.88, 587.33, 659.25, 739.99,
+  440.00, 369.99, 293.66, 220.00, 146.83
+];
+
 const SoundToggle = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const gainNodeRef = useRef<GainNode | null>(null);
-  const oscillatorsRef = useRef<OscillatorNode[]>([]);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleSound = () => {
     if (!isPlaying) {
-      startAmbientSound();
+      startMinecraftSoundtrack();
       setIsPlaying(true);
     } else {
-      stopAmbientSound();
+      stopMinecraftSoundtrack();
       setIsPlaying(false);
     }
   };
 
-  const startAmbientSound = () => {
+  const playPianoNote = (ctx: AudioContext, freq: number) => {
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+
+      // Triangle/sine blend for warm Minecraft electric piano tone
+      osc.type = Math.random() > 0.5 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800 + Math.random() * 200, ctx.currentTime);
+
+      // C418 soft piano envelope: fast attack, long gentle decay
+      gain.gain.setValueAtTime(0.001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.2);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 3.3);
+    } catch {}
+  };
+
+  const startMinecraftSoundtrack = () => {
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       const ctx = new AudioCtx();
       audioCtxRef.current = ctx;
 
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0.08, ctx.currentTime);
-      masterGain.connect(ctx.destination);
-      gainNodeRef.current = masterGain;
+      let noteIdx = 0;
 
-      // Soft ambient harmonic chords (C minor 9th pad: C, Eb, G, Bb, D)
-      const frequencies = [130.81, 155.56, 196.00, 233.08, 293.66];
-      const oscillators: OscillatorNode[] = [];
+      const scheduleNextNote = () => {
+        if (!audioCtxRef.current) return;
+        
+        const freq = C418_MELODY_NOTES[noteIdx % C418_MELODY_NOTES.length];
+        playPianoNote(ctx, freq);
+        
+        // Also play a soft bass note occasionally
+        if (noteIdx % 3 === 0) {
+          playPianoNote(ctx, freq / 2);
+        }
 
-      frequencies.forEach((freq) => {
-        const osc = ctx.createOscillator();
-        const filter = ctx.createBiquadFilter();
+        noteIdx++;
+        // Sparse Minecraft timing: 1.8s to 3.5s delay between notes
+        const delay = 1800 + Math.random() * 1600;
+        timerRef.current = setTimeout(scheduleNextNote, delay);
+      };
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(450, ctx.currentTime);
-
-        osc.connect(filter);
-        filter.connect(masterGain);
-        osc.start();
-
-        oscillators.push(osc);
-      });
-
-      oscillatorsRef.current = oscillators;
+      scheduleNextNote();
     } catch (e) {
-      console.warn("Web Audio API not supported", e);
+      console.warn("Web Audio API error", e);
     }
   };
 
-  const stopAmbientSound = () => {
-    if (gainNodeRef.current && audioCtxRef.current) {
-      gainNodeRef.current.gain.setTargetAtTime(0, audioCtxRef.current.currentTime, 0.3);
-      setTimeout(() => {
-        oscillatorsRef.current.forEach((osc) => {
-          try { osc.stop(); } catch {}
-        });
-        audioCtxRef.current?.close();
-        audioCtxRef.current = null;
-      }, 400);
+  const stopMinecraftSoundtrack = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (audioCtxRef.current) {
+      try { audioCtxRef.current.close(); } catch {}
+      audioCtxRef.current = null;
     }
   };
 
   useEffect(() => {
     return () => {
-      stopAmbientSound();
+      stopMinecraftSoundtrack();
     };
   }, []);
 
   return (
     <button
       onClick={toggleSound}
-      className="fixed top-6 left-6 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md text-xs font-mono tracking-wider text-white/80 hover:text-white hover:border-white/50 transition-all duration-300 group"
-      title="Toggle Ambient Audio"
+      className="fixed top-6 left-6 z-50 flex items-center gap-2 px-3.5 py-2 rounded-lg border border-amber-400/40 bg-black/60 backdrop-blur-md text-xs font-mono tracking-widest text-amber-200 hover:text-white hover:border-amber-400 transition-all duration-300 shadow-lg shadow-amber-950/20 group"
+      title="Toggle C418 Minecraft Ambient Piano"
     >
       <div className="flex items-center gap-0.5 h-4 w-4 justify-center">
         {isPlaying ? (
           <>
-            <span className="w-0.5 bg-purple-400 rounded-full animate-bar-1" />
-            <span className="w-0.5 bg-indigo-400 rounded-full animate-bar-2" />
-            <span className="w-0.5 bg-blue-400 rounded-full animate-bar-3" />
-            <span className="w-0.5 bg-cyan-400 rounded-full animate-bar-4" />
+            <span className="w-0.5 bg-amber-400 rounded-sm animate-bar-1" />
+            <span className="w-0.5 bg-yellow-300 rounded-sm animate-bar-2" />
+            <span className="w-0.5 bg-amber-500 rounded-sm animate-bar-3" />
+            <span className="w-0.5 bg-orange-400 rounded-sm animate-bar-4" />
           </>
         ) : (
-          <span className="w-2 h-2 rounded-full bg-white/40 group-hover:bg-white transition-colors" />
+          <span className="w-2 h-2 rounded-sm bg-amber-400/50 group-hover:bg-amber-300 transition-colors" />
         )}
       </div>
-      <span>{isPlaying ? 'SOUND [ON]' : 'SOUND [OFF]'}</span>
+      <span>{isPlaying ? 'MINECRAFT MUSIC [ON]' : 'MINECRAFT MUSIC [OFF]'}</span>
     </button>
   );
 };
