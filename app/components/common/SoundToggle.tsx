@@ -24,7 +24,7 @@ const SUBWOOFER_LULLABY_NOTES = [
 ];
 
 const SoundToggle = () => {
-  const [isPlaying, setIsPlaying] = useState(true); // Sound enabled by default for new users
+  const [isPlaying, setIsPlaying] = useState(true);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -104,7 +104,6 @@ const SoundToggle = () => {
     }
   };
 
-  // Start sound on initial user interaction (due to browser autoplay policies)
   useEffect(() => {
     const handleFirstUserInteraction = () => {
       if (isPlaying && !audioCtxRef.current) {
@@ -124,40 +123,42 @@ const SoundToggle = () => {
     };
   }, [isPlaying]);
 
-  const positionClass = isMobile ? 'top-2 right-10' : 'top-6 right-16';
+  const positionClass = isMobile ? 'top-2 left-2' : 'top-6 left-6';
 
   return (
     <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }}>
-      <button
-        onClick={toggleSound}
-        className="flex items-center justify-center p-1 text-white hover:opacity-80 transition-opacity cursor-pointer focus:outline-none"
-        title={isPlaying ? "Mute Sound" : "Enable Sound"}
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-6 h-6 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+      <div className="flex items-center justify-center">
+        <a
+          onClick={toggleSound}
+          className="hover:cursor-pointer flex items-center justify-center"
+          title={isPlaying ? "Mute Sound" : "Enable Sound"}
         >
-          {isPlaying ? (
-            <>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-            </>
-          ) : (
-            <>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
-              <line x1="23" y1="1" x2="1" y2="23" stroke="#ff4d4d" strokeWidth="2.5" />
-            </>
-          )}
-        </svg>
-      </button>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-6 h-6 text-white"
+          >
+            {isPlaying ? (
+              <>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              </>
+            ) : (
+              <>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+                <line x1="23" y1="1" x2="1" y2="23" stroke="#ff4d4d" strokeWidth="2.5" />
+              </>
+            )}
+          </svg>
+        </a>
+      </div>
     </div>
   );
 };
