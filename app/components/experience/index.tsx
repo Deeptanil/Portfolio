@@ -18,8 +18,9 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.28 : 0.4,
+    fontSize: isMobile ? 0.4 : 0.4,
     color: 'white',
+    anchorX: 'center' as const,
   };
 
   useFrame((state, delta) => {
@@ -43,11 +44,19 @@ const Experience = () => {
   });
 
   const getTitle = () => {
+    if (isMobile) {
+      return (
+        <Text {...fontProps} position={[0, 2.2, 1]}>
+          EXPERIENCE
+        </Text>
+      );
+    }
+
     const title = 'EXPERIENCE';
-    const diff = isMobile ? 0.35 : 0.8;
+    const diff = 0.8;
     return title.split('').map((char, i) => {
       return (
-        <Text key={i} {...fontProps} position={[i * diff, 2, 1]}>{char}</Text>
+        <Text key={i} {...fontProps} anchorX="left" position={[i * diff, 2, 1]}>{char}</Text>
       );
     });
   };
@@ -55,7 +64,7 @@ const Experience = () => {
   return (
     <group position={[0, -41.5, 12]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
       <group rotation={[0, 0, Math.PI / 2]}>
-        <group ref={titleRef} position={[isMobile ? -1.5 : -3.6, 2, -2]}>
+        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 2, -2]}>
           {getTitle()}
         </group>
 
@@ -63,15 +72,15 @@ const Experience = () => {
           <GridTile title='WORK AND EDUCATION'
             id="work"
             color='#b9c6d6'
-            textAlign='left'
-            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.6 : 0, isMobile ? 0.4 : 0)}>
+            textAlign='center'
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.3 : 0, isMobile ? 0.2 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
-            textAlign='right'
-            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.6 : 0, 0)}>
+            textAlign='center'
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.3 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>
