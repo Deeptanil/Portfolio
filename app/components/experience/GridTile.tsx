@@ -5,7 +5,6 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
 import { useEffect, useRef } from 'react';
-import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
 
 interface GridTileProps {
@@ -23,17 +22,19 @@ const GridTile = (props: GridTileProps) => {
   const hoverBoxRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef(null);
   const { title, children, color, position, id } = props;
-  const { camera } = useThree();
+  const { camera, viewport } = useThree();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
   const activePortalId = usePortalStore((state) => state.activePortalId);
   const data = useScroll();
 
+  const isMobile = viewport.width < 6.5;
+
   useEffect(() => {
     if (isMobile && titleRef.current) {
       gsap.to(titleRef.current, {
-        fontSize: 0.35,
-        maxWidth: 2.8,
+        fontSize: 0.22,
+        maxWidth: 2.2,
         color: '#FFF',
         fillOpacity: 1,
       });
@@ -44,7 +45,7 @@ const GridTile = (props: GridTileProps) => {
         duration: 0.5,
       });
     }
-  }, [id]);
+  }, [id, isMobile]);
 
   useFrame(() => {
     if (!data) return;
@@ -138,10 +139,10 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 2.8 : 2,
+    maxWidth: isMobile ? 2.2 : 2,
     anchorX: 'center',
     anchorY: 'middle',
-    fontSize: isMobile ? 0.35 : 0.7,
+    fontSize: isMobile ? 0.22 : 0.7,
     color: 'white',
     textAlign: 'center',
     fillOpacity: isMobile ? 1 : 0,
@@ -173,7 +174,7 @@ const GridTile = (props: GridTileProps) => {
 
   const getGeometry = () => {
     if (isMobile) {
-      return <planeGeometry args={[3.2, 2.0, 1]} />;
+      return <planeGeometry args={[2.4, 1.5, 1]} />;
     }
 
     return <planeGeometry args={[4, 4, 1]} />;
@@ -188,7 +189,7 @@ const GridTile = (props: GridTileProps) => {
       { getGeometry() }
       <group>
         <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
-          <boxGeometry args={[isMobile ? 3.2 : 4, isMobile ? 2.0 : 4, 0.5]}/>
+          <boxGeometry args={[isMobile ? 2.4 : 1.5, isMobile ? 1.5 : 4, 0.5]}/>
           <meshPhysicalMaterial
             color="#444"
             transparent={true}
