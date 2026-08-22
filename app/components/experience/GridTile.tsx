@@ -34,14 +34,14 @@ const GridTile = (props: GridTileProps) => {
     if (isMobile && titleRef.current) {
       const isWork = id === 'work';
       gsap.to(titleRef.current, {
-        fontSize: 0.13,
-        maxWidth: 4,
-        color: isWork ? '#FFF' : '#888',
-        letterSpacing: 0.4,
+        fontSize: 0.25,
+        maxWidth: 3.2,
+        color: '#FFF',
+        fillOpacity: 1,
       });
       gsap.to(titleRef.current.position, {
-        x: isWork ? 1: -1,
-        y: isWork ? -1.7 : 1.5,
+        x: 0,
+        y: isWork ? -1.4 : -1.4,
         duration: 0.5,
       });
     }
@@ -139,10 +139,10 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: 2,
+    maxWidth: isMobile ? 2.8 : 2,
     anchorX: 'center',
     anchorY: 'bottom',
-    fontSize: 0.7,
+    fontSize: isMobile ? 0.4 : 0.7,
     color: 'white',
     textAlign: textAlign,
     fillOpacity: 0,
@@ -179,8 +179,8 @@ const GridTile = (props: GridTileProps) => {
 
     const isWork = id === 'work';
     const points = isWork ?
-      [[-1, 2, 0], [-1, -2, 0], [3, -2, 0]] :
-      [[-3, 2, 0], [1, -2, 0], [1, 2, 0]];
+      [[-1.8, 1.4, 0], [-1.8, -1.4, 0], [1.8, -1.4, 0]] :
+      [[-1.8, 1.4, 0], [1.8, -1.4, 0], [1.8, 1.4, 0]];
 
     return <primitive object={TriangleGeometry({ points })} attach="geometry" />;
   };

@@ -18,7 +18,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: 0.4,
+    fontSize: isMobile ? 0.28 : 0.4,
     color: 'white',
   };
 
@@ -44,8 +44,8 @@ const Experience = () => {
 
   const getTitle = () => {
     const title = 'EXPERIENCE';
+    const diff = isMobile ? 0.35 : 0.8;
     return title.split('').map((char, i) => {
-      const diff = isMobile ? 0.4 : 0.8;
       return (
         <Text key={i} {...fontProps} position={[i * diff, 2, 1]}>{char}</Text>
       );
@@ -55,7 +55,7 @@ const Experience = () => {
   return (
     <group position={[0, -41.5, 12]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
       <group rotation={[0, 0, Math.PI / 2]}>
-        <group ref={titleRef} position={[isMobile ? -1.8 : -3.6, 2, -2]}>
+        <group ref={titleRef} position={[isMobile ? -1.5 : -3.6, 2, -2]}>
           {getTitle()}
         </group>
 
@@ -64,14 +64,14 @@ const Experience = () => {
             id="work"
             color='#b9c6d6'
             textAlign='left'
-            position={new THREE.Vector3(isMobile ? -1 : -2, 0, isMobile ? 0.4 : 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.6 : 0, isMobile ? 0.4 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
             textAlign='right'
-            position={new THREE.Vector3(isMobile ? 1 : 2, 0, 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.6 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>
