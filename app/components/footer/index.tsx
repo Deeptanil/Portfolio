@@ -16,6 +16,16 @@ const FooterLinkItem = ({ link }: { link: FooterLink }) => {
   const onPointerOut = () => setHovered(false);
 
   const onClick = () => {
+    if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
+      // 1. Copy email to user's clipboard
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+      }
+      // 2. Open default mail application prefilled with your email address
+      window.location.href = 'mailto:deeptanilsinha27@gmail.com';
+      return;
+    }
+
     if (link.download || link.url.endsWith('.pdf')) {
       const a = document.createElement('a');
       a.href = link.url;
