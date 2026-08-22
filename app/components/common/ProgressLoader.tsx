@@ -12,15 +12,23 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
         opacity: progress === 100 ? 0 : 1,
       }}
     >
-      <div className="w-56 sm:w-72 space-y-3 font-mono text-center">
-        <div className="w-full bg-black/70 border-2 border-[#8b653a] h-3 rounded overflow-hidden p-[1px] shadow-2xl">
-          <div
-            className="h-full bg-[#ffff55] transition-all duration-300 ease-out"
-            style={{ width: `${clampedProgress}%` }}
-          />
-        </div>
-        <div className="text-[#ffff55] text-xs sm:text-sm font-bold tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+      {/* Minecraft UI Progress Box */}
+      <div className="w-64 sm:w-80 space-y-4 font-mono text-center select-none bg-[#3c3c3c]/90 p-4 border-2 border-black shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b]">
+        
+        {/* Loading Label */}
+        <div className="text-[#ffff55] text-xs sm:text-sm font-bold tracking-wider uppercase drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
           {`Loading World... ${clampedProgress.toFixed(0)}%`}
+        </div>
+
+        {/* Minecraft XP-Style Loading Bar */}
+        <div className="w-full bg-[#1c1c1c] border-2 border-black h-4 p-[2px] shadow-[inset_2px_2px_0px_0px_#000000]">
+          <div
+            className="h-full bg-[#55ff55] shadow-[inset_1px_1px_0px_0px_#aaffaa,inset_-1px_-1px_0px_0px_#00aa00] transition-all duration-300 ease-out"
+            style={{
+              width: `${clampedProgress}%`,
+              imageRendering: 'pixelated',
+            }}
+          />
         </div>
       </div>
     </div>

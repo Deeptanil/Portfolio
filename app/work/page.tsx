@@ -79,8 +79,8 @@ export default function WorkPage() {
           className="relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-[#747474] text-white font-mono text-xs sm:text-sm tracking-wider uppercase border-2 border-black active:translate-y-[1px] select-none shadow-[inset_-2px_-2px_0px_0px_#373737,inset_2px_2px_0px_0px_#ffffff] hover:bg-[#8b8b8b] hover:text-[#ffff55] transition-colors"
           style={{ imageRendering: 'pixelated' }}
         >
-          <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
-            ← Return to World
+          <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)] text-center">
+            Return to World
           </span>
         </Link>
       </div>
