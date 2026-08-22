@@ -55,7 +55,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
     backgroundColor: "#402c1b",
     backgroundImage: "url('/minecraft_dirt.webp')",
     backgroundRepeat: "repeat",
-    backgroundSize: "64px 64px",
+    backgroundSize: "256px 256px",
     imageRendering: "pixelated",
   };
 

@@ -88,7 +88,7 @@ export default function WorkPage() {
         backgroundColor: "#3b2716",
         backgroundImage: "url('/minecraft_dirt.webp')",
         backgroundRepeat: "repeat",
-        backgroundSize: "64px 64px",
+        backgroundSize: "256px 256px",
         imageRendering: "pixelated",
       }}
     >
