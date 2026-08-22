@@ -11,6 +11,7 @@ import { useThemeStore } from "@stores";
 
 import ProgressLoader from "./ProgressLoader";
 import { ScrollHint } from "./ScrollHint";
+import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const CanvasLoader = (props: { children: React.ReactNode }) => {
@@ -37,7 +38,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
 
   useGSAP(() => {
     if (progress === 100) {
-      gsap.to('.base-canvas', { opacity: 1, duration: 3, delay: 0.5 });
+      gsap.to('.base-canvas', { opacity: 1, duration: 2, delay: 0.3 });
     }
   }, [progress]);
 
@@ -74,7 +75,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
           dpr={[1, 2]}
         >
           <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
+            <ambientLight intensity={0.6} />
 
             <ScrollControls pages={3} damping={0.4} maxSpeed={1} distance={1} style={{ zIndex: 1 }}>
               {props.children}
@@ -86,6 +87,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
         </Canvas>
         <ProgressLoader progress={progress} />
       </div>
+      <SoundToggle />
       <ThemeSwitcher />
       <ScrollHint />
     </div>

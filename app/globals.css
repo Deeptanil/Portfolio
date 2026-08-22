@@ -3,22 +3,16 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-serif: var(--font-soria);
-  --font-sans: var(--font-vercetti);
+  --font-syne: var(--font-syne);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-jakarta);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --scrollbarColor: #FFF;
+  --background: #0a0a0c;
+  --foreground: #ffffff;
+  --scrollbarColor: rgba(255, 255, 255, 0.4);
   --scrollbarBackground: rgba(0, 0, 0, 0);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 * {
@@ -34,11 +28,22 @@ body {
   overscroll-behavior: none;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-vercetti), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 800;
+}
+
+.font-serif-italic {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -46,5 +51,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  border-bottom: 100vh solid var(--scrollbarColor);
+  background: var(--scrollbarColor);
+  border-radius: 3px;
 }
+
+/* Sound Wave Equalizer animation */
+@keyframes soundwave {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+.animate-bar-1 { animation: soundwave 1.2s infinite ease-in-out 0s; }
+.animate-bar-2 { animation: soundwave 1.2s infinite ease-in-out 0.2s; }
+.animate-bar-3 { animation: soundwave 1.2s infinite ease-in-out 0.4s; }
+.animate-bar-4 { animation: soundwave 1.2s infinite ease-in-out 0.1s; }
