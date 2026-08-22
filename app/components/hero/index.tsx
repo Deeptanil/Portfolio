@@ -36,7 +36,10 @@ const Hero = () => {
         Hi, I am Deeptanil Sinha.
       </Text>
       <StarsContainer />
-      <MinecraftSky position={[0, -5, 0]} />
+      
+      {/* Minecraft Sky clouds positioned at bottom of Hero section for fly-through */}
+      <MinecraftSky position={[0, -6, -4]} />
+
       <group position={[0, -25, 5.69]}>
         <pointLight castShadow position={[1, 1, -2.5]} intensity={60} distance={10} />
         <WindowModel receiveShadow />
