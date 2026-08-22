@@ -37,8 +37,8 @@ const MinecraftBee = () => {
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
 
-    // Bee activates as cloud fading starts (scroll 8% -> 48%)
-    const t = scroll.range(0.08, 0.48);
+    // Bee starts later in scroll (20%) and flies slower over an expanded 40% scroll range (20% -> 60%)
+    const t = scroll.range(0.20, 0.60);
 
     const isVisible = t > 0.001 && t < 0.995;
     groupRef.current.visible = isVisible;
@@ -81,8 +81,8 @@ const MinecraftBee = () => {
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={3.0} />
       <pointLight position={[0, 0, 5]} intensity={100} />
-      {/* 0.04 scale: tiny, subtle, authentic Minecraft bee size */}
-      <primitive object={scene} scale={[0.04, 0.04, 0.04]} />
+      {/* 0.08 scale: slightly bigger, crisp Minecraft bee size */}
+      <primitive object={scene} scale={[0.08, 0.08, 0.08]} />
     </group>
   );
 };
