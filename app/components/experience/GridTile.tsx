@@ -63,6 +63,13 @@ const GridTile = (props: GridTileProps) => {
   };
 
   const portalInto = (e: React.MouseEvent) => {
+    // For Work & Education: opens a new page directly (no 3D model portal)
+    if (id === 'work') {
+      e.stopPropagation();
+      window.open('/Deeptanil_Sinha_Resume.pdf', '_blank');
+      return;
+    }
+
     if (isActive || activePortalId) return;
     e.stopPropagation();
     setActivePortal(id);

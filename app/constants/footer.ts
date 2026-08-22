@@ -19,4 +19,11 @@ export const FOOTER_LINKS: FooterLink[] = [
     icon: 'icons/file.svg',
     url: 'mailto:deeptanilsinha27@gmail.com',
   },
+  {
+    name: 'Resume',
+    hoverText: 'Download CV',
+    icon: 'icons/file.svg',
+    url: '/Deeptanil_Sinha_Resume.pdf',
+    download: true,
+  },
 ];

@@ -3,4 +3,5 @@ export interface FooterLink {
   hoverText: string;
   icon: string;
   url: string;
+  download?: boolean;
 }

@@ -14,7 +14,19 @@ const FooterLinkItem = ({ link }: { link: FooterLink }) => {
   const [hovered, setHovered] = useState(false);
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
-  const onClick = () => window.open(link.url, '_blank');
+
+  const onClick = () => {
+    if (link.download || link.url.endsWith('.pdf')) {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.download = 'Deeptanil_Sinha_Resume.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      window.open(link.url, '_blank');
+    }
+  };
   
   const onPointerMove = (e: MouseEvent) => {
     if (isMobile) return;
@@ -122,7 +134,7 @@ const Footer = () => {
 
   return (
     <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-      <group position={[isMobile ? -1.5 : -2.5, 0, 0]}>
+      <group position={[isMobile ? -2.5 : -3.75, 0, 0]}>
         {getLinks()}
       </group>
     </group>
