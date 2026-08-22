@@ -27,7 +27,7 @@ const TextWindow = () => {
         {...fontProps}
         scale={[-1, -1, 1]}
         fontSize={1.3}
-        position={[0.12, 0, -1.4]}
+        position={[-0.05, 0, -1.4]}
         rotation={[0, 0, -Math.PI / 2]}>
         UI/UX & E-COMMERCE
       </Text>
