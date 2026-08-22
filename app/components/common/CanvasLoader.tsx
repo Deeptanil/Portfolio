@@ -51,15 +51,16 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
     }
   }, [backgroundColor]);
 
-  const noiseOverlayStyle = {
-    backgroundBlendMode: "soft-light",
-    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E\")",
+  const minecraftDirtStyle: React.CSSProperties = {
+    backgroundColor: "#402c1b",
+    backgroundImage: "url('/minecraft_dirt.webp')",
     backgroundRepeat: "repeat",
-    backgroundSize: "100px",
+    backgroundSize: "64px 64px",
+    imageRendering: "pixelated",
   };
 
   return (
-    <div className="h-[100dvh] wrapper relative overflow-hidden" style={noiseOverlayStyle}>
+    <div className="h-[100dvh] wrapper relative overflow-hidden" style={minecraftDirtStyle}>
       <div className="h-[100dvh] relative" ref={ref}>
         <Canvas
           className="base-canvas"
