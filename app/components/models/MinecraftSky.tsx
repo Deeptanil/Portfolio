@@ -6,7 +6,11 @@ import { ComponentProps, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 
-const SingleCloudLayer = () => {
+const SingleCloudLayer = ({
+  isBottom = false,
+}: {
+  isBottom?: boolean;
+}) => {
   const { scene } = useGLTF('models/minecraft_sky.glb');
   const isNight = useThemeStore((state) => state.theme.type === 'night');
 
@@ -47,25 +51,27 @@ const SingleCloudLayer = () => {
     return cloned;
   }, [scene, isNight]);
 
+  if (isBottom) {
+    return (
+      <group dispose={null}>
+        {/* BOTTOM LAYER: Shifted slightly lower to Y = -68 with X = 35 offset */}
+        <primitive
+          object={preparedScene}
+          position={[35, -68, -6]}
+          scale={[5.2, 1.8, 5.2]}
+          rotation={[0, Math.PI, 0]}
+        />
+      </group>
+    );
+  }
+
   return (
     <group dispose={null}>
-      {/* 
-        LAYER 1: TOP CLOUD LAYER (Positioned above text at Y = 12)
-      */}
+      {/* TOP LAYER: Positioned above text at Y = 12 */}
       <primitive
         object={preparedScene}
         position={[0, 12, -6]}
-        scale={[4.5, 1.8, 4.5]}
-        rotation={[0, 0, 0]}
-      />
-
-      {/* 
-        LAYER 2: BOTTOM CLOUD LAYER (Shifted down to Y = -56 for perfect breathing room below text)
-      */}
-      <primitive
-        object={preparedScene.clone()}
-        position={[0, -56, -6]}
-        scale={[4.5, 1.8, 4.5]}
+        scale={[4.2, 1.8, 4.2]}
         rotation={[0, 0, 0]}
       />
     </group>
@@ -73,36 +79,64 @@ const SingleCloudLayer = () => {
 };
 
 const MinecraftSky = (props: ComponentProps<'group'>) => {
-  const track1Ref = useRef<THREE.Group>(null);
-  const track2Ref = useRef<THREE.Group>(null);
+  // Top Layer Track Refs (Increased Speed: 0.95)
+  const topTrack1 = useRef<THREE.Group>(null);
+  const topTrack2 = useRef<THREE.Group>(null);
+
+  // Bottom Layer Track Refs (Speed: 1.6)
+  const bottomTrack1 = useRef<THREE.Group>(null);
+  const bottomTrack2 = useRef<THREE.Group>(null);
 
   const TRACK_WIDTH = 100;
-  const SPEED = 1.0;
+  const TOP_SPEED = 0.95;     // Increased top clouds speed
+  const BOTTOM_SPEED = 1.6;   // Bottom clouds speed
 
   useFrame((_, delta) => {
-    const moveAmount = delta * SPEED;
+    // 1. Move Top Layer
+    const topMove = delta * TOP_SPEED;
+    if (topTrack1.current && topTrack2.current) {
+      topTrack1.current.position.x += topMove;
+      topTrack2.current.position.x += topMove;
 
-    if (track1Ref.current && track2Ref.current) {
-      track1Ref.current.position.x += moveAmount;
-      track2Ref.current.position.x += moveAmount;
-
-      if (track1Ref.current.position.x >= TRACK_WIDTH) {
-        track1Ref.current.position.x = track2Ref.current.position.x - TRACK_WIDTH;
+      if (topTrack1.current.position.x >= TRACK_WIDTH) {
+        topTrack1.current.position.x = topTrack2.current.position.x - TRACK_WIDTH;
       }
+      if (topTrack2.current.position.x >= TRACK_WIDTH) {
+        topTrack2.current.position.x = topTrack1.current.position.x - TRACK_WIDTH;
+      }
+    }
 
-      if (track2Ref.current.position.x >= TRACK_WIDTH) {
-        track2Ref.current.position.x = track1Ref.current.position.x - TRACK_WIDTH;
+    // 2. Move Bottom Layer
+    const bottomMove = delta * BOTTOM_SPEED;
+    if (bottomTrack1.current && bottomTrack2.current) {
+      bottomTrack1.current.position.x += bottomMove;
+      bottomTrack2.current.position.x += bottomMove;
+
+      if (bottomTrack1.current.position.x >= TRACK_WIDTH) {
+        bottomTrack1.current.position.x = bottomTrack2.current.position.x - TRACK_WIDTH;
+      }
+      if (bottomTrack2.current.position.x >= TRACK_WIDTH) {
+        bottomTrack2.current.position.x = bottomTrack1.current.position.x - TRACK_WIDTH;
       }
     }
   });
 
   return (
     <group {...props}>
-      <group ref={track1Ref} position={[0, 0, 0]}>
-        <SingleCloudLayer />
+      {/* Top Layer Tracks (Increased Speed = 0.95) */}
+      <group ref={topTrack1} position={[0, 0, 0]}>
+        <SingleCloudLayer isBottom={false} />
       </group>
-      <group ref={track2Ref} position={[-TRACK_WIDTH, 0, 0]}>
-        <SingleCloudLayer />
+      <group ref={topTrack2} position={[-TRACK_WIDTH, 0, 0]}>
+        <SingleCloudLayer isBottom={false} />
+      </group>
+
+      {/* Bottom Layer Tracks (Position Y = -68, Speed = 1.6) */}
+      <group ref={bottomTrack1} position={[0, 0, 0]}>
+        <SingleCloudLayer isBottom={true} />
+      </group>
+      <group ref={bottomTrack2} position={[-TRACK_WIDTH, 0, 0]}>
+        <SingleCloudLayer isBottom={true} />
       </group>
     </group>
   );
