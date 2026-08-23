@@ -51,6 +51,8 @@ const Hero = () => {
       <MinecraftPhantom />
 
       <group position={[0, -25, 5.69]}>
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[3, 5, 4]} intensity={3.5} castShadow />
         <pointLight castShadow position={[1, 1, -2.5]} intensity={60} distance={10} />
         <WindowModel receiveShadow />
         <TextWindow />

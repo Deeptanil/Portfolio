@@ -17,10 +17,16 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
       if (data && data.el && progress === 100) {
+        // Only run auto-scroll if screen/tab is currently in focus and visible
+        if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+          window.history.replaceState(null, '', window.location.pathname);
+          return;
+        }
+
         // Start at top of the home page so user sees the initial 3D scene
         data.el.scrollTop = 0;
 
-        // Prevent user scroll inputs (wheel, touch, keys, scrollbar) during auto-scroll
+        // Prevent user scroll inputs during auto-scroll
         const blockScrollInput = (e: Event) => {
           e.preventDefault();
           e.stopPropagation();
@@ -30,30 +36,46 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
         const targetEl = data.el;
         targetEl.style.pointerEvents = 'none';
         window.addEventListener('wheel', blockScrollInput, { capture: true, passive: false });
+        window.addEventListener('touchstart', blockScrollInput, { capture: true, passive: false });
         window.addEventListener('touchmove', blockScrollInput, { capture: true, passive: false });
         window.addEventListener('keydown', blockScrollInput, { capture: true, passive: false });
 
         const unlockScroll = () => {
           targetEl.style.pointerEvents = 'auto';
           window.removeEventListener('wheel', blockScrollInput, { capture: true });
+          window.removeEventListener('touchstart', blockScrollInput, { capture: true });
           window.removeEventListener('touchmove', blockScrollInput, { capture: true });
           window.removeEventListener('keydown', blockScrollInput, { capture: true });
           window.history.replaceState(null, '', window.location.pathname);
         };
 
-        // Smoothly auto-scroll from top to bottom over 3.2 seconds using power2.out for 60fps GPU acceleration
+        let scrollTween: gsap.core.Tween | null = null;
+
+        const handleFocusLoss = () => {
+          if (scrollTween) {
+            scrollTween.kill();
+          }
+          unlockScroll();
+        };
+
+        window.addEventListener('blur', handleFocusLoss, { passive: true });
+        document.addEventListener('visibilitychange', handleFocusLoss, { passive: true });
+
         const timer = setTimeout(() => {
           const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
-          gsap.to(targetEl, {
+          scrollTween = gsap.to(targetEl, {
             scrollTop: targetScroll,
-            duration: 3.2,
-            ease: "power2.out",
+            duration: 2.8,
+            ease: "power2.inOut",
             onComplete: unlockScroll
           });
-        }, 300);
+        }, 50);
 
         return () => {
           clearTimeout(timer);
+          if (scrollTween) scrollTween.kill();
+          window.removeEventListener('blur', handleFocusLoss);
+          document.removeEventListener('visibilitychange', handleFocusLoss);
           unlockScroll();
         };
       }
@@ -61,6 +83,11 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   }, [data, progress]);
 
   useFrame((state, delta) => {
+    // Pause frame updates if window is out of focus or tab is hidden
+    if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+      return;
+    }
+
     if (data) {
       const a = data.range(0, 0.3);
       const b = data.range(0.3, 0.5);

@@ -2,7 +2,7 @@
 
 import { useGLTF, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTF } from 'three-stdlib';
 
@@ -23,6 +23,16 @@ const WindowModel = (props: Partial<THREE.Object3D>) => {
 
   const { nodes, materials } = useGLTF('models/window.glb', true) as unknown as GLTFResult;
   const data = useScroll();
+
+  useEffect(() => {
+    if (materials?.WIN0003_Textures) {
+      const mat = materials.WIN0003_Textures;
+      mat.roughness = 0.35;
+      mat.metalness = 0.15;
+      mat.envMapIntensity = 1.8;
+      mat.needsUpdate = true;
+    }
+  }, [materials]);
 
   useFrame(() => {
     if (!data) return;

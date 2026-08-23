@@ -79,17 +79,22 @@ export default function WorkPage() {
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Start slow auto-scroll after 15 seconds
+    // Start slow auto-scroll after 15 seconds only if screen is in focus and visible
     const timer = setTimeout(() => {
       isAutoScrollingRef.current = true;
       scrollIntervalRef.current = setInterval(() => {
-        if (isAutoScrollingRef.current) {
+        if (
+          isAutoScrollingRef.current &&
+          typeof document !== 'undefined' &&
+          !document.hidden &&
+          document.hasFocus()
+        ) {
           window.scrollBy({ top: 1, behavior: 'auto' });
         }
       }, 40); // Slow 25px/sec auto-scroll
     }, 15000);
 
-    // Stop auto-scroll on user interaction so user scrolls from current position
+    // Stop auto-scroll on user interaction or when screen loses focus / tab changes
     const handleInteract = () => {
       isAutoScrollingRef.current = false;
       if (scrollIntervalRef.current) {
@@ -97,10 +102,18 @@ export default function WorkPage() {
       }
     };
 
+    const handleVisibilityChange = () => {
+      if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+        handleInteract();
+      }
+    };
+
     window.addEventListener('wheel', handleInteract, { passive: true });
     window.addEventListener('touchstart', handleInteract, { passive: true });
     window.addEventListener('touchmove', handleInteract, { passive: true });
     window.addEventListener('keydown', handleInteract, { passive: true });
+    window.addEventListener('blur', handleInteract, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
 
     return () => {
       clearTimeout(timer);
@@ -111,6 +124,8 @@ export default function WorkPage() {
       window.removeEventListener('touchstart', handleInteract);
       window.removeEventListener('touchmove', handleInteract);
       window.removeEventListener('keydown', handleInteract);
+      window.removeEventListener('blur', handleInteract);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
