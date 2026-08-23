@@ -6,6 +6,7 @@ const syne = Syne({
   subsets: ['latin'],
   weight: ['700', '800'],
   variable: '--font-syne',
+  display: 'swap',
 });
 
 const cormorant = Cormorant_Garamond({
@@ -13,12 +14,14 @@ const cormorant = Cormorant_Garamond({
   weight: ['400', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-cormorant',
+  display: 'swap',
 });
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-jakarta',
+  display: 'swap',
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://deeptanil.com';
@@ -132,6 +135,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="overscroll-y-none" suppressHydrationWarning>
       <head>
+        <link rel="preload" href="/fonts/MinecraftRegular-Bmg3.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/soria-font.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/Vercetti-Regular.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
