@@ -86,7 +86,7 @@ export default function WorkPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button — Pixel-Perfect Matching Screenshot */}
+      {/* Minecraft UI Return Button */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
@@ -104,57 +104,59 @@ export default function WorkPage() {
         </Link>
       </div>
 
-      {/* Minecraft End Credits Roll — High Contrast, Bigger Font, Unboxed */}
+      {/* Minecraft End Credits Roll */}
       <div
         className={`w-full max-w-[94vw] sm:max-w-3xl px-4 sm:px-8 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-24 ${
           manualScroll ? '' : startScrolling ? 'animate-[minecraftCreditsScroll_45s_linear_forwards]' : ''
         }`}
       >
-        {/* Header */}
-        <div className="space-y-4 pt-10 sm:pt-14 font-minecraft-regular">
+        {/* Header: Minecraft Font for Heading, Normal Font for Subtitle */}
+        <div className="space-y-4 pt-10 sm:pt-14">
           <h1
-            className="text-3xl sm:text-5xl font-bold tracking-widest text-[#ffff55] uppercase"
-            style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000' }}
+            className="text-3xl sm:text-5xl font-bold tracking-widest text-white uppercase font-minecraft-regular"
+            style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
           >
             {preventOrphans("WORK & EDUCATION")}
           </h1>
           <p
-            className="text-[#55ffff] text-base sm:text-xl tracking-widest uppercase"
-            style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
+            className="text-white text-base sm:text-xl tracking-widest uppercase font-sans"
+            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
           >
             {preventOrphans("The Chronicle of Deeptanil Sinha")}
           </p>
         </div>
 
-        {/* Work Timeline Sections — Clean separated text without cards/boxes */}
+        {/* Work Timeline Sections */}
         {WORK_EXPERIENCE.map((item, idx) => (
-          <div key={idx} className="w-full space-y-5 font-minecraft-regular max-w-2xl">
+          <div key={idx} className="w-full space-y-5 max-w-2xl">
+            {/* Heading: Minecraft font */}
             <h2
-              className="text-2xl sm:text-3xl font-bold text-[#ffff55] uppercase tracking-widest"
+              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
               {preventOrphans(item.title)}
             </h2>
+            {/* Subtitle: Normal font */}
             <h3
-              className="text-lg sm:text-xl font-bold text-[#55ffff] uppercase tracking-wider"
-              style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
+              className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
+              style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
             >
               {preventOrphans(item.subtitle)}
             </h3>
+            {/* Date: Minecraft font */}
             <p
-              className="text-xs sm:text-sm text-[#ffffff] tracking-widest uppercase opacity-90"
+              className="text-xs sm:text-sm text-white tracking-widest uppercase font-minecraft-regular opacity-90"
               style={{ textShadow: '1px 1px 0px #000000' }}
             >
               [{item.date}]
             </p>
+            {/* Body: Normal font */}
             <div className="space-y-4 pt-2">
               {item.description.map((line, lIdx) => (
                 <p
                   key={lIdx}
-                  className={`text-base sm:text-lg leading-relaxed tracking-wide ${
-                    lIdx % 2 === 0 ? 'text-[#55ff55]' : 'text-[#55ffff]'
-                  }`}
-                  style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
+                  className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
+                  style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
                 >
                   {preventOrphans(line)}
                 </p>
@@ -164,21 +166,21 @@ export default function WorkPage() {
         ))}
 
         {/* End Credits Footer Note */}
-        <div className="pt-16 sm:pt-24 space-y-6 font-minecraft-regular text-center pb-16">
+        <div className="pt-16 sm:pt-24 space-y-6 text-center pb-16">
           <p
-            className="text-[#55ff55] text-base sm:text-lg tracking-widest uppercase"
-            style={{ textShadow: '2px 2px 0px #000000' }}
+            className="text-white text-base sm:text-lg tracking-widest uppercase font-sans"
+            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
           >
             {preventOrphans("And the player awoke from the dream. And the player began a new dream.")}
           </p>
           <p
-            className="text-[#55ff55] text-base sm:text-lg tracking-widest uppercase"
-            style={{ textShadow: '2px 2px 0px #000000' }}
+            className="text-white text-base sm:text-lg tracking-widest uppercase font-sans"
+            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
           >
             {preventOrphans("and the universe said I love you because you are love.")}
           </p>
           <p
-            className="text-[#aaaaaa] text-xs sm:text-sm tracking-widest uppercase pt-4"
+            className="text-white text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular opacity-80"
             style={{ textShadow: '1px 1px 0px #000000' }}
           >
             [End of Document]
