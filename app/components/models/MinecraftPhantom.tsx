@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
+import { isMobile } from 'react-device-detect';
 
 const MinecraftPhantom = () => {
   const groupRef = useRef<THREE.Group>(null);
@@ -13,8 +14,8 @@ const MinecraftPhantom = () => {
   const isDark = useThemeStore((state) => state.theme.type === 'dark');
 
   // Straight linear path: enters from right, exits to left, centered near Y=0 for mobile visibility
-  const startLocal = new THREE.Vector3(4.5, 1.0, -3.5);
-  const endLocal = new THREE.Vector3(-4.5, -1.0, -3.5);
+  const startLocal = new THREE.Vector3(5.5, 0.8, -3.5);
+  const endLocal = new THREE.Vector3(-5.5, -0.8, -3.5);
 
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
@@ -24,14 +25,16 @@ const MinecraftPhantom = () => {
       return;
     }
 
-    // Tighter scroll window: enters later, leaves earlier
-    const t = scroll.range(0.27, 0.25);
+    // Expanded scroll range (0.18 -> 0.65) so it takes longer to scroll past
+    const linearT = scroll.range(0.18, 0.47);
 
-    const isVisible = t > 0.001 && t < 0.995;
+    const isVisible = linearT > 0.001 && linearT < 0.995;
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
-      // Pure linear interpolation in camera local space — no bezier, no bouncing
+      // Ease curve (cosine ease) so progress lingers near center of screen for longer
+      const t = 0.5 - 0.5 * Math.cos(Math.PI * linearT);
+
       const localPos = startLocal.clone().lerp(endLocal, t);
 
       const worldPos = localPos.clone();
@@ -39,7 +42,8 @@ const MinecraftPhantom = () => {
       groupRef.current.position.copy(worldPos);
 
       // Point toward end of path
-      const nextT = Math.min(1, t + 0.05);
+      const nextLinearT = Math.min(1, linearT + 0.03);
+      const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextLinearT);
       const nextLocal = startLocal.clone().lerp(endLocal, nextT);
       const nextWorld = nextLocal.clone();
       state.camera.localToWorld(nextWorld);
@@ -48,12 +52,14 @@ const MinecraftPhantom = () => {
     }
   });
 
+  const phantomScale = isMobile ? 0.60 : 0.48;
+
   return (
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={4.0} />
       <directionalLight position={[2, 4, 5]} intensity={4.0} />
       <group rotation={[0, 0, 0]}>
-        <primitive object={scene} scale={[0.45, 0.45, 0.45]} />
+        <primitive object={scene} scale={[phantomScale, phantomScale, phantomScale]} />
       </group>
     </group>
   );
