@@ -150,17 +150,12 @@ const GridTile = (props: GridTileProps) => {
       { getGeometry() }
       <group>
         {!isMobile && (
-          <mesh
-            position={[0, 0, -0.25]}
-            ref={hoverBoxRef}
-            scale={[0, 0, 0]}
-            raycast={() => null}
-          >
+          <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
             <boxGeometry args={[4, 4, 0.5]} />
             <meshPhysicalMaterial
-              color="#222222"
+              color="#444"
               transparent={true}
-              opacity={0.5}
+              opacity={0.3}
             />
             <Edges color="white" lineWidth={3} />
           </mesh>
@@ -173,8 +168,7 @@ const GridTile = (props: GridTileProps) => {
         <color attach="background" args={[color]} />
         {children}
       </MeshPortalMaterial>
-      {/* 2D white wireframe border around main tile surface */}
-      <Edges color="white" lineWidth={isMobile ? 2 : 3} />
+      {isMobile && <Edges color="white" lineWidth={2} />}
     </mesh>
   );
 };
