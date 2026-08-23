@@ -49,8 +49,9 @@ const MinecraftPhantom = () => {
       return;
     }
 
-    // Expanded scroll range (0.18 -> 0.65) so it takes longer to scroll past
-    const linearT = scroll.range(0.18, 0.47);
+    // Enters at 0.18 and fully exits by ~0.32 — well before the window scene starts
+    // opening at scroll ~0.4, so the phantom is gone before the window comes into focus.
+    const linearT = scroll.range(0.18, 0.14);
 
     const isVisible = linearT > 0.001 && linearT < 0.995;
     groupRef.current.visible = isVisible;
@@ -73,7 +74,7 @@ const MinecraftPhantom = () => {
     }
   });
 
-  const phantomScale = isMobile ? 0.60 : 0.48;
+  const phantomScale = isMobile ? 0.45 : 0.48;
 
   return (
     <group ref={groupRef} visible={false}>

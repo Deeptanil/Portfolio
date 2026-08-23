@@ -58,8 +58,9 @@ const MinecraftBee = () => {
       return;
     }
 
-    // Enters at 0.21 and exits earlier at 0.65
-    const linearT = scroll.range(0.21, 0.44);
+    // Enters at 0.21 and fully exits by ~0.32 — well before the window scene starts
+    // opening at scroll ~0.4, so the bee is gone before the window comes into focus.
+    const linearT = scroll.range(0.21, 0.11);
 
     const isVisible = linearT > 0.001 && linearT < 0.995;
     groupRef.current.visible = isVisible;
@@ -87,7 +88,7 @@ const MinecraftBee = () => {
     }
   });
 
-  const beeScale = isMobile ? 0.12 : 0.08;
+  const beeScale = isMobile ? 0.09 : 0.08;
 
   return (
     <group ref={groupRef} visible={false}>

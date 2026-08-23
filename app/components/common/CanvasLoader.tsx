@@ -5,7 +5,6 @@ import { AdaptiveDpr, Preload, ScrollControls, useProgress } from "@react-three/
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { Suspense, useRef, useSyncExternalStore } from "react";
-import { isMobile } from "react-device-detect";
 
 import { useThemeStore } from "@stores";
 
@@ -65,10 +64,10 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
       <div className="h-[100dvh] relative" ref={ref} suppressHydrationWarning>
         <Canvas
           className="base-canvas"
-          shadows={!isMobile}
+          shadows
           style={canvasStyle}
           ref={canvasRef}
-          dpr={isMobile ? 1 : [1, 2]}
+          dpr={[1, 2]}
           gl={{ powerPreference: 'high-performance', antialias: true, alpha: false }}
         >
           {/* Attach dynamic theme background color directly to 3D scene clear color */}
