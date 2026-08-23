@@ -6,6 +6,7 @@ import { ComponentProps, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 
+// Shared material setup for a cloned scene
 const createSceneClone = (
   baseScene: THREE.Group,
   isNight: boolean,
@@ -36,6 +37,9 @@ const createSceneClone = (
   return cloned;
 };
 
+// ─────────────────────────────────────────────────────────────
+// 3-Tile Seamless Ring Treadmill
+// ─────────────────────────────────────────────────────────────
 const CloudTreadmill = ({
   y,
   z = 0,
@@ -63,6 +67,7 @@ const CloudTreadmill = ({
     const center = box.getCenter(new THREE.Vector3());
 
     centeredGroup.position.set(-center.x, -center.y, -center.z);
+
     const w = size.x * scale[0] * 0.99;
 
     const a = createSceneClone(centeredGroup, isNight, materialsRef);
@@ -78,8 +83,8 @@ const CloudTreadmill = ({
   const drift = useRef(0);
 
   useFrame((_, delta) => {
-    const safeDelta = Math.min(delta, 0.05);
-    drift.current += safeDelta * speed;
+    const clampedDelta = Math.min(delta, 0.033);
+    drift.current += clampedDelta * speed;
 
     const span = 3 * tileWidth;
     const halfSpan = 1.5 * tileWidth;
@@ -118,22 +123,21 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
 
   useFrame((_, delta) => {
     if (!cloudGroupRef.current || !scroll) return;
-    const safeDelta = Math.min(delta, 0.05);
 
     const windowRange = scroll.range(0.10, 0.30);
 
     const targetScale = 1 + 8 * windowRange * windowRange;
     cloudGroupRef.current.scale.setScalar(
-      THREE.MathUtils.damp(cloudGroupRef.current.scale.x, targetScale, 6, safeDelta)
+      THREE.MathUtils.damp(cloudGroupRef.current.scale.x, targetScale, 6, delta)
     );
 
     const targetY = 180 * windowRange;
     const targetZ = 220 * windowRange;
     cloudGroupRef.current.position.y = THREE.MathUtils.damp(
-      cloudGroupRef.current.position.y, targetY, 6, safeDelta
+      cloudGroupRef.current.position.y, targetY, 6, delta
     );
     cloudGroupRef.current.position.z = THREE.MathUtils.damp(
-      cloudGroupRef.current.position.z, targetZ, 6, safeDelta
+      cloudGroupRef.current.position.z, targetZ, 6, delta
     );
 
     const fadeRange = scroll.range(0.10, 0.32);
@@ -144,7 +148,7 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
 
     if (isVisible) {
       materialsRef.current.forEach((mat) => {
-        mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, 6, safeDelta);
+        mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, 6, delta);
       });
     }
   });

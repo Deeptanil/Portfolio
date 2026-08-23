@@ -19,7 +19,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.28 : 0.4,
+    fontSize: isMobile ? 0.22 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -35,8 +35,8 @@ const Experience = () => {
 
     if (titleRef.current) {
       titleRef.current.children.forEach((text, i) => {
-        // Mobile target Y = 1.8 so title is clearly visible right above the top button
-        const yTarget = isMobile ? 1.8 : 0.5;
+        // Lower Y target (1.95 on mobile) so EXPERIENCE text sits comfortably inside camera view above tiles
+        const yTarget = isMobile ? 1.95 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -48,16 +48,16 @@ const Experience = () => {
   const getTitle = () => {
     const title = 'EXPERIENCE';
     if (isMobile) {
-      const diff = 0.28;
+      const diff = 0.22;
       const startX = -((title.length - 1) * diff) / 2;
       return title.split('').map((char, i) => {
         return (
           <Text
             key={i}
             {...fontProps}
-            fontSize={0.28}
+            fontSize={0.22}
             anchorX="center"
-            position={[startX + i * diff, 1.8, 0.4]}
+            position={[startX + i * diff, 1.95, 0.4]}
           >
             {char}
           </Text>
@@ -87,14 +87,14 @@ const Experience = () => {
             id="work"
             color='#b9c6d6'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.2 : 0, isMobile ? 0.01 : 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 0.95 : 0, isMobile ? 0.01 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.2 : 0, 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -0.95 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>

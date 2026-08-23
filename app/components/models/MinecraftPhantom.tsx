@@ -12,6 +12,7 @@ const MinecraftPhantom = () => {
   const scroll = useScroll();
   const isDark = useThemeStore((state) => state.theme.type === 'dark');
 
+  // Helper for 4-point Cubic Bezier Curve evaluation
   const getCubicBezierPoint = (
     p0: THREE.Vector3,
     p1: THREE.Vector3,
@@ -30,16 +31,20 @@ const MinecraftPhantom = () => {
   useFrame((state, delta) => {
     if (!groupRef.current || !scroll) return;
 
+    // Phantom flies ONLY in night/dark mode
     if (!isDark) {
       groupRef.current.visible = false;
       return;
     }
 
+    // Phantom activates during night scroll (scroll 20% -> 60%)
     const t = scroll.range(0.20, 0.60);
+
     const isVisible = t > 0.001 && t < 0.995;
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
+      // Camera-local space flight curve
       const p0 = new THREE.Vector3(7, 4.5, -3.5);
       const p1 = new THREE.Vector3(5, 1.0, -3.5);
       const p2 = new THREE.Vector3(-1, -2.5, -3.5);
@@ -50,10 +55,10 @@ const MinecraftPhantom = () => {
       const worldPos = localPos.clone();
       state.camera.localToWorld(worldPos);
 
-      // Smooth lerp position
+      // Smooth position lerp
       groupRef.current.position.lerp(worldPos, Math.min(1, delta * 6));
 
-      // Right-side up orientation along flight path
+      // Orientation along flight curve with right-side-up Y-rotation correction
       const nextT = Math.min(1, t + 0.03);
       const nextLocalPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
       const nextWorldPos = nextLocalPos.clone();
@@ -62,10 +67,18 @@ const MinecraftPhantom = () => {
       const targetRotation = new THREE.Matrix4().lookAt(
         groupRef.current.position,
         nextWorldPos,
-        new THREE.Vector3(0, 1, 0)
+        state.camera.up
       );
       const targetQuat = new THREE.Quaternion().setFromRotationMatrix(targetRotation);
+
+      // Flip 180 deg around Y so Phantom faces forward right side up
+      const flipQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+      targetQuat.multiply(flipQuat);
+
       groupRef.current.quaternion.slerp(targetQuat, Math.min(1, delta * 8));
+
+      // Subtle wing flap oscillation
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 6) * 0.05;
     }
   });
 
@@ -73,7 +86,7 @@ const MinecraftPhantom = () => {
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={4.0} />
       <directionalLight position={[2, 4, 5]} intensity={4.0} />
-      <primitive object={scene} scale={[0.45, 0.45, 0.45]} rotation={[0, Math.PI, 0]} />
+      <primitive object={scene} scale={[0.45, 0.45, 0.45]} />
     </group>
   );
 };
