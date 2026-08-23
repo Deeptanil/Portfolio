@@ -137,10 +137,10 @@ const GridTile = (props: GridTileProps) => {
       onPointerOut={onPointerOut}>
       <planeGeometry args={[tileWidth, tileHeight, 1]} />
       <group>
-        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
+        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
           <boxGeometry args={[tileWidth, tileHeight, 0.5]}/>
           <meshPhysicalMaterial color="#444" transparent={true} opacity={0.3} />
-          <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
+          <Edges color="white" lineWidth={3}/>
         </mesh>
         <Text position={textPosition} {...fontProps} ref={titleRef}>
           {title}

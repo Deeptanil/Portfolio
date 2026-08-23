@@ -1,6 +1,6 @@
 'use client';
 
-import { Html, Svg, Text, useCursor, useScroll } from "@react-three/drei";
+import { Html, Text, useCursor, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -18,7 +18,6 @@ interface ToastState {
 const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string, x?: number, y?: number) => void }) => {
   const textRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
-  const isMobile = useIsMobile();
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
 
@@ -55,9 +54,8 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       window.open(link.url, '_blank');
     }
   };
-  
+
   const onPointerMove = (e: MouseEvent) => {
-    if (isMobile) return;
     const hoverDiv = document.getElementById(`footer-link-${link.name}`);
     if (hoverDiv) {
       gsap.to(hoverDiv, {
@@ -79,8 +77,6 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
   };
 
   useEffect(() => {
-    if (isMobile) return;
-
     if (!document.getElementById(`footer-link-${link.name}`)) {
       const hoverDiv = document.createElement('div');
       hoverDiv.id = `footer-link-${link.name}`;
@@ -101,11 +97,9 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       const el = document.getElementById(`footer-link-${link.name}`);
       if (el) el.remove();
     };
-  }, [link.name, link.hoverText, isMobile]);
+  }, [link.name, link.hoverText]);
 
   useEffect(() => {
-    if (isMobile) return;
-
     const hoverDiv = document.getElementById(`footer-link-${link.name}`);
 
     if (hovered) {
@@ -125,26 +119,9 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       if (hoverDiv) gsap.killTweensOf(hoverDiv);
       if (textRef.current) gsap.killTweensOf(textRef.current);
     };
-  }, [hovered, link.name, isMobile]);
+  }, [hovered, link.name]);
 
   useCursor(hovered);
-
-  if (isMobile) {
-    const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
-    return (
-      <group onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
-        <Svg
-          src={iconPath}
-          scale={0.0018}
-          position={[-0.2, 0.2, 0]}
-        />
-        <mesh position={[0, 0, 0.01]}>
-          <planeGeometry args={[0.8, 0.8]} />
-          <meshBasicMaterial visible={false} />
-        </mesh>
-      </group>
-    );
-  }
 
   return (
     <Text ref={textRef} {...fontProps}>
@@ -174,10 +151,36 @@ const Footer = () => {
     }
   });
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const handleMobileClick = (link: FooterLink, e: any) => {
+    const clientX = e.clientX ?? e.nativeEvent?.clientX;
+    const clientY = e.clientY ?? e.nativeEvent?.clientY;
+
+    if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+        handleToast('Copied!', clientX, clientY);
+      }
+      window.location.href = 'mailto:deeptanilsinha27@gmail.com';
+      return;
+    }
+
+    if (link.download || link.url.endsWith('.pdf')) {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.download = 'Deeptanil_Sinha_Resume.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      window.open(link.url, '_blank');
+    }
+  };
+
   const getLinks = () => {
     return FOOTER_LINKS.map((link, i) => {
       return (
-        <group key={i} position={[i * (isMobile ? 1.25 : 2.5), 0, 0]}>
+        <group key={i} position={[i * 2.5, 0, 0]}>
           <FooterLinkItem link={link} onToast={handleToast} />
         </group>
       );
@@ -187,9 +190,30 @@ const Footer = () => {
   return (
     <>
       <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-        <group position={[isMobile ? -1.875 : -3.75, 0, 0]}>
-          {getLinks()}
-        </group>
+        {!isMobile ? (
+          <group position={[-3.75, 0, 0]}>
+            {getLinks()}
+          </group>
+        ) : (
+          <Html center zIndexRange={[50, 0]}>
+            <div className="flex items-center justify-center space-x-6 sm:space-x-10 select-none" suppressHydrationWarning>
+              {FOOTER_LINKS.map((link, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => handleMobileClick(link, e)}
+                  className="p-2 transition-transform active:scale-90 hover:opacity-80 focus:outline-none"
+                  aria-label={link.name}
+                >
+                  <img
+                    src={link.icon.startsWith('/') ? link.icon : `/${link.icon}`}
+                    alt={link.name}
+                    className="w-6 h-6 sm:w-7 sm:h-7 invert brightness-200 object-contain"
+                  />
+                </button>
+              ))}
+            </div>
+          </Html>
+        )}
       </group>
 
       {/* Minecraft-styled Toast Popup near Mouse Cursor */}
