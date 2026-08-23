@@ -24,8 +24,8 @@ const SUBWOOFER_LULLABY_NOTES = [
 ];
 
 const SoundToggle = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const isPlayingRef = useRef(true); // ref mirrors state so handlers always read current value
+  const [isPlaying, setIsPlaying] = useState(false); // Default muted for clean initial user experience
+  const isPlayingRef = useRef(false); // ref mirrors state so handlers always read current value
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 

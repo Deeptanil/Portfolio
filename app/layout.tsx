@@ -21,29 +21,81 @@ const jakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://deeptanil.com';
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://deeptanil.com/'),
-  title: "Deeptanil Sinha | Product Engineer",
-  description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co. Hands-on experience building production websites, optimizing backends, and using AI-assisted development.",
-  keywords: "Deeptanil Sinha, Product Engineer, STRAYED, Prettiva, Full-Stack Developer, UI/UX Design, E-commerce, Web Performance, Bengaluru",
-  authors: [{ name: "Deeptanil Sinha" }],
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: "Deeptanil Sinha | Product Engineer & Creative Technologist",
+    template: "%s | Deeptanil Sinha",
+  },
+  description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+  keywords: [
+    "Deeptanil Sinha",
+    "Product Engineer",
+    "Creative Technologist",
+    "Full-Stack Developer",
+    "WebGL Developer",
+    "Three.js Developer",
+    "UI/UX Designer",
+    "MIT Bengaluru",
+    "Portfolio",
+    "STRAYED",
+    "Prettiva",
+  ],
+  authors: [{ name: "Deeptanil Sinha", url: baseUrl }],
   creator: "Deeptanil Sinha",
+  publisher: "Deeptanil Sinha",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: baseUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: "Deeptanil Sinha | Product Engineer",
-    description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co.",
+    title: "Deeptanil Sinha | Product Engineer & Creative Technologist",
+    description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+    url: baseUrl,
     siteName: "Deeptanil Sinha Portfolio",
+    images: [
+      {
+        url: '/Deeptanil.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Deeptanil Sinha - Product Engineer & Creative Technologist',
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Deeptanil Sinha | Product Engineer",
-    description: "Bridging development, UX, and e-commerce. Co-founder of STRAYED and Prettiva & Co.",
+    title: "Deeptanil Sinha | Product Engineer & Creative Technologist",
+    description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+    images: ['/Deeptanil.webp'],
+    creator: "@deeptanil",
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/Deeptanil.webp',
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e65c00",
+  themeColor: "#0a0a0c",
   initialScale: 1,
   minimumScale: 1,
   maximumScale: 1,
@@ -54,8 +106,37 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Deeptanil Sinha",
+    "jobTitle": "Product Engineer & Creative Technologist",
+    "url": baseUrl,
+    "image": `${baseUrl}/Deeptanil.webp`,
+    "sameAs": [
+      "https://linkedin.com/in/deeptanil",
+      "https://github.com/Deeptanil"
+    ],
+    "alumniOf": "MIT Bengaluru",
+    "knowsAbout": [
+      "Product Engineering",
+      "WebGL",
+      "Three.js",
+      "Next.js",
+      "React",
+      "UI/UX Design",
+      "Full-Stack Software Architecture"
+    ]
+  };
+
   return (
     <html lang="en" className="overscroll-y-none">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${syne.variable} ${cormorant.variable} ${jakarta.variable} font-sans antialiased bg-[#0a0a0c] text-white`}
       >
