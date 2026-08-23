@@ -8,13 +8,15 @@ import Hero from "./components/hero";
 
 const Home = () => {
   return (
-    <CanvasLoader>
-      <ScrollWrapper>
-        <Hero />
-        <Experience />
-        <Footer />
-      </ScrollWrapper>
-    </CanvasLoader>
+    <main suppressHydrationWarning className="w-full h-full">
+      <CanvasLoader>
+        <ScrollWrapper>
+          <Hero />
+          <Experience />
+          <Footer />
+        </ScrollWrapper>
+      </CanvasLoader>
+    </main>
   );
 };
 
