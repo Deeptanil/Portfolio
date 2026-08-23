@@ -2,10 +2,10 @@
 
 import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
+import gsap from "gsap";
+import { useEffect } from 'react';
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
-
-import { useEffect } from 'react';
 import { useScrollStore } from "@stores";
 
 const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] }) => {
@@ -16,9 +16,23 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
       if (data && data.el) {
-        setTimeout(() => {
-          data.el.scrollTop = data.el.scrollHeight;
-        }, 100);
+        // Start at top of the home page so user sees the initial 3D scene
+        data.el.scrollTop = 0;
+
+        // Smoothly auto-scroll from top to bottom over 3.5 seconds
+        const timer = setTimeout(() => {
+          const targetScroll = data.el.scrollHeight - data.el.clientHeight;
+          gsap.to(data.el, {
+            scrollTop: targetScroll,
+            duration: 3.5,
+            ease: "power1.inOut",
+            onComplete: () => {
+              window.history.replaceState(null, '', window.location.pathname);
+            }
+          });
+        }, 400);
+
+        return () => clearTimeout(timer);
       }
     }
   }, [data]);
