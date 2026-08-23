@@ -28,8 +28,8 @@ const Hero = () => {
   }, [progress]);
 
   const fontProps = {
-    font: "./soria-font.ttf",
-    fontSize: 1.2,
+    font: "./fonts/MinecraftRegular-Bmg3.otf",
+    fontSize: 1.0,
   };
 
   return (

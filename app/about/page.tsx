@@ -16,24 +16,23 @@ const ABOUT_SECTIONS = [
     text: [
       "Hello! I am Deeptanil Sinha, a computer science student at MIT Bengaluru '28 and full-stack product engineer.",
       "I craft immersive digital experiences at the intersection of 3D WebGL graphics, elegant UI/UX design, and scalable frontend architecture.",
-      "I love pushing the boundaries of what is possible on the web—turning complex engineering challenges into seamless, joyful user experiences."
+      "I love pushing the boundaries of interactive web technologies with Next.js, React Three Fiber, GSAP, and custom GLSL shaders."
     ]
   },
   {
-    title: "PASSIONS & INTERESTS",
-    subtitle: "What Drives Me",
+    title: "PHILOSOPHY & CRAFT",
+    subtitle: "How I Build Products",
     text: [
-      "🎮 Gaming & World Building: Inspired by Minecraft, voxel art, and sandbox gaming environments.",
-      "🎧 Music & DJing: Passionate about sound design, electronic music composition, and audio visualization.",
-      "⚡ High-Performance Web: Obsessed with sub-second page loads, WebGL shaders, 60fps animations, and clean code."
+      "Every pixel, animation frame, and system architecture choice should serve a clear purpose: delighting users and delivering real value.",
+      "I believe in building software that is blazingly fast, visually stunning, accessible, and resilient under production loads."
     ]
   },
   {
-    title: "THE PHILOSOPHY",
-    subtitle: "Code & Craft",
+    title: "INTERESTS & PASSIONS",
+    subtitle: "Beyond The Code",
     text: [
-      "Great software is like a great game world: intuitive, beautiful, responsive, and filled with delightful micro-details.",
-      "Whether building e-commerce platforms, 3D interactive canvases, or developer tools, I code with meticulous precision and creative vision."
+      "When I am not coding, you can find me exploring immersive game design, experimenting with electronic sound design & DJing, or researching high-performance WebGL rendering techniques.",
+      "Always curious, always building."
     ]
   }
 ];
@@ -43,7 +42,6 @@ export default function AboutPage() {
   const [startScrolling, setStartScrolling] = useState(false);
 
   useEffect(() => {
-    // 20 second delay before autoscroll begins
     const timer = setTimeout(() => {
       setStartScrolling(true);
     }, 20000);
@@ -71,13 +69,13 @@ export default function AboutPage() {
       }}
     >
       {/* Strong Vignette */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.85)_80%,rgba(0,0,0,0.98)_100%)]" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.2)_0%,rgba(0,0,0,0.85)_80%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Authentic Minecraft UI Button */}
+      {/* Minecraft UI Return Button */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
-          className="relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-[#747474] text-white font-mono text-xs sm:text-sm tracking-wider uppercase border-2 border-black active:translate-y-[1px] select-none shadow-[inset_-2px_-2px_0px_0px_#373737,inset_2px_2px_0px_0px_#ffffff] hover:bg-[#8b8b8b] hover:text-[#ffff55] transition-colors"
+          className="relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-[#747474] text-white font-minecraft-regular text-xs sm:text-sm tracking-wider uppercase border-2 border-black active:translate-y-[1px] select-none shadow-[inset_-2px_-2px_0px_0px_#373737,inset_2px_2px_0px_0px_#ffffff] hover:bg-[#8b8b8b] hover:text-[#ffff55] transition-colors"
           style={{ imageRendering: 'pixelated' }}
         >
           <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)] text-center">
@@ -86,35 +84,53 @@ export default function AboutPage() {
         </Link>
       </div>
 
-      {/* End Credits Roll — Starts visible right on screen, begins scrolling after 20s */}
+      {/* Minecraft End Credits Roll — Direct text without boxes */}
       <div
-        className={`w-full max-w-[92vw] sm:max-w-2xl px-4 sm:px-6 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-12 sm:space-y-16 ${
+        className={`w-full max-w-[92vw] sm:max-w-2xl px-4 sm:px-6 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-20 ${
           manualScroll ? '' : startScrolling ? 'animate-[minecraftCreditsScroll_45s_linear_forwards]' : ''
         }`}
       >
         {/* Header */}
-        <div className="space-y-3 sm:space-y-4 pt-10 sm:pt-12">
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-widest text-[#ffff55] font-mono uppercase drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+        <div className="space-y-4 pt-10 sm:pt-14 font-minecraft-regular">
+          <h1
+            className="text-2xl sm:text-4xl font-bold tracking-widest text-[#ffff55] uppercase"
+            style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+          >
             {preventOrphans("ABOUT ME")}
           </h1>
-          <p className="text-[#55ff55] font-mono text-xs sm:text-base tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
-            {preventOrphans("The Journey of Deeptanil Sinha")}
+          <p
+            className="text-[#00aaaa] text-sm sm:text-lg tracking-widest uppercase"
+            style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+          >
+            {preventOrphans("The Story of Deeptanil Sinha")}
           </p>
         </div>
 
-        {/* About Cards */}
+        {/* About Sections — Clean separated text without cards/boxes */}
         {ABOUT_SECTIONS.map((item, idx) => (
-          <div key={idx} className="w-full space-y-3 sm:space-y-4 max-w-lg bg-black/60 p-4 sm:p-6 rounded-lg border border-[#8b653a]/60 shadow-2xl backdrop-blur-xs">
-            <h2 className="text-lg sm:text-2xl font-mono text-[#ffff55] uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+          <div key={idx} className="w-full space-y-4 font-minecraft-regular max-w-xl">
+            <h2
+              className="text-xl sm:text-2xl font-bold text-[#ffff55] uppercase tracking-widest"
+              style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+            >
               {preventOrphans(item.title)}
             </h2>
-            <h3 className="text-sm sm:text-base font-mono text-[#55ffff] uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
+            <h3
+              className="text-base sm:text-lg text-[#00aaaa] uppercase tracking-wider"
+              style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+            >
               {preventOrphans(item.subtitle)}
             </h3>
-            <div className="space-y-2 pt-1 sm:pt-2">
-              {item.text.map((line, lIdx) => (
-                <p key={lIdx} className="text-xs sm:text-sm font-mono text-[#ffffff] leading-relaxed tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
-                  {preventOrphans(line)}
+            <div className="space-y-3 pt-2">
+              {item.text.map((paragraph, pIdx) => (
+                <p
+                  key={pIdx}
+                  className={`text-sm sm:text-base leading-relaxed tracking-wide ${
+                    pIdx % 2 === 0 ? 'text-[#00aa00]' : 'text-[#00aaaa]'
+                  }`}
+                  style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+                >
+                  {preventOrphans(paragraph)}
                 </p>
               ))}
             </div>
@@ -122,11 +138,17 @@ export default function AboutPage() {
         ))}
 
         {/* End Credits Footer Note */}
-        <div className="pt-12 sm:pt-16 space-y-4 text-center pb-12">
-          <p className="text-[#55ff55] font-mono text-xs sm:text-sm tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [text-wrap:pretty]">
-            {preventOrphans("And the universe said you are the daylight. And the universe said you are the night.")}
+        <div className="pt-16 sm:pt-20 space-y-6 font-minecraft-regular text-center pb-16">
+          <p
+            className="text-[#00aa00] text-sm sm:text-base tracking-widest uppercase"
+            style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.95)' }}
+          >
+            {preventOrphans("and the universe said I love you because you are love.")}
           </p>
-          <p className="text-[#aaaaaa] font-mono text-[10px] sm:text-xs tracking-widest uppercase">
+          <p
+            className="text-[#aaaaaa] text-xs tracking-widest uppercase pt-4"
+            style={{ textShadow: '1px 1px 0px rgba(0,0,0,0.95)' }}
+          >
             [End of Document]
           </p>
         </div>
