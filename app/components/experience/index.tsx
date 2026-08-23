@@ -18,7 +18,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.45 : 0.4,
+    fontSize: isMobile ? 0.32 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -34,36 +34,42 @@ const Experience = () => {
     }
 
     if (titleRef.current) {
-      if (isMobile) {
-        titleRef.current.children.forEach((text) => {
-          /* eslint-disable  @typescript-eslint/no-explicit-any */
-          (text as any).fillOpacity = 1;
-        });
-      } else {
-        titleRef.current.children.forEach((text, i) => {
-          const y = Math.max(Math.min((1 - d) * (10 - i), 10), 0.5);
-          text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
-          /* eslint-disable  @typescript-eslint/no-explicit-any */
-          (text as any).fillOpacity = e;
-        });
-      }
+      titleRef.current.children.forEach((text, i) => {
+        const yTarget = isMobile ? 2.6 : 0.5;
+        const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
+        text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
+        (text as any).fillOpacity = e;
+      });
     }
   });
 
   const getTitle = () => {
+    const title = 'EXPERIENCE';
     if (isMobile) {
-      return (
-        <Text {...fontProps} position={[0, 2.7, 0.4]}>
-          EXPERIENCE
-        </Text>
-      );
+      const diff = 0.32;
+      const startX = -((title.length - 1) * diff) / 2;
+      return title.split('').map((char, i) => {
+        return (
+          <Text
+            key={i}
+            {...fontProps}
+            fontSize={0.32}
+            anchorX="center"
+            position={[startX + i * diff, 2.6, 0.4]}
+          >
+            {char}
+          </Text>
+        );
+      });
     }
 
-    const title = 'EXPERIENCE';
     const diff = 0.8;
     return title.split('').map((char, i) => {
       return (
-        <Text key={i} {...fontProps} anchorX="left" position={[i * diff, 2, 1]}>{char}</Text>
+        <Text key={i} {...fontProps} anchorX="left" position={[i * diff, 2, 1]}>
+          {char}
+        </Text>
       );
     });
   };
