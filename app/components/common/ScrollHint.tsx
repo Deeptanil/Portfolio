@@ -8,19 +8,40 @@ import { useScrollStore, useThemeStore } from "@stores";
 export const ScrollHint = () => {
   const scrollProgress = useScrollStore((state) => state.scrollProgress);
   const isDay = useThemeStore((state) => state.theme.type === 'day');
-  const [initialBoost, setInitialBoost] = useState(true);
+  const [initialBoost, setInitialBoost] = useState(false);
 
   const showScrollHint = scrollProgress === 0;
   const textColor = isDay ? 'text-[#1a0933]' : 'text-white';
 
   useEffect(() => {
-    // For the first 10 seconds, make scroll indicator prominent and noticeable
-    const timer = setTimeout(() => {
-      setInitialBoost(false);
-    }, 10000);
+    // Only show prominent scroll-down prompt if user opens website for the first time
+    // If returning from /work or /about (has ?scroll= parameter) or has scrolled before, do NOT show prompt
+    if (typeof window !== 'undefined') {
+      const isReturnFromSubpage = window.location.search.includes('scroll=');
+      const hasScrolledBefore = sessionStorage.getItem('hasScrolledBefore');
 
-    return () => clearTimeout(timer);
+      if (!isReturnFromSubpage && !hasScrolledBefore) {
+        setInitialBoost(true);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (scrollProgress > 0 && typeof window !== 'undefined') {
+      sessionStorage.setItem('hasScrolledBefore', 'true');
+      setInitialBoost(false);
+    }
+  }, [scrollProgress]);
+
+  useEffect(() => {
+    // 10 second timeout to dismiss initial boost if user stays on top
+    if (initialBoost) {
+      const timer = setTimeout(() => {
+        setInitialBoost(false);
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [initialBoost]);
 
   useEffect(() => {
     if (showScrollHint) {

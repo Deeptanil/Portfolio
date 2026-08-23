@@ -83,18 +83,18 @@ const Experience = () => {
         </group>
 
         <group position={[0, -1, 0]} ref={groupRef}>
-          <GridTile title='WORK AND EDUCATION'
+          <GridTile title={isMobile ? "WORK AND\nEDUCATION" : "WORK AND EDUCATION"}
             id="work"
             color='#b9c6d6'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 0.95 : 0, isMobile ? 0.01 : 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 0.925 : 0, isMobile ? 0.01 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -0.95 : 0, 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -0.925 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>

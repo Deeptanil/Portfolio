@@ -150,12 +150,17 @@ const GridTile = (props: GridTileProps) => {
       { getGeometry() }
       <group>
         {!isMobile && (
-          <mesh position={[0, 0, -0.25]} ref={hoverBoxRef} scale={[0, 0, 0]}>
+          <mesh
+            position={[0, 0, -0.25]}
+            ref={hoverBoxRef}
+            scale={[0, 0, 0]}
+            raycast={() => null}
+          >
             <boxGeometry args={[4, 4, 0.5]} />
             <meshPhysicalMaterial
-              color="#444"
+              color="#222222"
               transparent={true}
-              opacity={0.3}
+              opacity={0.5}
             />
             <Edges color="white" lineWidth={3} />
           </mesh>
