@@ -35,8 +35,8 @@ const Experience = () => {
 
     if (titleRef.current) {
       titleRef.current.children.forEach((text, i) => {
-        // Lower Y target (1.95 on mobile) so EXPERIENCE text sits comfortably inside camera view above tiles
-        const yTarget = isMobile ? 1.95 : 0.5;
+        // Mobile target Y: 0.0 (sitting at Y=1.5 in parent space, directly above the Work button)
+        const yTarget = isMobile ? 0.0 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -57,7 +57,7 @@ const Experience = () => {
             {...fontProps}
             fontSize={0.22}
             anchorX="center"
-            position={[startX + i * diff, 1.95, 0.4]}
+            position={[startX + i * diff, 0.0, 0.4]}
           >
             {char}
           </Text>
@@ -78,7 +78,7 @@ const Experience = () => {
   return (
     <group position={[0, -41.5, 12]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
       <group rotation={[0, 0, Math.PI / 2]}>
-        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 2, isMobile ? 0.4 : -2]}>
+        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 1.5, isMobile ? 0.4 : -2]}>
           {getTitle()}
         </group>
 
