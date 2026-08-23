@@ -16,7 +16,7 @@ export const FOOTER_LINKS: FooterLink[] = [
   {
     name: 'Email',
     hoverText: 'Get in touch',
-    icon: 'icons/file.svg',
+    icon: 'icons/gmail.svg',
     url: 'mailto:deeptanilsinha27@gmail.com',
   },
   {

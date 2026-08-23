@@ -3,6 +3,7 @@
 import { Text, useProgress } from "@react-three/drei";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
+import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import MinecraftSky from "../models/MinecraftSky";
 import MinecraftBee from "../models/MinecraftBee";
@@ -29,7 +30,10 @@ const Hero = () => {
 
   const fontProps = {
     font: "./fonts/MinecraftRegular-Bmg3.otf",
-    fontSize: 1.0,
+    fontSize: isMobile ? 0.45 : 1.0,
+    maxWidth: isMobile ? 6 : undefined,
+    textAlign: "center" as const,
+    anchorX: "center" as const,
   };
 
   return (

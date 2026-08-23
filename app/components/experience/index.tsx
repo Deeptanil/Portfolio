@@ -18,7 +18,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.4 : 0.4,
+    fontSize: isMobile ? 0.35 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -46,7 +46,7 @@ const Experience = () => {
   const getTitle = () => {
     if (isMobile) {
       return (
-        <Text {...fontProps} position={[0, 2.2, 1]}>
+        <Text {...fontProps} position={[0, 2.6, 0.4]}>
           EXPERIENCE
         </Text>
       );
@@ -64,7 +64,7 @@ const Experience = () => {
   return (
     <group position={[0, -41.5, 12]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
       <group rotation={[0, 0, Math.PI / 2]}>
-        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 2, -2]}>
+        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 2, isMobile ? 0.4 : -2]}>
           {getTitle()}
         </group>
 

@@ -7,7 +7,6 @@ import gsap from "gsap";
 import { useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
-import { TriangleGeometry } from './Triangle';
 
 interface GridTileProps {
   id: string;
@@ -32,18 +31,8 @@ const GridTile = (props: GridTileProps) => {
 
   useEffect(() => {
     if (isMobile && titleRef.current) {
-      const isWork = id === 'work';
-      gsap.to(titleRef.current, {
-        fontSize: 0.13,
-        maxWidth: 4,
-        color: isWork ? '#FFF' : '#888',
-        letterSpacing: 0.4,
-      });
-      gsap.to(titleRef.current.position, {
-        x: isWork ? 1 : -1,
-        y: isWork ? -1.7 : 1.5,
-        duration: 0.5,
-      });
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
+      (titleRef.current as any).fillOpacity = 1;
     }
   }, [id]);
 
@@ -52,7 +41,7 @@ const GridTile = (props: GridTileProps) => {
     const d = data.range(0.95, 0.05);
     if (isMobile && titleRef.current) {
       /* eslint-disable  @typescript-eslint/no-explicit-any */
-      (titleRef.current as any).fillOpacity = d;
+      (titleRef.current as any).fillOpacity = Math.max(0.8, d);
     }
   });
 
@@ -62,20 +51,21 @@ const GridTile = (props: GridTileProps) => {
     }
   };
 
-  const portalInto = (e: React.MouseEvent) => {
-    if (id === 'work') {
+  const portalInto = (e: React.SyntheticEvent | Event) => {
+    if (e && 'stopPropagation' in e) {
       e.stopPropagation();
+    }
+
+    if (id === 'work') {
       window.location.href = '/work';
       return;
     }
     if (id === 'about') {
-      e.stopPropagation();
       window.location.href = '/about';
       return;
     }
 
     if (isActive || activePortalId) return;
-    e.stopPropagation();
     setActivePortal(id);
     document.body.style.cursor = 'auto';
     const div = document.createElement('div');
@@ -139,13 +129,13 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: 2,
+    maxWidth: isMobile ? 3 : 2,
     anchorX: 'center',
-    anchorY: 'bottom',
-    fontSize: 0.7,
+    anchorY: 'middle',
+    fontSize: isMobile ? 0.28 : 0.7,
     color: 'white',
     textAlign: textAlign,
-    fillOpacity: 0,
+    fillOpacity: isMobile ? 1 : 0,
   };
 
   const onPointerOver = () => {
@@ -176,33 +166,29 @@ const GridTile = (props: GridTileProps) => {
     if (!isMobile) {
       return <planeGeometry args={[4, 4, 1]} />;
     }
-
-    const isWork = id === 'work';
-    const points = isWork ?
-      [[-1, 2, 0], [-1, -2, 0], [3, -2, 0]] :
-      [[-3, 2, 0], [1, -2, 0], [1, 2, 0]];
-
-    return <primitive object={TriangleGeometry({ points })} attach="geometry" />;
+    return <planeGeometry args={[3.2, 2.0, 1]} />;
   };
 
   return (
     <mesh ref={gridRef}
       position={position}
       onClick={portalInto}
+      onPointerDown={portalInto}
+      onPointerUp={portalInto}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}>
       { getGeometry() }
       <group>
-        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
-          <boxGeometry args={[4, 4, 0.5]}/>
+        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
+          <boxGeometry args={[isMobile ? 3.2 : 4, isMobile ? 2.0 : 4, 0.5]}/>
           <meshPhysicalMaterial
             color="#444"
             transparent={true}
             opacity={0.3}
           />
-          <Edges color="white" lineWidth={3}/>
+          <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
-        <Text position={[0, -1.8, 0.4]} {...fontProps} ref={titleRef}>
+        <Text position={[0, isMobile ? -0.7 : -1.8, 0.4]} {...fontProps} ref={titleRef}>
           {title}
         </Text>
       </group>
