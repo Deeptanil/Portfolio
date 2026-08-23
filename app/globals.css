@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/minecraft-4');
 @import "tailwindcss";
 
 @theme {
@@ -28,6 +29,12 @@ body {
   background: var(--background);
   font-family: var(--font-jakarta), Arial, sans-serif;
   overflow-x: hidden;
+}
+
+.font-minecraft {
+  font-family: 'Minecraft', 'Minecraftia', monospace;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
 }
 
 .font-display {

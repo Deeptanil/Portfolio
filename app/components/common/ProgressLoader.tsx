@@ -13,29 +13,32 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
       }}
     >
       <div
-        className="w-64 sm:w-80 space-y-3 font-mono text-center select-none p-4"
+        className="w-72 sm:w-88 space-y-3 font-minecraft text-center select-none p-5"
         style={{
-          background: '#3c3c3c',
-          border: '2px solid #000',
-          boxShadow: 'inset -2px -2px 0px 0px #1a1a1a, inset 2px 2px 0px 0px #8b8b8b',
+          background: '#c6c6c6',
+          border: '3px solid #000',
+          boxShadow: 'inset -3px -3px 0px 0px #555555, inset 3px 3px 0px 0px #ffffff',
           imageRendering: 'pixelated',
         }}
       >
-        {/* Loading Label */}
+        {/* Official Minecraft Yellow Loading Text */}
         <div
-          className="text-[#ffff55] text-xs sm:text-sm font-bold tracking-wider uppercase"
-          style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.9)' }}
+          className="text-[#ffff55] text-sm sm:text-base font-bold tracking-wide uppercase"
+          style={{
+            textShadow: '2px 2px 0px #3f3f00',
+            fontFamily: "'Minecraft', 'Minecraftia', monospace",
+          }}
         >
           {`Loading World... ${clampedProgress.toFixed(0)}%`}
         </div>
 
-        {/* Minecraft-styled loading bar */}
+        {/* Authentic Minecraft XP / Progress Bar */}
         <div
           style={{
-            background: '#1c1c1c',
-            border: '2px solid #000',
-            boxShadow: 'inset 2px 2px 0px 0px #0a0a0a',
-            height: '14px',
+            background: '#000000',
+            border: '2px solid #373737',
+            boxShadow: 'inset 2px 2px 0px 0px #000000',
+            height: '16px',
             width: '100%',
             padding: '2px',
             imageRendering: 'pixelated',
@@ -45,8 +48,9 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
             style={{
               height: '100%',
               background: '#55ff55',
+              boxShadow: 'inset 0px 2px 0px 0px #aaffaa, inset 0px -2px 0px 0px #00aa00',
               width: `${clampedProgress}%`,
-              transition: 'width 0.3s ease-out',
+              transition: 'width 0.2s ease-out',
               imageRendering: 'pixelated',
             }}
           />
