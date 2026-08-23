@@ -31,7 +31,7 @@ export const ScrollHint = () => {
   }, [showScrollHint]);
 
   return (
-    <div className="fixed w-full bottom-5 scroll-hint pointer-events-none" style={{ opacity: 0, zIndex: 10 }}>
+    <div className="fixed w-full bottom-5 scroll-hint pointer-events-none" style={{ opacity: 0, zIndex: 10 }} suppressHydrationWarning>
       <div className="flex items-center justify-center gap-2 animate-pulse">
         <Image
           src="icons/chevrons-up-down.svg"

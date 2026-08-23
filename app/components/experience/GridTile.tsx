@@ -22,12 +22,14 @@ const GridTile = (props: GridTileProps) => {
   const gridRef = useRef<THREE.Group>(null);
   const hoverBoxRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef(null);
-  const { title, textAlign, children, color, position, id } = props;
+  const { title, children, color, position, id } = props;
   const { camera } = useThree();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
   const activePortalId = usePortalStore((state) => state.activePortalId);
   const data = useScroll();
+
+  const isWork = id === 'work';
 
   useEffect(() => {
     if (isMobile && titleRef.current) {
@@ -129,14 +131,20 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 3 : 3.5,
-    anchorX: 'center',
-    anchorY: 'middle',
+    maxWidth: isMobile ? 3 : 3.2,
+    anchorX: isMobile ? 'center' : (isWork ? 'left' : 'right'),
+    anchorY: isMobile ? 'middle' : 'bottom',
     fontSize: isMobile ? 0.28 : 0.55,
     color: 'white',
-    textAlign: textAlign,
+    textAlign: isMobile ? 'center' : (isWork ? 'left' : 'right'),
     fillOpacity: isMobile ? 1 : 0,
   };
+
+  const textPosition: [number, number, number] = isMobile
+    ? [0, 0, 0.4]
+    : isWork
+    ? [-1.6, -1.6, 0.4]  // Bottom-Left corner for Left (Work) tile
+    : [1.6, -1.6, 0.4];   // Bottom-Right corner for Right (About) tile
 
   const onPointerOver = () => {
     if (isActive || isMobile) return;
@@ -188,8 +196,8 @@ const GridTile = (props: GridTileProps) => {
           />
           <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
-        {/* Title text centered INSIDE the hover box */}
-        <Text position={[0, 0, 0.4]} {...fontProps} ref={titleRef}>
+        {/* Left tile: Bottom-Left corner, Right tile: Bottom-Right corner */}
+        <Text position={textPosition} {...fontProps} ref={titleRef}>
           {title}
         </Text>
       </group>

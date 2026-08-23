@@ -144,7 +144,7 @@ const SoundToggle = () => {
   const positionClass = isMobile ? 'top-2 left-2' : 'top-6 left-6';
 
   return (
-    <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }}>
+    <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }} suppressHydrationWarning>
       <div className="flex items-center justify-center">
         <a
           onClick={toggleSound}
