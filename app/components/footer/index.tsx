@@ -133,10 +133,10 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
     const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
     const nameLower = link.name.toLowerCase();
 
-    // Scale each icon so their rendered visual heights are 100% equal
+    // Scale each icon so their rendered visual heights match
     let iconScale: [number, number] = [0.38, 0.38];
     if (nameLower === 'resume') {
-      iconScale = [0.24, 0.31];
+      iconScale = [0.20, 0.26];
     } else if (nameLower === 'github') {
       iconScale = [0.31, 0.31];
     }

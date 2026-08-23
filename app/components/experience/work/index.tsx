@@ -22,10 +22,15 @@ const Work = () => {
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Spanning Background Painting matched to 1.85 x 1.85 tile geometry on mobile */}
+      {/* Spanning Background Painting with reduced brightness on mobile for text readability */}
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4]} />
-        <meshBasicMaterial map={bgTexture} transparent opacity={0.88} />
+        <meshBasicMaterial
+          map={bgTexture}
+          transparent
+          opacity={isMobile ? 0.52 : 0.88}
+          color={isMobile ? "#888888" : "#ffffff"}
+        />
       </mesh>
 
       {/* Foreground Icon */}
