@@ -26,7 +26,7 @@ const Experience = () => {
 
   useFrame((state, delta) => {
     if (!data) return;
-    const d = data.range(0.7, 0.3);
+    const d = data.range(0.82, 0.18);
 
     if (groupRef.current && !isActive) {
       groupRef.current.position.y = d > 0 ? -1 : -30;
