@@ -11,7 +11,7 @@ const MinecraftStars = () => {
 
   const count = 600;
 
-  // Generate random square star transforms on a sky sphere
+  // Generate random square star transforms on a sky sphere surrounding the camera
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const starData = useMemo(() => {
     const list: { x: number; y: number; z: number; scale: number; rot: number }[] = [];
@@ -20,13 +20,13 @@ const MinecraftStars = () => {
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
       const phi = Math.acos(2.0 * v - 1.0);
-      const r = 80 + Math.random() * 40;
+      const r = 35 + Math.random() * 25;
 
       list.push({
         x: r * Math.sin(phi) * Math.cos(theta),
         y: r * Math.sin(phi) * Math.sin(theta),
         z: r * Math.cos(phi),
-        scale: 0.4 + Math.random() * 0.6,
+        scale: 0.3 + Math.random() * 0.5,
         rot: Math.random() * Math.PI,
       });
     }
@@ -57,7 +57,7 @@ const MinecraftStars = () => {
   if (!isDarkTheme) return null;
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
       {/* Minecraft square pixel star geometry */}
       <planeGeometry args={[0.8, 0.8]} />
       <meshBasicMaterial
@@ -65,6 +65,7 @@ const MinecraftStars = () => {
         side={THREE.DoubleSide}
         transparent
         opacity={0.95}
+        depthWrite={false}
       />
     </instancedMesh>
   );
