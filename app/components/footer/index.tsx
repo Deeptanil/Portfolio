@@ -131,8 +131,15 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
 
   if (isMobile) {
     const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
-    const isResume = link.name.toLowerCase() === 'resume';
-    const iconScale: [number, number] = isResume ? [0.29, 0.38] : [0.38, 0.38];
+    const nameLower = link.name.toLowerCase();
+
+    // Scale each icon so their rendered visual heights are 100% equal
+    let iconScale: [number, number] = [0.38, 0.38];
+    if (nameLower === 'resume') {
+      iconScale = [0.24, 0.31];
+    } else if (nameLower === 'github') {
+      iconScale = [0.31, 0.31];
+    }
 
     return (
       <mesh onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
