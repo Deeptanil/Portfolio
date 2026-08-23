@@ -1,10 +1,11 @@
 'use client';
 
 import { Image, useTexture } from '@react-three/drei';
-import { isMobile } from 'react-device-detect';
 import { useMemo } from 'react';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 const Work = () => {
+  const isMobile = useIsMobile();
   const paintingTexture = useTexture(isMobile ? '/painting_m.webp' : '/painting.webp');
 
   const bgTexture = useMemo(() => {
@@ -18,18 +19,17 @@ const Work = () => {
       tex.offset.set(0.0, 0.0); // Left half for Work tile on PC
     }
     return tex;
-  }, [paintingTexture]);
+  }, [paintingTexture, isMobile]);
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Spanning Background Painting with reduced brightness on mobile for text readability */}
+      {/* Spanning Background Painting restored to full original brightness */}
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4]} />
         <meshBasicMaterial
           map={bgTexture}
           transparent
-          opacity={isMobile ? 0.52 : 0.88}
-          color={isMobile ? "#888888" : "#ffffff"}
+          opacity={0.88}
         />
       </mesh>
 

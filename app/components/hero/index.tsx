@@ -18,13 +18,11 @@ const Hero = () => {
 
   useEffect(() => {
     if (progress === 100 && titleRef.current) {
-      gsap.fromTo(titleRef.current.position, {
-        y: -10,
-        duration: 1,
-      }, {
-        y: 0,
-        duration: 3
-      });
+      gsap.fromTo(
+        titleRef.current.position,
+        { y: isMobile ? -4 : -8 },
+        { y: 0, duration: isMobile ? 1.0 : 1.5, ease: "power2.out" }
+      );
     }
   }, [progress]);
 
