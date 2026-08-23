@@ -18,7 +18,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.35 : 0.4,
+    fontSize: isMobile ? 0.45 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -34,19 +34,26 @@ const Experience = () => {
     }
 
     if (titleRef.current) {
-      titleRef.current.children.forEach((text, i) => {
-        const y = Math.max(Math.min((1 - d) * (10 - i), 10), 0.5);
-        text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
-        /* eslint-disable  @typescript-eslint/no-explicit-any */
-        (text as any).fillOpacity = e;
-      });
+      if (isMobile) {
+        titleRef.current.children.forEach((text) => {
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
+          (text as any).fillOpacity = 1;
+        });
+      } else {
+        titleRef.current.children.forEach((text, i) => {
+          const y = Math.max(Math.min((1 - d) * (10 - i), 10), 0.5);
+          text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
+          (text as any).fillOpacity = e;
+        });
+      }
     }
   });
 
   const getTitle = () => {
     if (isMobile) {
       return (
-        <Text {...fontProps} position={[0, 2.6, 0.4]}>
+        <Text {...fontProps} position={[0, 2.5, 0.4]}>
           EXPERIENCE
         </Text>
       );

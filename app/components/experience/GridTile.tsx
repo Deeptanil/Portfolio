@@ -129,10 +129,10 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 3 : 2,
+    maxWidth: isMobile ? 3 : 3.5,
     anchorX: 'center',
     anchorY: 'middle',
-    fontSize: isMobile ? 0.28 : 0.7,
+    fontSize: isMobile ? 0.28 : 0.55,
     color: 'white',
     textAlign: textAlign,
     fillOpacity: isMobile ? 1 : 0,
@@ -188,7 +188,8 @@ const GridTile = (props: GridTileProps) => {
           />
           <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
-        <Text position={[0, isMobile ? -0.7 : -1.8, 0.4]} {...fontProps} ref={titleRef}>
+        {/* Title text centered INSIDE the hover box */}
+        <Text position={[0, 0, 0.4]} {...fontProps} ref={titleRef}>
           {title}
         </Text>
       </group>
