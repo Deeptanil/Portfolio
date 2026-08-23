@@ -1,6 +1,6 @@
 'use client';
 
-import { useScroll } from "@react-three/drei";
+import { useProgress, useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect } from 'react';
@@ -11,15 +11,16 @@ import { useScrollStore } from "@stores";
 const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] }) => {
   const { camera } = useThree();
   const data = useScroll();
+  const { progress } = useProgress();
   const setScrollProgress = useScrollStore((state) => state.setScrollProgress);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
-      if (data && data.el) {
+      if (data && data.el && progress === 100) {
         // Start at top of the home page so user sees the initial 3D scene
         data.el.scrollTop = 0;
 
-        // Prevent all user scroll inputs (wheel, touch, keys, scrollbar) during auto-scroll
+        // Prevent user scroll inputs (wheel, touch, keys, scrollbar) during auto-scroll
         const blockScrollInput = (e: Event) => {
           e.preventDefault();
           e.stopPropagation();
@@ -40,16 +41,16 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
           window.history.replaceState(null, '', window.location.pathname);
         };
 
-        // Smoothly auto-scroll from top to bottom over 3.5 seconds
+        // Smoothly auto-scroll from top to bottom over 3.2 seconds using power2.out for 60fps GPU acceleration
         const timer = setTimeout(() => {
           const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
           gsap.to(targetEl, {
             scrollTop: targetScroll,
-            duration: 3.5,
-            ease: "power1.inOut",
+            duration: 3.2,
+            ease: "power2.out",
             onComplete: unlockScroll
           });
-        }, 400);
+        }, 300);
 
         return () => {
           clearTimeout(timer);
@@ -57,7 +58,7 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
         };
       }
     }
-  }, [data]);
+  }, [data, progress]);
 
   useFrame((state, delta) => {
     if (data) {

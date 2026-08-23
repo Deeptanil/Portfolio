@@ -5,7 +5,6 @@ import { AdaptiveDpr, Preload, ScrollControls, useProgress } from "@react-three/
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { Suspense, useRef, useSyncExternalStore } from "react";
-import { isMobile } from "react-device-detect";
 
 import { useThemeStore } from "@stores";
 
@@ -28,11 +27,12 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
     height: "100%",
     opacity: 0,
     overflow: "hidden",
+    willChange: "opacity",
   };
 
   useGSAP(() => {
     if (progress === 100) {
-      gsap.to('.base-canvas', { opacity: 1, duration: 3, delay: 1 });
+      gsap.to('.base-canvas', { opacity: 1, duration: 2, delay: 0.5 });
     }
   }, [progress]);
 
@@ -68,11 +68,12 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
           style={canvasStyle}
           ref={canvasRef}
           dpr={[1, 2]}
+          gl={{ powerPreference: 'high-performance', antialias: true, alpha: false }}
         >
           <Suspense fallback={null}>
             <ambientLight intensity={0.5} />
 
-            <ScrollControls pages={4} damping={0.4} maxSpeed={1} distance={1} style={{ zIndex: 1 }}>
+            <ScrollControls pages={4} damping={0.2} maxSpeed={1} distance={1} style={{ zIndex: 1, willChange: 'transform' }}>
               {props.children}
             </ScrollControls>
 
