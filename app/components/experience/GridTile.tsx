@@ -25,14 +25,17 @@ const GridTile = (props: GridTileProps) => {
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
   const { title, children, color, position, id } = props;
-  const { camera } = useThree();
+  const { viewport } = useThree();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
-  const activePortalId = usePortalStore((state) => state.activePortalId);
   const data = useScroll();
   const isMobile = useIsMobile();
 
   const isWork = id === 'work';
+
+  // Dynamic screen size responsive scaling
+  const tileWidth = isMobile ? Math.min(2.8, Math.max(2.0, viewport.width * 0.65)) : 4;
+  const tileHeight = isMobile ? tileWidth : 4;
 
   useEffect(() => {
     if (isMobile && titleRef.current) {
@@ -66,7 +69,6 @@ const GridTile = (props: GridTileProps) => {
     const duration = Date.now() - touchStartRef.current.time;
     touchStartRef.current = null;
 
-    // Mistouch Prevention: If finger moved > 12px or tap was < 40ms, treat as scroll swipe & ignore!
     if (moveDist > 12 || duration < 40) {
       return;
     }
@@ -87,14 +89,11 @@ const GridTile = (props: GridTileProps) => {
       window.location.href = '/about';
       return;
     }
-
-    if (isActive || activePortalId) return;
-    setActivePortal(id);
   };
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 2.2 : 3.2,
+    maxWidth: isMobile ? tileWidth * 0.9 : 3.2,
     anchorX: isMobile ? 'center' : (isWork ? 'left' : 'right'),
     anchorY: isMobile ? 'middle' : 'bottom',
     fontSize: isMobile ? 0.22 : 0.55,
@@ -106,15 +105,13 @@ const GridTile = (props: GridTileProps) => {
   const textPosition: [number, number, number] = isMobile
     ? [0, 0, 0.4]
     : isWork
-    ? [-1.6, -1.6, 0.4]  // Bottom-Left corner for Left (Work) tile
-    : [1.6, -1.6, 0.4];   // Bottom-Right corner for Right (About) tile
+    ? [-1.6, -1.6, 0.4]
+    : [1.6, -1.6, 0.4];
 
   const onPointerOver = () => {
     if (isActive || isMobile) return;
     document.body.style.cursor = 'pointer';
-    gsap.to(titleRef.current, {
-      fillOpacity: 1
-    });
+    gsap.to(titleRef.current, { fillOpacity: 1 });
     if (gridRef.current && hoverBoxRef.current) {
       gsap.to(gridRef.current.position, { z: 0.5, duration: 0.4});
       gsap.to(hoverBoxRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.4 });
@@ -124,20 +121,11 @@ const GridTile = (props: GridTileProps) => {
   const onPointerOut = () => {
     if (isMobile) return;
     document.body.style.cursor = 'auto';
-    gsap.to(titleRef.current, {
-      fillOpacity: 0
-    });
+    gsap.to(titleRef.current, { fillOpacity: 0 });
     if (gridRef.current && hoverBoxRef.current) {
       gsap.to(gridRef.current.position, { z: 0, duration: 0.4});
       gsap.to(hoverBoxRef.current.scale, { x: 0, y: 0, z: 0, duration: 0.4 });
     }
-  };
-
-  const getGeometry = () => {
-    if (!isMobile) {
-      return <planeGeometry args={[4, 4, 1]} />;
-    }
-    return <planeGeometry args={[2.4, 2.4, 1]} />;
   };
 
   return (
@@ -147,15 +135,11 @@ const GridTile = (props: GridTileProps) => {
       onPointerUp={handlePointerUp}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}>
-      { getGeometry() }
+      <planeGeometry args={[tileWidth, tileHeight, 1]} />
       <group>
         <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
-          <boxGeometry args={[isMobile ? 2.4 : 4, isMobile ? 2.4 : 4, 0.5]}/>
-          <meshPhysicalMaterial
-            color="#444"
-            transparent={true}
-            opacity={0.3}
-          />
+          <boxGeometry args={[tileWidth, tileHeight, 0.5]}/>
+          <meshPhysicalMaterial color="#444" transparent={true} opacity={0.3} />
           <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
         <Text position={textPosition} {...fontProps} ref={titleRef}>

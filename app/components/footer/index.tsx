@@ -1,6 +1,6 @@
 'use client';
 
-import { Html, Image, Text, useCursor, useScroll } from "@react-three/drei";
+import { Html, Svg, Text, useCursor, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -132,16 +132,17 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
   if (isMobile) {
     const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
     return (
-      <mesh onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
-        <planeGeometry args={[0.7, 0.7]} />
-        <meshBasicMaterial visible={false} />
-        <Image
-          url={iconPath}
-          transparent
-          scale={[0.45, 0.45]}
-          position={[0, 0, 0.05]}
+      <group onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
+        <Svg
+          src={iconPath}
+          scale={0.0018}
+          position={[-0.2, 0.2, 0]}
         />
-      </mesh>
+        <mesh position={[0, 0, 0.01]}>
+          <planeGeometry args={[0.8, 0.8]} />
+          <meshBasicMaterial visible={false} />
+        </mesh>
+      </group>
     );
   }
 

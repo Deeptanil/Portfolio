@@ -35,7 +35,8 @@ const Experience = () => {
 
     if (titleRef.current) {
       titleRef.current.children.forEach((text, i) => {
-        const yTarget = isMobile ? 2.6 : 0.5;
+        // Mobile target Y = 1.8 so title is clearly visible right above the top button
+        const yTarget = isMobile ? 1.8 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -56,7 +57,7 @@ const Experience = () => {
             {...fontProps}
             fontSize={0.28}
             anchorX="center"
-            position={[startX + i * diff, 2.6, 0.4]}
+            position={[startX + i * diff, 1.8, 0.4]}
           >
             {char}
           </Text>
