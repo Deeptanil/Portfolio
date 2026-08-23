@@ -1,16 +1,42 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useEffect, useRef, useState } from 'react';
 
 const ProgressLoader = ({ progress }: { progress: number }) => {
-  const clampedProgress = Math.max(0, Math.min(100, progress));
+  const [displayProgress, setDisplayProgress] = useState(0);
+  const simProgressRef = useRef(0);
+
+  useEffect(() => {
+    // Optimistic progress ticker: trickles forward continuously so it never feels stuck
+    const interval = setInterval(() => {
+      simProgressRef.current = Math.min(
+        95,
+        simProgressRef.current + (simProgressRef.current < 40 ? 2.5 : simProgressRef.current < 75 ? 1.2 : 0.4)
+      );
+
+      setDisplayProgress((prev) => {
+        const actualClamped = Math.min(100, Math.round(progress));
+        if (actualClamped === 100) return 100;
+        return Math.max(prev, actualClamped, Math.round(simProgressRef.current));
+      });
+    }, 80);
+
+    return () => clearInterval(interval);
+  }, [progress]);
+
+  useEffect(() => {
+    if (progress === 100) {
+      setDisplayProgress(100);
+    }
+  }, [progress]);
 
   return (
     <div
       className="fixed inset-0 w-full h-full flex flex-col items-center justify-center z-50 transition-opacity duration-700 select-none"
       style={{
-        opacity: progress === 100 ? 0 : 1,
-        pointerEvents: progress === 100 ? 'none' : 'auto',
+        opacity: displayProgress === 100 ? 0 : 1,
+        pointerEvents: displayProgress === 100 ? 'none' : 'auto',
         backgroundColor: "#402c1b",
         backgroundImage: "url('/minecraft_dirt.webp')",
         backgroundRepeat: "repeat",
@@ -59,8 +85,8 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
             style={{
               height: '100%',
               background: '#80ff20',
-              width: `${clampedProgress}%`,
-              transition: 'width 0.2s ease-out',
+              width: `${displayProgress}%`,
+              transition: 'width 0.15s ease-out',
               imageRendering: 'pixelated',
             }}
           />

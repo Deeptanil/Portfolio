@@ -9,21 +9,35 @@ import * as THREE from "three";
 import { FOOTER_LINKS } from "@constants";
 import { FooterLink } from "@types";
 
-const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string) => void }) => {
+interface ToastState {
+  message: string;
+  x?: number;
+  y?: number;
+}
+
+const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string, x?: number, y?: number) => void }) => {
   const textRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
 
-  const onClick = (e?: React.SyntheticEvent | Event) => {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const onClick = (e?: any) => {
     if (e && 'stopPropagation' in e) {
       e.stopPropagation();
+    }
+
+    let clientX: number | undefined;
+    let clientY: number | undefined;
+    if (e && e.nativeEvent) {
+      clientX = e.nativeEvent.clientX ?? e.clientX;
+      clientY = e.nativeEvent.clientY ?? e.clientY;
     }
 
     if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
-        onToast('Copied deeptanilsinha27@gmail.com to clipboard!');
+        onToast('Copied!', clientX, clientY);
       }
       window.location.href = 'mailto:deeptanilsinha27@gmail.com';
       return;
@@ -138,13 +152,13 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
 const Footer = () => {
   const groupRef = useRef<THREE.Group>(null);
   const data = useScroll();
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
 
-  const handleToast = (msg: string) => {
-    setToastMessage(msg);
+  const handleToast = (msg: string, x?: number, y?: number) => {
+    setToast({ message: msg, x, y });
     setTimeout(() => {
-      setToastMessage(null);
-    }, 3500);
+      setToast(null);
+    }, 2000);
   };
 
   useFrame(() => {
@@ -173,12 +187,28 @@ const Footer = () => {
         </group>
       </group>
 
-      {/* Minecraft-styled Toast Popup wrapped in Drei's <Html> so R3F renders HTML outside Three.js namespace */}
-      {toastMessage && (
-        <Html center zIndexRange={[100, 0]}>
-          <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-mono text-xs sm:text-sm tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] transition-all whitespace-nowrap" suppressHydrationWarning>
-            <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
-              {toastMessage}
+      {/* Minecraft-styled Toast Popup near Mouse Cursor */}
+      {toast && (
+        <Html center={!toast.x} zIndexRange={[100, 0]}>
+          <div
+            className="fixed z-50 px-4 py-2 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-minecraft-regular text-xs sm:text-sm tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] animate-bounce whitespace-nowrap pointer-events-none"
+            style={
+              toast.x && toast.y
+                ? {
+                    left: `${toast.x}px`,
+                    top: `${toast.y - 30}px`,
+                    transform: 'translate(-50%, -100%)',
+                  }
+                : {
+                    bottom: '40px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }
+            }
+            suppressHydrationWarning
+          >
+            <span style={{ textShadow: '2px 2px 0px #000000' }}>
+              {toast.message}
             </span>
           </div>
         </Html>
