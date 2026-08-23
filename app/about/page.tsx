@@ -42,6 +42,14 @@ const ABOUT_SECTIONS = [
       "Outside of software engineering and digital design, I am passionate about motorsports, playing the drums, swimming, sports, and culinary experiences.",
       "Driven by curiosity, creativity, and relentless execution."
     ]
+  },
+  {
+    title: "OPPORTUNITIES & AVAILABILITY",
+    subtitle: "Open to Internships & Roles",
+    text: [
+      "I am actively open to internship opportunities and engineering roles.",
+      "Looking for Remote positions or Hybrid roles in Bengaluru, India."
+    ]
   }
 ];
 
@@ -171,7 +179,13 @@ export default function AboutPage() {
         {/* End Credits Footer Note */}
         <div className="pt-16 sm:pt-24 space-y-6 text-center pb-16">
           <p
-            className="text-white text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular opacity-80"
+            className="text-[#ffff55] text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular"
+            style={{ textShadow: '2px 2px 0px #000000' }}
+          >
+            {preventOrphans("Open to Internships • Remote / Hybrid (Bengaluru, India)")}
+          </p>
+          <p
+            className="text-white text-xs sm:text-sm tracking-widest uppercase font-minecraft-regular opacity-80"
             style={{ textShadow: '1px 1px 0px #000000' }}
           >
             [End of Document]

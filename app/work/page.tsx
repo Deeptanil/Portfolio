@@ -14,6 +14,8 @@ const WORK_EXPERIENCE = [
     title: "PRETTIVA & CO.",
     subtitle: "Co-Founder & Digital Director",
     date: "2026 - PRESENT",
+    url: "https://prettiva.co",
+    buttonText: "Visit prettiva.co ↗",
     description: [
       "Built and optimized a 45+ product e-commerce platform with 12K+ monthly visitors.",
       "Achieved a 100/100 PageSpeed SEO score with sub-second page loading speeds.",
@@ -24,6 +26,8 @@ const WORK_EXPERIENCE = [
     title: "STRAYED",
     subtitle: "Co-Founder & Technical Director",
     date: "2025 - PRESENT",
+    url: "https://strayed.in",
+    buttonText: "Visit strayed.in ↗",
     description: [
       "Architected and built a custom e-commerce platform from scratch with 90% lower load times.",
       "Integrated secure payment gateways, cloud hosting infrastructure, order fulfillment, coupons, and customer loyalty rewards.",
@@ -34,6 +38,8 @@ const WORK_EXPERIENCE = [
     title: "MANIPAL INSTITUTE OF TECHNOLOGY, BENGALURU",
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
+    url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
+    buttonText: "Visit MAHE BLR ↗",
     description: [
       "Pursuing B.Tech in Information Technology with a focus on web performance, graphics programming, and software architecture.",
       "Specializing in bridging frontend UX design with backend systems and digital product infrastructure."
@@ -186,6 +192,28 @@ export default function WorkPage() {
                 </p>
               ))}
             </div>
+
+            {/* Optional Website Link Button */}
+            {item.url && (
+              <div className="pt-2 flex justify-center">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-5 py-2 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                  style={{
+                    backgroundColor: '#747474',
+                    border: '2px solid #000000',
+                    boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+                    imageRendering: 'pixelated',
+                  }}
+                >
+                  <span style={{ textShadow: '2px 2px 0px #373737' }}>
+                    {preventOrphans(item.buttonText || "Visit Website ↗")}
+                  </span>
+                </a>
+              </div>
+            )}
           </div>
         ))}
 
