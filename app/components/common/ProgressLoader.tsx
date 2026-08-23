@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 
 const ProgressLoader = ({ progress }: { progress: number }) => {
@@ -38,9 +37,9 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
         opacity: displayProgress === 100 ? 0 : 1,
         pointerEvents: displayProgress === 100 ? 'none' : 'auto',
         backgroundColor: "#402c1b",
-        backgroundImage: "url('/minecraft_dirt.webp')",
-        backgroundRepeat: "repeat",
-        backgroundSize: "256px 256px",
+        backgroundImage: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.85) 65%, rgba(0,0,0,0.98) 100%), url('/minecraft_dirt.webp')",
+        backgroundRepeat: "no-repeat, repeat",
+        backgroundSize: "cover, 256px 256px",
         imageRendering: "pixelated",
       }}
       suppressHydrationWarning
@@ -51,9 +50,10 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
         style={{
           background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.85) 65%, rgba(0,0,0,0.98) 100%)',
         }}
+        suppressHydrationWarning
       />
 
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 font-minecraft-regular text-center select-none">
+      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 font-minecraft-regular text-center select-none" suppressHydrationWarning>
         
         {/* Line 1: Loading level */}
         <div
@@ -62,6 +62,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
             textShadow: '2px 2px 0px rgba(0,0,0,0.9)',
             fontFamily: "'MinecraftRegular', 'Minecraft', monospace",
           }}
+          suppressHydrationWarning
         >
           Loading level
         </div>
@@ -73,6 +74,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
             textShadow: '2px 2px 0px rgba(0,0,0,0.9)',
             fontFamily: "'MinecraftRegular', 'Minecraft', monospace",
           }}
+          suppressHydrationWarning
         >
           Building terrain
         </div>
@@ -85,6 +87,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
             height: '4px',
             imageRendering: 'pixelated',
           }}
+          suppressHydrationWarning
         >
           <div
             style={{
@@ -94,6 +97,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
               transition: 'width 0.15s ease-out',
               imageRendering: 'pixelated',
             }}
+            suppressHydrationWarning
           />
         </div>
       </div>
@@ -101,4 +105,4 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(ProgressLoader), { ssr: false });
+export default ProgressLoader;
