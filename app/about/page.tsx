@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 function preventOrphans(str: string): string {
   const lastSpaceIndex = str.lastIndexOf(' ');
@@ -56,8 +57,12 @@ const ABOUT_SECTIONS = [
 export default function AboutPage() {
   const isAutoScrollingRef = useRef(false);
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    // Respect prefers-reduced-motion — don't auto-scroll visitors who asked not to be moved
+    if (prefersReducedMotion) return;
+
     // Start slow auto-scroll after 15 seconds only if screen is in focus and visible
     const timer = setTimeout(() => {
       isAutoScrollingRef.current = true;
@@ -106,7 +111,7 @@ export default function AboutPage() {
       window.removeEventListener('blur', handleInteract);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <main

@@ -3,84 +3,126 @@
 import { useProgress, useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import { useScrollStore } from "@stores";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+
+// Shared "smoothly scroll to the very bottom" behavior — used both when returning from
+// /about or /work with ?scroll=footer, and when a visitor clicks the "Skip to Experience"
+// button. Pauses itself if the tab loses focus/visibility mid-scroll, and jumps instantly
+// instead of tweening for prefers-reduced-motion users.
+function runAutoScrollToBottom(
+  targetEl: HTMLElement,
+  options: { resetToTop: boolean; clearUrlParam: boolean; reducedMotion: boolean }
+) {
+  const { resetToTop, clearUrlParam, reducedMotion } = options;
+
+  // Only run if screen/tab is currently in focus and visible
+  if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
+    return () => {};
+  }
+
+  if (resetToTop) {
+    targetEl.scrollTop = 0;
+  }
+
+  // Prevent user scroll inputs during auto-scroll
+  const blockScrollInput = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  };
+
+  targetEl.style.pointerEvents = 'none';
+  window.addEventListener('wheel', blockScrollInput, { capture: true, passive: false });
+  window.addEventListener('touchstart', blockScrollInput, { capture: true, passive: false });
+  window.addEventListener('touchmove', blockScrollInput, { capture: true, passive: false });
+  window.addEventListener('keydown', blockScrollInput, { capture: true, passive: false });
+
+  const unlockScroll = () => {
+    targetEl.style.pointerEvents = 'auto';
+    window.removeEventListener('wheel', blockScrollInput, { capture: true });
+    window.removeEventListener('touchstart', blockScrollInput, { capture: true });
+    window.removeEventListener('touchmove', blockScrollInput, { capture: true });
+    window.removeEventListener('keydown', blockScrollInput, { capture: true });
+    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
+  };
+
+  let scrollTween: gsap.core.Tween | null = null;
+
+  const handleFocusLoss = () => {
+    if (scrollTween) {
+      scrollTween.kill();
+    }
+    unlockScroll();
+  };
+
+  window.addEventListener('blur', handleFocusLoss, { passive: true });
+  document.addEventListener('visibilitychange', handleFocusLoss, { passive: true });
+
+  const timer = setTimeout(() => {
+    const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
+
+    if (reducedMotion) {
+      targetEl.scrollTop = targetScroll;
+      unlockScroll();
+      return;
+    }
+
+    scrollTween = gsap.to(targetEl, {
+      scrollTop: targetScroll,
+      duration: 2.8,
+      ease: "power2.inOut",
+      onComplete: unlockScroll
+    });
+  }, 50);
+
+  return () => {
+    clearTimeout(timer);
+    if (scrollTween) scrollTween.kill();
+    window.removeEventListener('blur', handleFocusLoss);
+    document.removeEventListener('visibilitychange', handleFocusLoss);
+    unlockScroll();
+  };
+}
 
 const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] }) => {
   const { camera } = useThree();
   const data = useScroll();
   const { progress } = useProgress();
   const setScrollProgress = useScrollStore((state) => state.setScrollProgress);
+  const skipToEndToken = useScrollStore((state) => state.skipToEndToken);
+  const skipTokenSeenRef = useRef(skipToEndToken);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
       if (data && data.el && progress === 100) {
-        // Only run auto-scroll if screen/tab is currently in focus and visible
-        if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
-          window.history.replaceState(null, '', window.location.pathname);
-          return;
-        }
-
-        // Start at top of the home page so user sees the initial 3D scene
-        data.el.scrollTop = 0;
-
-        // Prevent user scroll inputs during auto-scroll
-        const blockScrollInput = (e: Event) => {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        };
-
-        const targetEl = data.el;
-        targetEl.style.pointerEvents = 'none';
-        window.addEventListener('wheel', blockScrollInput, { capture: true, passive: false });
-        window.addEventListener('touchstart', blockScrollInput, { capture: true, passive: false });
-        window.addEventListener('touchmove', blockScrollInput, { capture: true, passive: false });
-        window.addEventListener('keydown', blockScrollInput, { capture: true, passive: false });
-
-        const unlockScroll = () => {
-          targetEl.style.pointerEvents = 'auto';
-          window.removeEventListener('wheel', blockScrollInput, { capture: true });
-          window.removeEventListener('touchstart', blockScrollInput, { capture: true });
-          window.removeEventListener('touchmove', blockScrollInput, { capture: true });
-          window.removeEventListener('keydown', blockScrollInput, { capture: true });
-          window.history.replaceState(null, '', window.location.pathname);
-        };
-
-        let scrollTween: gsap.core.Tween | null = null;
-
-        const handleFocusLoss = () => {
-          if (scrollTween) {
-            scrollTween.kill();
-          }
-          unlockScroll();
-        };
-
-        window.addEventListener('blur', handleFocusLoss, { passive: true });
-        document.addEventListener('visibilitychange', handleFocusLoss, { passive: true });
-
-        const timer = setTimeout(() => {
-          const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
-          scrollTween = gsap.to(targetEl, {
-            scrollTop: targetScroll,
-            duration: 2.8,
-            ease: "power2.inOut",
-            onComplete: unlockScroll
-          });
-        }, 50);
-
-        return () => {
-          clearTimeout(timer);
-          if (scrollTween) scrollTween.kill();
-          window.removeEventListener('blur', handleFocusLoss);
-          document.removeEventListener('visibilitychange', handleFocusLoss);
-          unlockScroll();
-        };
+        return runAutoScrollToBottom(data.el, {
+          resetToTop: true,
+          clearUrlParam: true,
+          reducedMotion: prefersReducedMotion,
+        });
       }
     }
-  }, [data, progress]);
+  }, [data, progress, prefersReducedMotion]);
+
+  useEffect(() => {
+    // Skip the initial mount value — only react to actual "Skip to Experience" presses
+    if (skipToEndToken === skipTokenSeenRef.current) return;
+    skipTokenSeenRef.current = skipToEndToken;
+
+    if (data && data.el) {
+      return runAutoScrollToBottom(data.el, {
+        resetToTop: false,
+        clearUrlParam: false,
+        reducedMotion: prefersReducedMotion,
+      });
+    }
+  }, [skipToEndToken, data, prefersReducedMotion]);
 
   useFrame((state, delta) => {
     // Pause frame updates if window is out of focus or tab is hidden
@@ -99,8 +141,8 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
 
       setScrollProgress(data.range(0, 1));
 
-      // Move camera slightly on mouse movement.
-      if (!isMobile) {
+      // Move camera slightly on mouse movement (skipped for prefers-reduced-motion visitors).
+      if (!isMobile && !prefersReducedMotion) {
         camera.rotation.y = THREE.MathUtils.lerp(camera.rotation.y, -(state.pointer.x * Math.PI) / 90, 0.05);
       }
     }
