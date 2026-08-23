@@ -70,6 +70,9 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
           dpr={[1, 2]}
           gl={{ powerPreference: 'high-performance', antialias: true, alpha: false }}
         >
+          {/* Attach dynamic theme background color directly to 3D scene clear color */}
+          <color attach="background" args={[backgroundColor]} />
+
           <Suspense fallback={null}>
             <ambientLight intensity={0.5} />
 

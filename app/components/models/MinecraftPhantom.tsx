@@ -58,22 +58,20 @@ const MinecraftPhantom = () => {
       // Smooth position lerp
       groupRef.current.position.lerp(worldPos, Math.min(1, delta * 6));
 
-      // Orientation along flight curve with right-side-up Y-rotation correction
-      const nextT = Math.min(1, t + 0.03);
+      // Compute forward tangent direction along flight curve
+      const nextT = Math.min(1, t + 0.02);
       const nextLocalPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
       const nextWorldPos = nextLocalPos.clone();
       state.camera.localToWorld(nextWorldPos);
 
-      const targetRotation = new THREE.Matrix4().lookAt(
-        groupRef.current.position,
-        nextWorldPos,
-        state.camera.up
-      );
-      const targetQuat = new THREE.Quaternion().setFromRotationMatrix(targetRotation);
+      const dir = nextWorldPos.clone().sub(worldPos).normalize();
 
-      // Flip 180 deg around Y so Phantom faces forward right side up
-      const flipQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
-      targetQuat.multiply(flipQuat);
+      // Smooth Euler orientation (yaw, pitch) — eliminates 180° flips and glitches
+      const yaw = Math.atan2(dir.x, dir.z) + Math.PI;
+      const pitch = Math.asin(Math.max(-0.99, Math.min(0.99, dir.y)));
+
+      const targetEuler = new THREE.Euler(pitch, yaw, 0, 'YXZ');
+      const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
 
       groupRef.current.quaternion.slerp(targetQuat, Math.min(1, delta * 8));
 

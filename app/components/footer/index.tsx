@@ -131,6 +131,9 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
 
   if (isMobile) {
     const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
+    const isResume = link.name.toLowerCase() === 'resume';
+    const iconScale: [number, number] = isResume ? [0.29, 0.38] : [0.38, 0.38];
+
     return (
       <mesh onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
         <planeGeometry args={[0.6, 0.6]} />
@@ -138,7 +141,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
         <Image
           url={iconPath}
           transparent
-          scale={[0.42, 0.42]}
+          scale={iconScale}
           position={[0, 0, 0.05]}
         />
       </mesh>
