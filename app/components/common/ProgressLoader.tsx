@@ -12,44 +12,43 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
         opacity: progress === 100 ? 0 : 1,
       }}
     >
-      {/* Minecraft Button Styled Panel */}
-      <div
-        className="w-72 sm:w-88 space-y-4 font-minecraft text-center select-none p-5"
-        style={{
-          background: '#747474',
-          border: '2px solid #000000',
-          boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
-          imageRendering: 'pixelated',
-        }}
-      >
-        {/* Crisp White Minecraft Loading Text (No Yellow) */}
+      <div className="flex flex-col items-center justify-center space-y-4 font-minecraft-regular text-center select-none">
+        
+        {/* Line 1: Loading level */}
         <div
-          className="text-white text-xs sm:text-sm font-bold tracking-wider uppercase"
+          className="text-white text-lg sm:text-xl font-normal tracking-wide"
           style={{
             textShadow: '2px 2px 0px rgba(0,0,0,0.9)',
-            fontFamily: "'Minecraft', monospace",
+            fontFamily: "'MinecraftRegular', 'Minecraft', monospace",
           }}
         >
-          {`Loading World... ${clampedProgress.toFixed(0)}%`}
+          Loading level
         </div>
 
-        {/* Minecraft Progress Bar Track */}
+        {/* Line 2: Building terrain */}
         <div
+          className="text-white text-lg sm:text-xl font-normal tracking-wide"
           style={{
-            background: '#000000',
-            border: '2px solid #373737',
-            boxShadow: 'inset 2px 2px 0px 0px #000000',
-            height: '16px',
-            width: '100%',
-            padding: '2px',
+            textShadow: '2px 2px 0px rgba(0,0,0,0.9)',
+            fontFamily: "'MinecraftRegular', 'Minecraft', monospace",
+          }}
+        >
+          Building terrain
+        </div>
+
+        {/* Thin Minecraft Progress Bar */}
+        <div
+          className="w-56 sm:w-64 mt-1"
+          style={{
+            background: '#555555',
+            height: '4px',
             imageRendering: 'pixelated',
           }}
         >
           <div
             style={{
               height: '100%',
-              background: '#55ff55',
-              boxShadow: 'inset 0px 2px 0px 0px #aaffaa, inset 0px -2px 0px 0px #00aa00',
+              background: '#80ff20',
               width: `${clampedProgress}%`,
               transition: 'width 0.2s ease-out',
               imageRendering: 'pixelated',
