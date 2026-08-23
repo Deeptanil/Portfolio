@@ -53,7 +53,7 @@ const Experience = () => {
   const getTitle = () => {
     if (isMobile) {
       return (
-        <Text {...fontProps} position={[0, 2.5, 0.4]}>
+        <Text {...fontProps} position={[0, 2.7, 0.4]}>
           EXPERIENCE
         </Text>
       );
@@ -80,14 +80,14 @@ const Experience = () => {
             id="work"
             color='#b9c6d6'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.3 : 0, isMobile ? 0.2 : 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : -2, isMobile ? 1.2 : 0, isMobile ? 0.01 : 0)}>
             <Work/>
           </GridTile>
           <GridTile title='ABOUT ME'
             id="about"
             color='#bdd1e3'
             textAlign='center'
-            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.3 : 0, 0)}>
+            position={new THREE.Vector3(isMobile ? 0 : 2, isMobile ? -1.2 : 0, 0)}>
             <Projects/>
           </GridTile>
         </group>

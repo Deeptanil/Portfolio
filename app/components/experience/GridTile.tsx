@@ -131,10 +131,10 @@ const GridTile = (props: GridTileProps) => {
 
   const fontProps: Partial<TextProps> = {
     font: "./soria-font.ttf",
-    maxWidth: isMobile ? 3 : 3.2,
+    maxWidth: isMobile ? 2.2 : 3.2,
     anchorX: isMobile ? 'center' : (isWork ? 'left' : 'right'),
     anchorY: isMobile ? 'middle' : 'bottom',
-    fontSize: isMobile ? 0.28 : 0.55,
+    fontSize: isMobile ? 0.22 : 0.55,
     color: 'white',
     textAlign: isMobile ? 'center' : (isWork ? 'left' : 'right'),
     fillOpacity: isMobile ? 1 : 0,
@@ -174,7 +174,7 @@ const GridTile = (props: GridTileProps) => {
     if (!isMobile) {
       return <planeGeometry args={[4, 4, 1]} />;
     }
-    return <planeGeometry args={[3.2, 2.0, 1]} />;
+    return <planeGeometry args={[2.4, 2.4, 1]} />;
   };
 
   return (
@@ -188,7 +188,7 @@ const GridTile = (props: GridTileProps) => {
       { getGeometry() }
       <group>
         <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
-          <boxGeometry args={[isMobile ? 3.2 : 4, isMobile ? 2.0 : 4, 0.5]}/>
+          <boxGeometry args={[isMobile ? 2.4 : 4, isMobile ? 2.4 : 4, 0.5]}/>
           <meshPhysicalMaterial
             color="#444"
             transparent={true}
