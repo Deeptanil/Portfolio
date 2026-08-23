@@ -45,8 +45,13 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
       }}
       suppressHydrationWarning
     >
-      {/* Heavy Radial Vignette Overlay */}
-      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
+      {/* Heavy Radial Vignette Overlay with inline style for 100% reliable SSR/refresh rendering */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.85) 65%, rgba(0,0,0,0.98) 100%)',
+        }}
+      />
 
       <div className="relative z-10 flex flex-col items-center justify-center space-y-4 font-minecraft-regular text-center select-none">
         

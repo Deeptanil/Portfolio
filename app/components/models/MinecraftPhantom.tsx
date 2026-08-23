@@ -28,7 +28,7 @@ const MinecraftPhantom = () => {
       .addScaledVector(p3, t * t * t);
   };
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!groupRef.current || !scroll) return;
 
     // Phantom flies ONLY in night/dark mode
@@ -54,29 +54,15 @@ const MinecraftPhantom = () => {
 
       const worldPos = localPos.clone();
       state.camera.localToWorld(worldPos);
+      groupRef.current.position.copy(worldPos);
 
-      // Smooth position lerp
-      groupRef.current.position.lerp(worldPos, Math.min(1, delta * 6));
-
-      // Compute forward tangent direction along flight curve
+      // Orientation along flight curve
       const nextT = Math.min(1, t + 0.02);
       const nextLocalPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
       const nextWorldPos = nextLocalPos.clone();
       state.camera.localToWorld(nextWorldPos);
 
-      const dir = nextWorldPos.clone().sub(worldPos).normalize();
-
-      // Smooth Euler orientation (yaw, pitch) — eliminates 180° flips and glitches
-      const yaw = Math.atan2(dir.x, dir.z) + Math.PI;
-      const pitch = Math.asin(Math.max(-0.99, Math.min(0.99, dir.y)));
-
-      const targetEuler = new THREE.Euler(pitch, yaw, 0, 'YXZ');
-      const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
-
-      groupRef.current.quaternion.slerp(targetQuat, Math.min(1, delta * 8));
-
-      // Subtle wing flap oscillation
-      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 6) * 0.05;
+      groupRef.current.lookAt(nextWorldPos);
     }
   });
 
@@ -84,7 +70,9 @@ const MinecraftPhantom = () => {
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={4.0} />
       <directionalLight position={[2, 4, 5]} intensity={4.0} />
-      <primitive object={scene} scale={[0.45, 0.45, 0.45]} />
+      <group rotation={[0, Math.PI, 0]}>
+        <primitive object={scene} scale={[0.45, 0.45, 0.45]} />
+      </group>
     </group>
   );
 };
