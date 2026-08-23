@@ -1,6 +1,6 @@
 'use client';
 
-import { MeshPortalMaterial, Text, TextProps, useScroll } from '@react-three/drei';
+import { Edges, MeshPortalMaterial, Text, TextProps, useScroll } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
@@ -20,7 +20,6 @@ interface GridTileProps {
 const GridTile = (props: GridTileProps) => {
   const titleRef = useRef<THREE.Group>(null);
   const gridRef = useRef<THREE.Group>(null);
-  const hoverBoxRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef(null);
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
@@ -115,9 +114,8 @@ const GridTile = (props: GridTileProps) => {
     gsap.to(titleRef.current, {
       fillOpacity: 1
     });
-    if (gridRef.current && hoverBoxRef.current) {
+    if (gridRef.current) {
       gsap.to(gridRef.current.position, { z: 0.5, duration: 0.4});
-      gsap.to(hoverBoxRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.4 });
     }
   };
 
@@ -127,9 +125,8 @@ const GridTile = (props: GridTileProps) => {
     gsap.to(titleRef.current, {
       fillOpacity: 0
     });
-    if (gridRef.current && hoverBoxRef.current) {
+    if (gridRef.current) {
       gsap.to(gridRef.current.position, { z: 0, duration: 0.4});
-      gsap.to(hoverBoxRef.current.scale, { x: 0, y: 0, z: 0, duration: 0.4 });
     }
   };
 
@@ -149,14 +146,6 @@ const GridTile = (props: GridTileProps) => {
       onPointerOut={onPointerOut}>
       { getGeometry() }
       <group>
-        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
-          <boxGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4, 0.5]}/>
-          <meshPhysicalMaterial
-            color="#444"
-            transparent={true}
-            opacity={0.3}
-          />
-        </mesh>
         <Text position={textPosition} {...fontProps} ref={titleRef}>
           {title}
         </Text>
@@ -165,6 +154,8 @@ const GridTile = (props: GridTileProps) => {
         <color attach="background" args={[color]} />
         {children}
       </MeshPortalMaterial>
+      {/* Clean 2D crisp white rectangular outline border matching reference architecture */}
+      <Edges color="white" lineWidth={isMobile ? 2 : 3} />
     </mesh>
   );
 };

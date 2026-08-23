@@ -35,7 +35,7 @@ const Experience = () => {
 
     if (titleRef.current) {
       titleRef.current.children.forEach((text, i) => {
-        // Mobile target Y: 0.0 (sitting at Y=1.5 in parent space, directly above the Work button)
+        // Mobile target Y: 0.0 (sitting at Y=0.95 in parent space, lower down right above Work button)
         const yTarget = isMobile ? 0.0 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
@@ -78,7 +78,7 @@ const Experience = () => {
   return (
     <group position={[0, -41.5, 12]} rotation={[-Math.PI / 2, 0, -Math.PI / 2]}>
       <group rotation={[0, 0, Math.PI / 2]}>
-        <group ref={titleRef} position={[isMobile ? 0 : -3.6, 1.5, isMobile ? 0.4 : -2]}>
+        <group ref={titleRef} position={[isMobile ? 0 : -3.6, isMobile ? 0.95 : 1.5, isMobile ? 0.4 : -2]}>
           {getTitle()}
         </group>
 

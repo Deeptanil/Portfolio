@@ -22,9 +22,9 @@ const Work = () => {
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Spanning Background Painting */}
+      {/* Spanning Background Painting matched to 1.85 x 1.85 tile geometry on mobile */}
       <mesh position={[0, 0, 0]}>
-        <planeGeometry args={[isMobile ? 2.4 : 4, isMobile ? 2.4 : 4]} />
+        <planeGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4]} />
         <meshBasicMaterial map={bgTexture} transparent opacity={0.88} />
       </mesh>
 
@@ -32,7 +32,7 @@ const Work = () => {
       <Image
         url="/Enchanted_Book.gif"
         transparent
-        scale={[isMobile ? 1.8 : 2.2, isMobile ? 1.8 : 2.2]}
+        scale={[isMobile ? 1.35 : 2.2, isMobile ? 1.35 : 2.2]}
         position={[0, 0, 0.1]}
       />
     </group>
