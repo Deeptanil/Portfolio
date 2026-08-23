@@ -39,7 +39,7 @@ const WORK_EXPERIENCE = [
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
-    buttonText: "Visit MAHE BLR ↗",
+    buttonText: "Visit manipal.edu ↗",
     description: [
       "Pursuing B.Tech in Information Technology with a focus on web performance, graphics programming, and software architecture.",
       "Specializing in bridging frontend UX design with backend systems and digital product infrastructure."
@@ -49,6 +49,8 @@ const WORK_EXPERIENCE = [
     title: "GOOGLE CAREER CERTIFICATES",
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
+    url: "https://www.coursera.org/professional-certificates/google-ux-design",
+    buttonText: "View Course ↗",
     description: [
       "Currently pursuing professional certification in end-to-end UX research, wireframing, prototyping, and usability testing.",
       "Applying human-centered design principles to modern web applications and e-commerce platforms."
@@ -58,9 +60,16 @@ const WORK_EXPERIENCE = [
     title: "SKILLS & TECHNOLOGIES",
     subtitle: "Technical & Product Stack",
     date: "CORE COMPETENCIES",
-    description: [
-      "Development: JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Three.js / React Three Fiber, Git, GitHub, Supabase",
-      "Product & Design: UI/UX Design, Web Performance Optimization, SEO, E-commerce Architecture, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+    description: [],
+    skillsList: [
+      {
+        category: "Development:",
+        items: "JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Three.js / React Three Fiber, Git, GitHub, Supabase"
+      },
+      {
+        category: "Product & Design:",
+        items: "UI/UX Design, Web Performance Optimization, SEO, E-commerce Architecture, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+      }
     ]
   }
 ];
@@ -181,17 +190,41 @@ export default function WorkPage() {
               [{item.date}]
             </p>
             {/* Body: Normal font */}
-            <div className="space-y-4 pt-2">
-              {item.description.map((line, lIdx) => (
-                <p
-                  key={lIdx}
-                  className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
-                  style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
-                >
-                  {preventOrphans(line)}
-                </p>
-              ))}
-            </div>
+            {item.description && item.description.length > 0 && (
+              <div className="space-y-4 pt-2">
+                {item.description.map((line, lIdx) => (
+                  <p
+                    key={lIdx}
+                    className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
+                    style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+                  >
+                    {preventOrphans(line)}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Skills List Rendering */}
+            {item.skillsList && (
+              <div className="space-y-6 pt-2">
+                {item.skillsList.map((skill, sIdx) => (
+                  <div key={sIdx} className="space-y-2">
+                    <h4
+                      className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
+                      style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+                    >
+                      {preventOrphans(skill.category)}
+                    </h4>
+                    <p
+                      className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
+                      style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+                    >
+                      {preventOrphans(skill.items)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Optional Website Link Button */}
             {item.url && (
