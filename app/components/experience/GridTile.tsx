@@ -1,6 +1,6 @@
 'use client';
 
-import { Edges, MeshPortalMaterial, Text, TextProps, useScroll } from '@react-three/drei';
+import { MeshPortalMaterial, Text, TextProps, useScroll } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
@@ -106,8 +106,8 @@ const GridTile = (props: GridTileProps) => {
   const textPosition: [number, number, number] = isMobile
     ? [0, 0, 0.4]
     : isWork
-    ? [-1.6, -1.6, 0.4]  // Bottom-Left corner for Left (Work) tile
-    : [1.6, -1.6, 0.4];   // Bottom-Right corner for Right (About) tile
+    ? [-1.6, -1.6, 0.4]
+    : [1.6, -1.6, 0.4];
 
   const onPointerOver = () => {
     if (isActive || isMobile) return;
@@ -137,7 +137,6 @@ const GridTile = (props: GridTileProps) => {
     if (!isMobile) {
       return <planeGeometry args={[4, 4, 1]} />;
     }
-    // Responsive compact 1.85 x 1.85 tiles on mobile
     return <planeGeometry args={[1.85, 1.85, 1]} />;
   };
 
@@ -150,14 +149,13 @@ const GridTile = (props: GridTileProps) => {
       onPointerOut={onPointerOut}>
       { getGeometry() }
       <group>
-        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={isMobile ? [1, 1, 1] : [0, 0, 0]}>
+        <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
           <boxGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4, 0.5]}/>
           <meshPhysicalMaterial
             color="#444"
             transparent={true}
             opacity={0.3}
           />
-          <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
         <Text position={textPosition} {...fontProps} ref={titleRef}>
           {title}

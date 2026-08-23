@@ -70,7 +70,7 @@ const MinecraftPhantom = () => {
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={4.0} />
       <directionalLight position={[2, 4, 5]} intensity={4.0} />
-      <group rotation={[0, Math.PI, 0]}>
+      <group rotation={[0, 0, 0]}>
         <primitive object={scene} scale={[0.45, 0.45, 0.45]} />
       </group>
     </group>
