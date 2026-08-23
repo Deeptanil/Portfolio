@@ -101,6 +101,12 @@ const GridTile = (props: GridTileProps) => {
     color: 'white',
     textAlign: isMobile ? 'center' : (isWork ? 'left' : 'right'),
     fillOpacity: isMobile ? 1 : 0,
+    outlineWidth: isMobile ? 0.006 : 0,
+    outlineColor: '#444444',
+    outlineBlur: isMobile ? '40%' : 0,
+    outlineOpacity: isMobile ? 0.5 : 0,
+    outlineOffsetX: isMobile ? 0.002 : 0,
+    outlineOffsetY: isMobile ? -0.002 : 0,
   };
 
   const textPosition: [number, number, number] = isMobile
