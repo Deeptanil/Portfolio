@@ -25,14 +25,17 @@ const SUBWOOFER_LULLABY_NOTES = [
 
 const SoundToggle = () => {
   const [isPlaying, setIsPlaying] = useState(true);
+  const isPlayingRef = useRef(true); // ref mirrors state so handlers always read current value
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleSound = () => {
     if (!isPlaying) {
+      isPlayingRef.current = true;
       startSubwooferLullaby();
       setIsPlaying(true);
     } else {
+      isPlayingRef.current = false;
       stopSubwooferLullaby();
       setIsPlaying(false);
     }
@@ -64,11 +67,22 @@ const SoundToggle = () => {
   };
 
   const startSubwooferLullaby = () => {
-    if (audioCtxRef.current) return;
+    if (audioCtxRef.current) {
+      // Resume if suspended (browser policy)
+      if (audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume();
+      }
+      return;
+    }
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       const ctx = new AudioCtx();
       audioCtxRef.current = ctx;
+
+      // Resume if browser auto-suspended it
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
 
       let noteIdx = 0;
 
@@ -104,24 +118,28 @@ const SoundToggle = () => {
     }
   };
 
+  // Register first-user-interaction listener ONCE on mount only.
+  // Uses isPlayingRef so the handler always reads the current playing state.
   useEffect(() => {
-    const handleFirstUserInteraction = () => {
-      if (isPlaying && !audioCtxRef.current) {
+    const handleFirstInteraction = () => {
+      if (isPlayingRef.current) {
         startSubwooferLullaby();
       }
     };
 
-    window.addEventListener('click', handleFirstUserInteraction, { once: true });
-    window.addEventListener('scroll', handleFirstUserInteraction, { once: true });
-    window.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    window.addEventListener('touchend', handleFirstInteraction, { once: true });
+    window.addEventListener('keydown', handleFirstInteraction, { once: true });
 
     return () => {
       stopSubwooferLullaby();
-      window.removeEventListener('click', handleFirstUserInteraction);
-      window.removeEventListener('scroll', handleFirstUserInteraction);
-      window.removeEventListener('touchstart', handleFirstUserInteraction);
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+      window.removeEventListener('touchend', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
     };
-  }, [isPlaying]);
+  }, []); // empty dep — register once on mount only
 
   const positionClass = isMobile ? 'top-2 left-2' : 'top-6 left-6';
 
