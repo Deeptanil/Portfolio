@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 function preventOrphans(str: string): string {
   const lastSpaceIndex = str.lastIndexOf(' ');
@@ -42,10 +42,10 @@ const WORK_EXPERIENCE = [
   {
     title: "GOOGLE CAREER CERTIFICATES",
     subtitle: "Google UX Design Professional Certificate",
-    date: "2026",
+    date: "IN PROGRESS",
     description: [
-      "Completed professional certification in end-to-end UX research, wireframing, prototyping, and usability testing.",
-      "Applied human-centered design principles to modern web applications and e-commerce platforms."
+      "Currently pursuing professional certification in end-to-end UX research, wireframing, prototyping, and usability testing.",
+      "Applying human-centered design principles to modern web applications and e-commerce platforms."
     ]
   },
   {
@@ -60,22 +60,42 @@ const WORK_EXPERIENCE = [
 ];
 
 export default function WorkPage() {
-  const [manualScroll, setManualScroll] = useState(false);
-  const [startScrolling, setStartScrolling] = useState(false);
+  const isAutoScrollingRef = useRef(false);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    // Start slow auto-scroll after 15 seconds
     const timer = setTimeout(() => {
-      setStartScrolling(true);
-    }, 20000);
+      isAutoScrollingRef.current = true;
+      scrollIntervalRef.current = setInterval(() => {
+        if (isAutoScrollingRef.current) {
+          window.scrollBy({ top: 1, behavior: 'auto' });
+        }
+      }, 40); // Slow 25px/sec auto-scroll
+    }, 15000);
 
-    const handleInteract = () => setManualScroll(true);
+    // Stop auto-scroll on user interaction so user scrolls from current position
+    const handleInteract = () => {
+      isAutoScrollingRef.current = false;
+      if (scrollIntervalRef.current) {
+        clearInterval(scrollIntervalRef.current);
+      }
+    };
+
     window.addEventListener('wheel', handleInteract, { passive: true });
     window.addEventListener('touchstart', handleInteract, { passive: true });
+    window.addEventListener('touchmove', handleInteract, { passive: true });
+    window.addEventListener('keydown', handleInteract, { passive: true });
 
     return () => {
       clearTimeout(timer);
+      if (scrollIntervalRef.current) {
+        clearInterval(scrollIntervalRef.current);
+      }
       window.removeEventListener('wheel', handleInteract);
       window.removeEventListener('touchstart', handleInteract);
+      window.removeEventListener('touchmove', handleInteract);
+      window.removeEventListener('keydown', handleInteract);
     };
   }, []);
 
@@ -113,11 +133,7 @@ export default function WorkPage() {
       </div>
 
       {/* Minecraft End Credits Roll */}
-      <div
-        className={`w-full max-w-[94vw] sm:max-w-3xl px-4 sm:px-8 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-24 ${
-          manualScroll ? '' : startScrolling ? 'animate-[minecraftCreditsScroll_45s_linear_forwards]' : ''
-        }`}
-      >
+      <div className="w-full max-w-[94vw] sm:max-w-3xl px-4 sm:px-8 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-24">
         {/* Header: Minecraft Font for Heading, Normal Font for Subtitle */}
         <div className="space-y-4 pt-10 sm:pt-14">
           <h1
@@ -176,18 +192,6 @@ export default function WorkPage() {
         {/* End Credits Footer Note */}
         <div className="pt-16 sm:pt-24 space-y-6 text-center pb-16">
           <p
-            className="text-white text-base sm:text-lg tracking-widest uppercase font-sans"
-            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
-          >
-            {preventOrphans("And the player awoke from the dream. And the player began a new dream.")}
-          </p>
-          <p
-            className="text-white text-base sm:text-lg tracking-widest uppercase font-sans"
-            style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
-          >
-            {preventOrphans("and the universe said I love you because you are love.")}
-          </p>
-          <p
             className="text-white text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular opacity-80"
             style={{ textShadow: '1px 1px 0px #000000' }}
           >
@@ -196,17 +200,6 @@ export default function WorkPage() {
         </div>
 
       </div>
-
-      <style jsx global>{`
-        @keyframes minecraftCreditsScroll {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-80%);
-          }
-        }
-      `}</style>
     </main>
   );
 }
