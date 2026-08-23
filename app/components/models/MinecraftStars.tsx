@@ -1,12 +1,12 @@
 'use client';
 
 import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 
 const MinecraftStars = () => {
-  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const meshRef = useRef<THREE.InstancedMesh | null>(null);
   const isDarkTheme = useThemeStore((state) => state.theme.type === 'dark');
 
   const count = 1000;
@@ -33,6 +33,31 @@ const MinecraftStars = () => {
     return list;
   }, [count]);
 
+  // Each star's local transform (position/scale/rotation, looking at the origin) never
+  // changes after creation — only the whole field's position (tracks camera) and slow
+  // group rotation change per frame. This used to rebuild all 1000 instance matrices from
+  // scratch every single frame for an identical result every time; instead, compute them
+  // once per mesh instance (via this ref callback, which fires exactly once per mount/
+  // remount — important since the mesh unmounts/remounts whenever the theme toggles) and
+  // just update position/rotation.y in useFrame.
+  const setMeshRef = useCallback(
+    (mesh: THREE.InstancedMesh | null) => {
+      meshRef.current = mesh;
+      if (!mesh) return;
+
+      starData.forEach((star, i) => {
+        dummy.position.set(star.x, star.y, star.z);
+        dummy.scale.setScalar(star.scale);
+        dummy.rotation.z = star.rot;
+        dummy.lookAt(0, 0, 0);
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+    },
+    [starData, dummy]
+  );
+
   useFrame((state) => {
     if (!meshRef.current || !isDarkTheme) return;
 
@@ -41,23 +66,12 @@ const MinecraftStars = () => {
 
     const time = state.clock.getElapsedTime();
     meshRef.current.rotation.y = time * 0.008;
-
-    starData.forEach((star, i) => {
-      dummy.position.set(star.x, star.y, star.z);
-      dummy.scale.setScalar(star.scale);
-      dummy.rotation.z = star.rot;
-      dummy.lookAt(0, 0, 0);
-      dummy.updateMatrix();
-      meshRef.current!.setMatrixAt(i, dummy.matrix);
-    });
-
-    meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
   if (!isDarkTheme) return null;
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
+    <instancedMesh ref={setMeshRef} args={[undefined, undefined, count]} frustumCulled={false}>
       {/* Small square pixel star geometry */}
       <planeGeometry args={[0.22, 0.22]} />
       <meshBasicMaterial

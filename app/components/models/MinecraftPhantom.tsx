@@ -2,10 +2,14 @@
 
 import { useGLTF, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 import { isMobile } from 'react-device-detect';
+
+// Straight linear path: enters from right, exits to left, centered near Y=0 for mobile visibility
+const startLocal = new THREE.Vector3(5.5, 0.8, -3.5);
+const endLocal = new THREE.Vector3(-5.5, -0.8, -3.5);
 
 const MinecraftPhantom = () => {
   const groupRef = useRef<THREE.Group>(null);
@@ -13,9 +17,9 @@ const MinecraftPhantom = () => {
   const scroll = useScroll();
   const isDark = useThemeStore((state) => state.theme.type === 'dark');
 
-  // Straight linear path: enters from right, exits to left, centered near Y=0 for mobile visibility
-  const startLocal = new THREE.Vector3(5.5, 0.8, -3.5);
-  const endLocal = new THREE.Vector3(-5.5, -0.8, -3.5);
+  // Reused every frame instead of allocating fresh Vector3s each time
+  const scratchPos = useMemo(() => new THREE.Vector3(), []);
+  const scratchNextPos = useMemo(() => new THREE.Vector3(), []);
 
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
@@ -35,20 +39,17 @@ const MinecraftPhantom = () => {
       // Ease curve (cosine ease) so progress lingers near center of screen for longer
       const t = 0.5 - 0.5 * Math.cos(Math.PI * linearT);
 
-      const localPos = startLocal.clone().lerp(endLocal, t);
-
-      const worldPos = localPos.clone();
-      state.camera.localToWorld(worldPos);
-      groupRef.current.position.copy(worldPos);
+      scratchPos.copy(startLocal).lerp(endLocal, t);
+      state.camera.localToWorld(scratchPos);
+      groupRef.current.position.copy(scratchPos);
 
       // Point toward end of path
       const nextLinearT = Math.min(1, linearT + 0.03);
       const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextLinearT);
-      const nextLocal = startLocal.clone().lerp(endLocal, nextT);
-      const nextWorld = nextLocal.clone();
-      state.camera.localToWorld(nextWorld);
+      scratchNextPos.copy(startLocal).lerp(endLocal, nextT);
+      state.camera.localToWorld(scratchNextPos);
 
-      groupRef.current.lookAt(nextWorld);
+      groupRef.current.lookAt(scratchNextPos);
     }
   });
 

@@ -143,9 +143,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="overscroll-y-none" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/MinecraftRegular-Bmg3.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/soria-font.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-        <link rel="preload" href="/Vercetti-Regular.woff" as="font" type="font/woff" crossOrigin="anonymous" />
+        {/* The 3 custom troika/CSS fonts below are only used by the home page's 3D canvas,
+            so their preloads live in app/page.tsx instead of here to avoid loading them
+            on /about and /work, which never render the canvas. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -4,6 +4,7 @@ import { Edges, MeshPortalMaterial, Text, TextProps, useScroll } from '@react-th
 import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useIsMobile } from '../../hooks/useIsMobile';
@@ -26,6 +27,7 @@ const GridTile = (props: GridTileProps) => {
 
   const { title, children, color, position, id } = props;
   const { camera } = useThree();
+  const router = useRouter();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
   const activePortalId = usePortalStore((state) => state.activePortalId);
@@ -80,11 +82,11 @@ const GridTile = (props: GridTileProps) => {
     }
 
     if (id === 'work') {
-      window.location.href = '/work';
+      router.push('/work');
       return;
     }
     if (id === 'about') {
-      window.location.href = '/about';
+      router.push('/about');
       return;
     }
 

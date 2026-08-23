@@ -35,7 +35,7 @@ const Work = () => {
 
       {/* Foreground Icon */}
       <Image
-        url="/Enchanted_Book.gif"
+        url="/Enchanted_Book.webp"
         transparent
         scale={[isMobile ? 1.35 : 2.2, isMobile ? 1.35 : 2.2]}
         position={[0, 0, 0.1]}

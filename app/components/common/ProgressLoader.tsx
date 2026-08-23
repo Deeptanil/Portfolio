@@ -7,19 +7,23 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
   const simProgressRef = useRef(0);
 
   useEffect(() => {
-    // Optimistic progress ticker: trickles forward continuously so it never feels stuck
+    // Optimistic progress ticker: trickles forward continuously so it never feels stuck.
+    // It exists purely to smooth out chunky real-progress jumps (e.g. a big glTF landing
+    // all at once) — it must never outrun how fast assets are actually loading, so the
+    // step size scales with elapsed time instead of a fixed multi-second floor.
+    const start = performance.now();
     const interval = setInterval(() => {
-      simProgressRef.current = Math.min(
-        95,
-        simProgressRef.current + (simProgressRef.current < 40 ? 2.5 : simProgressRef.current < 75 ? 1.2 : 0.4)
-      );
+      const elapsedMs = performance.now() - start;
+      // Reaches 95% in ~900ms — fast enough to feel instant on cached/fast loads,
+      // still smooth if real `progress` lags behind.
+      simProgressRef.current = Math.min(95, (elapsedMs / 900) * 95);
 
       setDisplayProgress((prev) => {
         const actualClamped = Math.min(100, Math.round(progress));
         if (actualClamped === 100) return 100;
         return Math.max(prev, actualClamped, Math.round(simProgressRef.current));
       });
-    }, 80);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [progress]);

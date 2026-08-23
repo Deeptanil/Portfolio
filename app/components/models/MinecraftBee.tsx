@@ -2,10 +2,14 @@
 
 import { useAnimations, useGLTF, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 import { isMobile } from 'react-device-detect';
+
+// Bee flies left-to-right (opposite to the Phantom), slightly above center
+const startLocal = new THREE.Vector3(-5.5, 1.2, -3.0);
+const endLocal = new THREE.Vector3(5.5, 0.2, -3.0);
 
 const MinecraftBee = () => {
   const groupRef = useRef<THREE.Group>(null);
@@ -21,9 +25,9 @@ const MinecraftBee = () => {
     }
   }, [actions]);
 
-  // Bee flies left-to-right (opposite to the Phantom), slightly above center
-  const startLocal = new THREE.Vector3(-5.5, 1.2, -3.0);
-  const endLocal = new THREE.Vector3(5.5, 0.2, -3.0);
+  // Reused every frame instead of allocating fresh Vector3s each time
+  const scratchPos = useMemo(() => new THREE.Vector3(), []);
+  const scratchNextPos = useMemo(() => new THREE.Vector3(), []);
 
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
@@ -44,23 +48,21 @@ const MinecraftBee = () => {
       // Cosine ease curve so progress lingers near center of screen
       const t = 0.5 - 0.5 * Math.cos(Math.PI * linearT);
 
-      const localPos = startLocal.clone().lerp(endLocal, t);
+      scratchPos.copy(startLocal).lerp(endLocal, t);
 
       // Gentle natural bobbing
-      localPos.y += Math.sin(state.clock.elapsedTime * 4) * 0.04;
+      scratchPos.y += Math.sin(state.clock.elapsedTime * 4) * 0.04;
 
-      const worldPos = localPos.clone();
-      state.camera.localToWorld(worldPos);
-      groupRef.current.position.copy(worldPos);
+      state.camera.localToWorld(scratchPos);
+      groupRef.current.position.copy(scratchPos);
 
       // Orient toward travel direction
       const nextLinearT = Math.min(1, linearT + 0.03);
       const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextLinearT);
-      const nextLocalPos = startLocal.clone().lerp(endLocal, nextT);
-      const nextWorldPos = nextLocalPos.clone();
-      state.camera.localToWorld(nextWorldPos);
+      scratchNextPos.copy(startLocal).lerp(endLocal, nextT);
+      state.camera.localToWorld(scratchNextPos);
 
-      groupRef.current.lookAt(nextWorldPos);
+      groupRef.current.lookAt(scratchNextPos);
       groupRef.current.rotateY(Math.PI);
     }
   });
