@@ -5,8 +5,8 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { usePortalStore } from '@stores';
 import gsap from "gsap";
 import { useEffect, useRef } from 'react';
-import { isMobile } from 'react-device-detect';
 import * as THREE from 'three';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface GridTileProps {
   id: string;
@@ -22,12 +22,15 @@ const GridTile = (props: GridTileProps) => {
   const gridRef = useRef<THREE.Group>(null);
   const hoverBoxRef = useRef<THREE.Mesh>(null);
   const portalRef = useRef(null);
+  const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+
   const { title, children, color, position, id } = props;
   const { camera } = useThree();
   const setActivePortal = usePortalStore((state) => state.setActivePortal);
   const isActive = usePortalStore((state) => state.activePortalId === id);
   const activePortalId = usePortalStore((state) => state.activePortalId);
   const data = useScroll();
+  const isMobile = useIsMobile();
 
   const isWork = id === 'work';
 
@@ -36,7 +39,7 @@ const GridTile = (props: GridTileProps) => {
       /* eslint-disable  @typescript-eslint/no-explicit-any */
       (titleRef.current as any).fillOpacity = 1;
     }
-  }, [id]);
+  }, [id, isMobile]);
 
   useFrame(() => {
     if (!data) return;
@@ -47,10 +50,28 @@ const GridTile = (props: GridTileProps) => {
     }
   });
 
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      exitPortal(true);
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const handlePointerDown = (e: any) => {
+    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0;
+    const clientY = e.clientY ?? e.nativeEvent?.clientY ?? 0;
+    touchStartRef.current = { x: clientX, y: clientY, time: Date.now() };
+  };
+
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const handlePointerUp = (e: any) => {
+    if (!touchStartRef.current) return;
+    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0;
+    const clientY = e.clientY ?? e.nativeEvent?.clientY ?? 0;
+    const moveDist = Math.hypot(clientX - touchStartRef.current.x, clientY - touchStartRef.current.y);
+    const duration = Date.now() - touchStartRef.current.time;
+    touchStartRef.current = null;
+
+    // Mistouch Prevention: If finger moved > 12px or tap was < 40ms, treat as scroll swipe & ignore!
+    if (moveDist > 12 || duration < 40) {
+      return;
     }
+
+    portalInto(e);
   };
 
   const portalInto = (e: React.SyntheticEvent | Event) => {
@@ -69,64 +90,6 @@ const GridTile = (props: GridTileProps) => {
 
     if (isActive || activePortalId) return;
     setActivePortal(id);
-    document.body.style.cursor = 'auto';
-    const div = document.createElement('div');
-
-    div.className = 'fixed close';
-    div.style.transform = 'rotateX(90deg)';
-    div.onclick = () => exitPortal(true);
-
-    if (!document.querySelector('.close')) {
-      document.body.appendChild(div);
-
-      gsap.fromTo(div, {
-        scale: 0,
-        rotate: '-180deg',
-      },{
-        opacity: 1,
-        zIndex: 10,
-        transform: 'rotateX(0deg)',
-        scale: 1,
-        duration: 1,
-      });
-    }
-    document.body.addEventListener('keydown', handleEscape);
-    gsap.to(portalRef.current, {
-      blend: 1,
-      duration: 0.5,
-    });
-  };
-
-  const exitPortal = (force = false) => {
-    if (!force && !activePortalId) return;
-    setActivePortal(null);
-
-    gsap.to(camera.position, {
-      x: 0,
-      duration: 1,
-    });
-
-    gsap.to(camera.rotation, {
-      x: -Math.PI / 2,
-      y: 0,
-      duration: 1,
-    });
-
-    gsap.to(portalRef.current, {
-      blend: 0,
-      duration: 1,
-    });
-
-    gsap.to(document.querySelector('.close'), {
-      scale: 0,
-      duration: 0.5,
-      onComplete: () => {
-        document.querySelectorAll('.close').forEach((el) => {
-          el.remove();
-        });
-      }
-    });
-    document.body.removeEventListener('keydown', handleEscape);
   };
 
   const fontProps: Partial<TextProps> = {
@@ -180,9 +143,8 @@ const GridTile = (props: GridTileProps) => {
   return (
     <mesh ref={gridRef}
       position={position}
-      onClick={portalInto}
-      onPointerDown={portalInto}
-      onPointerUp={portalInto}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}>
       { getGeometry() }
@@ -196,7 +158,6 @@ const GridTile = (props: GridTileProps) => {
           />
           <Edges color="white" lineWidth={isMobile ? 2 : 3}/>
         </mesh>
-        {/* Left tile: Bottom-Left corner, Right tile: Bottom-Right corner */}
         <Text position={textPosition} {...fontProps} ref={titleRef}>
           {title}
         </Text>

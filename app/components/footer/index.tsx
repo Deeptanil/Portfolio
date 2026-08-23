@@ -4,10 +4,10 @@ import { Html, Image, Text, useCursor, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import { FOOTER_LINKS } from "@constants";
 import { FooterLink } from "@types";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 interface ToastState {
   message: string;
@@ -18,6 +18,7 @@ interface ToastState {
 const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string, x?: number, y?: number) => void }) => {
   const textRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
 
@@ -78,6 +79,8 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
   };
 
   useEffect(() => {
+    if (isMobile) return;
+
     if (!document.getElementById(`footer-link-${link.name}`)) {
       const hoverDiv = document.createElement('div');
       hoverDiv.id = `footer-link-${link.name}`;
@@ -98,7 +101,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       const el = document.getElementById(`footer-link-${link.name}`);
       if (el) el.remove();
     };
-  }, [link.name, link.hoverText]);
+  }, [link.name, link.hoverText, isMobile]);
 
   useEffect(() => {
     if (isMobile) return;
@@ -122,7 +125,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       if (hoverDiv) gsap.killTweensOf(hoverDiv);
       if (textRef.current) gsap.killTweensOf(textRef.current);
     };
-  }, [hovered, link.name]);
+  }, [hovered, link.name, isMobile]);
 
   useCursor(hovered);
 
@@ -153,6 +156,7 @@ const Footer = () => {
   const groupRef = useRef<THREE.Group>(null);
   const data = useScroll();
   const [toast, setToast] = useState<ToastState | null>(null);
+  const isMobile = useIsMobile();
 
   const handleToast = (msg: string, x?: number, y?: number) => {
     setToast({ message: msg, x, y });
@@ -172,7 +176,7 @@ const Footer = () => {
   const getLinks = () => {
     return FOOTER_LINKS.map((link, i) => {
       return (
-        <group key={i} position={[i * (isMobile ? 1.5 : 2.5), 0, 0]}>
+        <group key={i} position={[i * (isMobile ? 1.25 : 2.5), 0, 0]}>
           <FooterLinkItem link={link} onToast={handleToast} />
         </group>
       );
@@ -182,7 +186,7 @@ const Footer = () => {
   return (
     <>
       <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-        <group position={[isMobile ? -2.25 : -3.75, 0, 0]}>
+        <group position={[isMobile ? -1.875 : -3.75, 0, 0]}>
           {getLinks()}
         </group>
       </group>

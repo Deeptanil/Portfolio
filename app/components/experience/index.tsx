@@ -4,17 +4,18 @@ import { Text, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { usePortalStore } from "@stores";
 import { useRef } from "react";
-import { isMobile } from "react-device-detect";
 import * as THREE from 'three';
 import GridTile from "./GridTile";
 import Projects from "./projects";
 import Work from "./work";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const Experience = () => {
   const titleRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
   const data = useScroll();
   const isActive = usePortalStore((state) => !!state.activePortalId);
+  const isMobile = useIsMobile();
 
   const fontProps = {
     font: "./soria-font.ttf",
@@ -25,7 +26,7 @@ const Experience = () => {
 
   useFrame((state, delta) => {
     if (!data) return;
-    const d = data.range(0.8, 0.2);
+    const d = data.range(0.7, 0.3);
 
     if (groupRef.current && !isActive) {
       groupRef.current.position.y = d > 0 ? -1 : -30;
@@ -34,7 +35,7 @@ const Experience = () => {
 
     if (titleRef.current) {
       titleRef.current.children.forEach((text, i) => {
-        const yTarget = 0.5;
+        const yTarget = isMobile ? 2.6 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -55,7 +56,7 @@ const Experience = () => {
             {...fontProps}
             fontSize={0.28}
             anchorX="center"
-            position={[startX + i * diff, 0.5, 0.4]}
+            position={[startX + i * diff, 2.6, 0.4]}
           >
             {char}
           </Text>
