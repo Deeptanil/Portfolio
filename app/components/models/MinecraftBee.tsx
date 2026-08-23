@@ -20,21 +20,9 @@ const MinecraftBee = () => {
     }
   }, [actions]);
 
-  // Helper for 4-point Cubic Bezier Curve evaluation
-  const getCubicBezierPoint = (
-    p0: THREE.Vector3,
-    p1: THREE.Vector3,
-    p2: THREE.Vector3,
-    p3: THREE.Vector3,
-    t: number
-  ) => {
-    const oneMinusT = 1 - t;
-    return new THREE.Vector3()
-      .addScaledVector(p0, oneMinusT * oneMinusT * oneMinusT)
-      .addScaledVector(p1, 3 * oneMinusT * oneMinusT * t)
-      .addScaledVector(p2, 3 * oneMinusT * t * t)
-      .addScaledVector(p3, t * t * t);
-  };
+  // Bee flies left-to-right (opposite to the Phantom), slightly above center
+  const startLocal = new THREE.Vector3(-5, 1.5, -3.0);
+  const endLocal = new THREE.Vector3(5, 0.2, -3.0);
 
   useFrame((state) => {
     if (!groupRef.current || !scroll) return;
@@ -45,30 +33,26 @@ const MinecraftBee = () => {
       return;
     }
 
-    // Bee activates as cloud fading starts (scroll 20% -> 60%)
-    const t = scroll.range(0.20, 0.60);
+    // Tighter scroll window matching Phantom: enters at 27%, exits at 52%
+    const t = scroll.range(0.27, 0.25);
 
     const isVisible = t > 0.001 && t < 0.995;
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
-      // Camera local space trajectory
-      const p0 = new THREE.Vector3(7, 4.5, -3.5);
-      const p1 = new THREE.Vector3(5, 1.0, -3.5);
-      const p2 = new THREE.Vector3(-1, -2.5, -3.5);
-      const p3 = new THREE.Vector3(-9, -6.0, -3.5);
+      // Pure linear interpolation — no bezier, no bouncing
+      const localPos = startLocal.clone().lerp(endLocal, t);
 
-      const localPos = getCubicBezierPoint(p0, p1, p2, p3, t);
-
-      localPos.x += Math.sin(state.clock.elapsedTime * 5) * 0.05;
-      localPos.y += Math.cos(state.clock.elapsedTime * 4) * 0.05;
+      // Gentle natural bobbing (small amplitude so it doesn't look like bouncing)
+      localPos.y += Math.sin(state.clock.elapsedTime * 4) * 0.04;
 
       const worldPos = localPos.clone();
       state.camera.localToWorld(worldPos);
       groupRef.current.position.copy(worldPos);
 
-      const nextT = Math.min(1, t + 0.02);
-      const nextLocalPos = getCubicBezierPoint(p0, p1, p2, p3, nextT);
+      // Orient toward travel direction
+      const nextT = Math.min(1, t + 0.05);
+      const nextLocalPos = startLocal.clone().lerp(endLocal, nextT);
       const nextWorldPos = nextLocalPos.clone();
       state.camera.localToWorld(nextWorldPos);
 
