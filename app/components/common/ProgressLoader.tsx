@@ -12,27 +12,28 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
         opacity: progress === 100 ? 0 : 1,
       }}
     >
+      {/* Minecraft Button Styled Panel */}
       <div
-        className="w-72 sm:w-88 space-y-3 font-minecraft text-center select-none p-5"
+        className="w-72 sm:w-88 space-y-4 font-minecraft text-center select-none p-5"
         style={{
-          background: '#c6c6c6',
-          border: '3px solid #000',
-          boxShadow: 'inset -3px -3px 0px 0px #555555, inset 3px 3px 0px 0px #ffffff',
+          background: '#747474',
+          border: '2px solid #000000',
+          boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
           imageRendering: 'pixelated',
         }}
       >
-        {/* Official Minecraft Yellow Loading Text */}
+        {/* Crisp White Minecraft Loading Text (No Yellow) */}
         <div
-          className="text-[#ffff55] text-sm sm:text-base font-bold tracking-wide uppercase"
+          className="text-white text-xs sm:text-sm font-bold tracking-wider uppercase"
           style={{
-            textShadow: '2px 2px 0px #3f3f00',
-            fontFamily: "'Minecraft', 'Minecraftia', monospace",
+            textShadow: '2px 2px 0px rgba(0,0,0,0.9)',
+            fontFamily: "'Minecraft', monospace",
           }}
         >
           {`Loading World... ${clampedProgress.toFixed(0)}%`}
         </div>
 
-        {/* Authentic Minecraft XP / Progress Bar */}
+        {/* Minecraft Progress Bar Track */}
         <div
           style={{
             background: '#000000',
