@@ -60,8 +60,8 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="h-[100dvh] wrapper relative overflow-hidden" style={minecraftDirtStyle}>
-      <div className="h-[100dvh] relative" ref={ref}>
+    <div className="h-[100dvh] wrapper relative overflow-hidden" style={minecraftDirtStyle} suppressHydrationWarning>
+      <div className="h-[100dvh] relative" ref={ref} suppressHydrationWarning>
         <Canvas
           className="base-canvas"
           shadows

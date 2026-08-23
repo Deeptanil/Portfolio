@@ -67,6 +67,7 @@ export default function AboutPage() {
         backgroundSize: "160px 160px",
         imageRendering: "pixelated",
       }}
+      suppressHydrationWarning
     >
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />

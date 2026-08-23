@@ -11,6 +11,7 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
       style={{
         opacity: progress === 100 ? 0 : 1,
       }}
+      suppressHydrationWarning
     >
       <div className="flex flex-col items-center justify-center space-y-4 font-minecraft-regular text-center select-none">
         
