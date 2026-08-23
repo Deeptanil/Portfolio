@@ -1,6 +1,6 @@
 'use client';
 
-import { Html, Svg, Text, useCursor, useScroll } from "@react-three/drei";
+import { Html, Image, Text, useCursor, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +15,11 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
 
-  const onClick = () => {
+  const onClick = (e?: React.SyntheticEvent | Event) => {
+    if (e && 'stopPropagation' in e) {
+      e.stopPropagation();
+    }
+
     if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
@@ -109,7 +113,19 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
   useCursor(hovered);
 
   if (isMobile) {
-    return <Svg onClick={onClick} scale={0.0015} position={[0.1, 0.25, 0]} src={link.icon} />;
+    const iconPath = link.icon.startsWith('/') ? link.icon : `/${link.icon}`;
+    return (
+      <mesh onClick={onClick} onPointerDown={onClick} onPointerUp={onClick}>
+        <planeGeometry args={[0.7, 0.7]} />
+        <meshBasicMaterial visible={false} />
+        <Image
+          url={iconPath}
+          transparent
+          scale={[0.45, 0.45]}
+          position={[0, 0, 0.05]}
+        />
+      </mesh>
+    );
   }
 
   return (
@@ -152,7 +168,7 @@ const Footer = () => {
   return (
     <>
       <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-        <group position={[isMobile ? -2.5 : -3.75, 0, 0]}>
+        <group position={[isMobile ? -2.25 : -3.75, 0, 0]}>
           {getLinks()}
         </group>
       </group>

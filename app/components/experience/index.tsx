@@ -18,7 +18,7 @@ const Experience = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    fontSize: isMobile ? 0.32 : 0.4,
+    fontSize: isMobile ? 0.22 : 0.4,
     color: 'white',
     anchorX: 'center' as const,
   };
@@ -26,7 +26,7 @@ const Experience = () => {
   useFrame((state, delta) => {
     if (!data) return;
     const d = data.range(0.8, 0.2);
-    const e = data.range(0.7, 0.2);
+    const e = data.range(0.7, 0.3);
 
     if (groupRef.current && !isActive) {
       groupRef.current.position.y = d > 0 ? -1 : -30;
@@ -39,7 +39,7 @@ const Experience = () => {
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
         text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
-        (text as any).fillOpacity = e;
+        (text as any).fillOpacity = isMobile ? (d > 0 ? 1 : 0) : e;
       });
     }
   });
@@ -47,14 +47,14 @@ const Experience = () => {
   const getTitle = () => {
     const title = 'EXPERIENCE';
     if (isMobile) {
-      const diff = 0.32;
+      const diff = 0.22;
       const startX = -((title.length - 1) * diff) / 2;
       return title.split('').map((char, i) => {
         return (
           <Text
             key={i}
             {...fontProps}
-            fontSize={0.32}
+            fontSize={0.22}
             anchorX="center"
             position={[startX + i * diff, 2.6, 0.4]}
           >
