@@ -168,7 +168,7 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
         y={-90}
         z={0}
         scale={[5.2, 1.8, 5.2]}
-        speed={2.0}
+        speed={2.15}
         initialOffset={25}
         rotationY={Math.PI}
         materialsRef={materialsRef}

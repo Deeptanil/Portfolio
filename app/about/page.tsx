@@ -37,6 +37,15 @@ const ABOUT_SECTIONS = [
     ]
   },
   {
+    title: "HOW THIS SITE WAS BUILT",
+    subtitle: "A Custom WebGL Experience, Not a Template",
+    text: [
+      "This portfolio is a fully custom 3D scene, built from scratch with Next.js, React Three Fiber, and Three.js. The Minecraft-inspired aesthetic was a deliberate choice — a nostalgic, universally recognizable visual language that let me demonstrate real-time 3D rendering, scroll-driven camera choreography, and portal-based navigation without defaulting to a generic portfolio template.",
+      "Every creature and structure in the scene — the gliding phantom, the flying bee, the drifting sky, the window you fly through — is a rigged 3D model, individually loaded, optimized, and re-oriented to animate in sync with scroll position. GSAP drives the tweened transitions, Zustand handles lightweight shared state like theme and scroll progress, and the whole site ships as a statically exported, performance-tuned build despite the WebGL payload.",
+      "Built iteratively with AI-assisted engineering tools (Codex, Antigravity, Claude Code) alongside hands-on tuning of every animation, camera path, and rotation until it felt right."
+    ]
+  },
+  {
     title: "INTERESTS & BEYOND",
     subtitle: "Motorsports, Drums & Sports",
     text: [

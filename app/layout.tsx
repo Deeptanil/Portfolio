@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
 
 const syne = Syne({
@@ -143,9 +144,20 @@ export default function RootLayout({
   return (
     <html lang="en" className="overscroll-y-none" suppressHydrationWarning>
       <head>
-        {/* The 3 custom troika/CSS fonts below are only used by the home page's 3D canvas,
-            so their preloads live in app/page.tsx instead of here to avoid loading them
-            on /about and /work, which never render the canvas. */}
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-D5W2EXXGEZ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-D5W2EXXGEZ');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

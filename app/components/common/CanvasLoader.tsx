@@ -10,7 +10,7 @@ import { useThemeStore } from "@stores";
 
 import ProgressLoader from "./ProgressLoader";
 import { ScrollHint } from "./ScrollHint";
-import SkipToExperienceButton from "./SkipToExperienceButton";
+import SkipToPortfolioButton from "./SkipToPortfolioButton";
 import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -90,7 +90,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
       <SoundToggle />
       <ThemeSwitcher />
       <ScrollHint />
-      <SkipToExperienceButton />
+      <SkipToPortfolioButton />
     </div>
   );
 };

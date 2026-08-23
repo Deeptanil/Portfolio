@@ -17,6 +17,7 @@ const WORK_EXPERIENCE = [
     date: "2026 - PRESENT",
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co ↗",
+    screenshot: "/prettiva-screenshot.webp",
     description: [
       "Built and optimized a 45+ product e-commerce platform with 12K+ monthly visitors.",
       "Achieved a 100/100 PageSpeed SEO score with sub-second page loading speeds.",
@@ -29,6 +30,7 @@ const WORK_EXPERIENCE = [
     date: "2025 - PRESENT",
     url: "https://strayed.in",
     buttonText: "Visit strayed.in ↗",
+    screenshot: "/strayed-screenshot.webp",
     description: [
       "Architected and built a custom e-commerce platform from scratch with 90% lower load times.",
       "Integrated secure payment gateways, cloud hosting infrastructure, order fulfillment, coupons, and customer loyalty rewards.",
@@ -209,6 +211,21 @@ export default function WorkPage() {
             >
               [{item.date}]
             </p>
+            {/* Live site screenshot — real evidence of the shipped product, not just a claim */}
+            {item.screenshot && (
+              <div className="pt-2">
+                <img
+                  src={item.screenshot}
+                  alt={`Screenshot of the ${item.title} website homepage`}
+                  className="w-full h-auto"
+                  style={{
+                    border: '2px solid #000000',
+                    boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+                  }}
+                  loading="lazy"
+                />
+              </div>
+            )}
             {/* Body: Normal font */}
             {item.description && item.description.length > 0 && (
               <div className="space-y-4 pt-2">

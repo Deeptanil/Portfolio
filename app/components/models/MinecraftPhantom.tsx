@@ -1,36 +1,45 @@
 'use client';
 
-import { useAnimations, useGLTF, useScroll } from '@react-three/drei';
+import { useGLTF, useScroll } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useThemeStore } from '@stores';
 import { isMobile } from 'react-device-detect';
 
-// How far in front of the camera the phantom's flight plane sits (local -Z).
+// Straight linear path: enters from right, exits to left, centered near Y=0
 const PHANTOM_DEPTH = 3.5;
-// How far outside the visible frame edge the path starts/ends
 const PHANTOM_MARGIN_FACTOR = 1.15;
 
 const MinecraftPhantom = () => {
   const groupRef = useRef<THREE.Group>(null);
-  const { scene, animations } = useGLTF('models/minecraft_phantom.glb');
-  const { actions } = useAnimations(animations, groupRef);
+  const { scene } = useGLTF('models/minecraft_phantom.glb');
   const scroll = useScroll();
   const isDark = useThemeStore((state) => state.theme.type === 'dark');
   const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera;
   const size = useThree((state) => state.size);
 
   useEffect(() => {
-    const idleAction = actions?.['Idle Flight'];
-    idleAction?.reset().play();
-  }, [actions]);
+    // Disable frustum culling & expand bounding spheres so no submesh (head/tail/wings) is ever clipped
+    scene.traverse((child) => {
+      const mesh = child as THREE.Mesh;
+      if (mesh.isMesh) {
+        mesh.frustumCulled = false;
+        if (mesh.geometry) {
+          mesh.geometry.computeBoundingBox();
+          mesh.geometry.computeBoundingSphere();
+          if (mesh.geometry.boundingSphere) {
+            mesh.geometry.boundingSphere.radius = 1000;
+          }
+        }
+      }
+    });
+  }, [scene]);
 
   const { startLocal, endLocal } = useMemo(() => {
     const aspect = size.width / size.height;
     const fovRad = THREE.MathUtils.degToRad(camera.fov ?? 75);
     const halfWidth = PHANTOM_DEPTH * Math.tan(fovRad / 2) * aspect * PHANTOM_MARGIN_FACTOR;
-    // Straight linear path: enters from top-right, exits to bottom-left
     return {
       startLocal: new THREE.Vector3(halfWidth, 0.8, -PHANTOM_DEPTH),
       endLocal: new THREE.Vector3(-halfWidth, -0.8, -PHANTOM_DEPTH),
@@ -73,17 +82,13 @@ const MinecraftPhantom = () => {
     }
   });
 
-  const phantomScale = isMobile ? 0.45 : 0.48;
+  const phantomScale = isMobile ? 0.60 : 0.48;
 
   return (
     <group ref={groupRef} visible={false}>
       <ambientLight intensity={4.0} />
       <directionalLight position={[2, 4, 5]} intensity={4.0} />
-      {/* 
-        Inner rotation [-Math.PI / 2, Math.PI, Math.PI / 2]:
-        Keeps dark blue back facing UP towards camera view while pointing head forward to bottom-left corner
-      */}
-      <group rotation={[-Math.PI / 2, Math.PI, Math.PI / 2]}>
+      <group rotation={[0, 0, 0]}>
         <primitive object={scene} scale={[phantomScale, phantomScale, phantomScale]} />
       </group>
     </group>

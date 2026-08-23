@@ -12,8 +12,8 @@ const Projects = () => {
     const tex = paintingTexture.clone();
     tex.needsUpdate = true;
     if (isMobile) {
-      tex.repeat.set(1.0, 0.5);
-      tex.offset.set(0.0, 0.0); // Bottom half for About tile on mobile
+      tex.repeat.set(0.96, 0.48);
+      tex.offset.set(0.02, 0.01); // Bottom half for About tile on mobile, padded so edges are fully visible
     } else {
       tex.repeat.set(0.5, 1.0);
       tex.offset.set(0.5, 0.0); // Right half for About tile on PC
@@ -23,7 +23,7 @@ const Projects = () => {
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Spanning Background Painting restored to full original brightness */}
+      {/* Spanning Background Painting */}
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4]} />
         <meshBasicMaterial
@@ -33,11 +33,11 @@ const Projects = () => {
         />
       </mesh>
 
-      {/* Foreground Icon */}
+      {/* Foreground Icon - Proportionately scaled to fit dynamically inside the tile */}
       <Image
         url="/Stone_Pickaxe.png"
         transparent
-        scale={[isMobile ? 1.35 : 2.2, isMobile ? 1.35 : 2.2]}
+        scale={[isMobile ? 0.85 : 2.2, isMobile ? 0.85 : 2.2]}
         position={[0, 0, 0.1]}
       />
     </group>
