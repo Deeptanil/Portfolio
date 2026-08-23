@@ -11,42 +11,50 @@ function preventOrphans(str: string): string {
 
 const WORK_EXPERIENCE = [
   {
-    title: "DEEPTANIL SINHA",
-    subtitle: "Product Engineer & Creative Technologist",
-    date: "2024 - PRESENT",
+    title: "PRETTIVA & CO.",
+    subtitle: "Co-Founder & Digital Director",
+    date: "2026 - PRESENT",
     description: [
-      "Building high-performance digital products, 3D WebGL experiences, and e-commerce platforms.",
-      "Specializing in Next.js, React Three Fiber, WebGL, TailwindCSS, and GSAP animations.",
-      "Focused on pixel-perfect UI/UX, SEO performance optimization, and immersive web graphics."
+      "Built and optimized a 45+ product e-commerce platform with 12K+ monthly visitors.",
+      "Achieved a 100/100 PageSpeed SEO score with sub-second page loading speeds.",
+      "Engineered high-converting storefront UI/UX, product catalog systems, and analytics funnels."
     ]
   },
   {
-    title: "STRAYED & PRETTIVA",
-    subtitle: "Co-Founder & Lead Engineer",
-    date: "2024 - PRESENT",
+    title: "STRAYED",
+    subtitle: "Co-Founder & Technical Director",
+    date: "2025 - PRESENT",
     description: [
-      "Architected scalable e-commerce infrastructure and digital brand experiences.",
-      "Engineered custom storefronts with real-time 3D product previews and optimized conversion funnels.",
-      "Achieved top-tier Lighthouse SEO scores and sub-second page loading speeds."
+      "Architected and built a custom e-commerce platform from scratch with 90% lower load times.",
+      "Integrated secure payment gateways, cloud hosting infrastructure, order fulfillment, coupons, and customer loyalty rewards.",
+      "Utilized AI-assisted engineering and modern web technology stacks to scale brand operations."
     ]
   },
   {
-    title: "MIT BENGALURU",
-    subtitle: "B.Tech in Computer Science & Engineering ('28)",
+    title: "MANIPAL INSTITUTE OF TECHNOLOGY, BENGALURU",
+    subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
     description: [
-      "Pursuing Computer Science with a core focus on Graphics Programming, Systems, and Software Architecture.",
-      "Active contributor to open-source developer communities, web standards, and creative technology projects."
+      "Pursuing B.Tech in Information Technology with a focus on web performance, graphics programming, and software architecture.",
+      "Specializing in bridging frontend UX design with backend systems and digital product infrastructure."
+    ]
+  },
+  {
+    title: "GOOGLE CAREER CERTIFICATES",
+    subtitle: "Google UX Design Professional Certificate",
+    date: "2026",
+    description: [
+      "Completed professional certification in end-to-end UX research, wireframing, prototyping, and usability testing.",
+      "Applied human-centered design principles to modern web applications and e-commerce platforms."
     ]
   },
   {
     title: "SKILLS & TECHNOLOGIES",
-    subtitle: "Engineering Stack",
+    subtitle: "Technical & Product Stack",
     date: "CORE COMPETENCIES",
     description: [
-      "Languages: TypeScript, JavaScript, HTML5, CSS3, Python, C++",
-      "Frameworks: Next.js, React, Node.js, Three.js / React Three Fiber, GSAP, Zustand",
-      "Design & Graphics: WebGL Shaders, Blender 3D Modeling, UI/UX Systems, Tailwind CSS"
+      "Development: JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Three.js / React Three Fiber, Git, GitHub, Supabase",
+      "Product & Design: UI/UX Design, Web Performance Optimization, SEO, E-commerce Architecture, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
     ]
   }
 ];

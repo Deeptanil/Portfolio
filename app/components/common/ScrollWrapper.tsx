@@ -19,20 +19,42 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
         // Start at top of the home page so user sees the initial 3D scene
         data.el.scrollTop = 0;
 
+        // Prevent all user scroll inputs (wheel, touch, keys, scrollbar) during auto-scroll
+        const blockScrollInput = (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        };
+
+        const targetEl = data.el;
+        targetEl.style.pointerEvents = 'none';
+        window.addEventListener('wheel', blockScrollInput, { capture: true, passive: false });
+        window.addEventListener('touchmove', blockScrollInput, { capture: true, passive: false });
+        window.addEventListener('keydown', blockScrollInput, { capture: true, passive: false });
+
+        const unlockScroll = () => {
+          targetEl.style.pointerEvents = 'auto';
+          window.removeEventListener('wheel', blockScrollInput, { capture: true });
+          window.removeEventListener('touchmove', blockScrollInput, { capture: true });
+          window.removeEventListener('keydown', blockScrollInput, { capture: true });
+          window.history.replaceState(null, '', window.location.pathname);
+        };
+
         // Smoothly auto-scroll from top to bottom over 3.5 seconds
         const timer = setTimeout(() => {
-          const targetScroll = data.el.scrollHeight - data.el.clientHeight;
-          gsap.to(data.el, {
+          const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
+          gsap.to(targetEl, {
             scrollTop: targetScroll,
             duration: 3.5,
             ease: "power1.inOut",
-            onComplete: () => {
-              window.history.replaceState(null, '', window.location.pathname);
-            }
+            onComplete: unlockScroll
           });
         }, 400);
 
-        return () => clearTimeout(timer);
+        return () => {
+          clearTimeout(timer);
+          unlockScroll();
+        };
       }
     }
   }, [data]);

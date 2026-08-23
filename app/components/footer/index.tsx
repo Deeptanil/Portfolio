@@ -1,6 +1,6 @@
 'use client';
 
-import { Svg, Text, useCursor, useScroll } from "@react-three/drei";
+import { Html, Svg, Text, useCursor, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -157,13 +157,15 @@ const Footer = () => {
         </group>
       </group>
 
-      {/* Minecraft-styled Toast Popup for Clipboard Feedback */}
+      {/* Minecraft-styled Toast Popup wrapped in Drei's <Html> so R3F renders HTML outside Three.js namespace */}
       {toastMessage && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-mono text-xs sm:text-sm tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] transition-all">
-          <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
-            {toastMessage}
-          </span>
-        </div>
+        <Html center zIndexRange={[100, 0]}>
+          <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-mono text-xs sm:text-sm tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] transition-all whitespace-nowrap" suppressHydrationWarning>
+            <span className="drop-shadow-[2px_2px_0px_rgba(0,0,0,0.9)]">
+              {toastMessage}
+            </span>
+          </div>
+        </Html>
       )}
     </>
   );

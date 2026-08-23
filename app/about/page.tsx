@@ -12,27 +12,35 @@ function preventOrphans(str: string): string {
 const ABOUT_SECTIONS = [
   {
     title: "ABOUT DEEPTANIL",
-    subtitle: "Product Engineer, Designer & Builder",
+    subtitle: "Product Engineer, UX Specialist & Entrepreneur",
     text: [
-      "Hello! I am Deeptanil Sinha, a computer science student at MIT Bengaluru '28 and full-stack product engineer.",
-      "I craft immersive digital experiences at the intersection of 3D WebGL graphics, elegant UI/UX design, and scalable frontend architecture.",
-      "I love pushing the boundaries of interactive web technologies with Next.js, React Three Fiber, GSAP, and custom GLSL shaders."
+      "Hello! I am Deeptanil Sinha, a Product Engineer based in Bengaluru, India.",
+      "Currently pursuing B.Tech in Information Technology at Manipal Institute of Technology, Bengaluru ('28) and certified with the Google UX Design Professional Certificate ('26).",
+      "I bridge frontend software engineering, user experience design, and digital e-commerce systems."
     ]
   },
   {
-    title: "PHILOSOPHY & CRAFT",
-    subtitle: "How I Build Products",
+    title: "VENTURES & LEADERSHIP",
+    subtitle: "Building Brands & E-commerce Infrastructure",
     text: [
-      "Every pixel, animation frame, and system architecture choice should serve a clear purpose: delighting users and delivering real value.",
-      "I believe in building software that is blazingly fast, visually stunning, accessible, and resilient under production loads."
+      "As Co-Founder & Technical Director of Strayed and Co-Founder & Digital Director of Prettiva & Co., I lead end-to-end digital product strategy.",
+      "From architecting custom e-commerce engines with sub-second load times and 100/100 PageSpeed scores to engineering payment gateways and real-time inventory tools, I build products designed for high scale and conversions."
     ]
   },
   {
-    title: "INTERESTS & PASSIONS",
-    subtitle: "Beyond The Code",
+    title: "ENGINEERING PHILOSOPHY",
+    subtitle: "Crafting High-Performance Digital Products",
     text: [
-      "When I am not coding, you can find me exploring immersive game design, experimenting with electronic sound design & DJing, or researching high-performance WebGL rendering techniques.",
-      "Always curious, always building."
+      "I leverage modern technologies like Next.js, React Three Fiber, WebGL, Node.js, and Supabase alongside AI-assisted development tools (Codex, Antigravity, Claude Code).",
+      "I believe every user interaction should be fast, visually captivating, intuitive, and built on rock-solid architectural foundations."
+    ]
+  },
+  {
+    title: "INTERESTS & BEYOND",
+    subtitle: "Motorsports, Drums & Sports",
+    text: [
+      "Outside of software engineering and digital design, I am passionate about motorsports, playing the drums, swimming, sports, and culinary experiences.",
+      "Driven by curiosity, creativity, and relentless execution."
     ]
   }
 ];
