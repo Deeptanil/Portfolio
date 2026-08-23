@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const syne = Syne({
@@ -155,6 +156,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
