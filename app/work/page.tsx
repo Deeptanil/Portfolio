@@ -85,17 +85,19 @@ export default function WorkPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button — Matching Screenshot Styling */}
+      {/* Minecraft UI Return Button — Pixel-Perfect Matching Screenshot */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
-          className="relative inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-[#747474] text-white font-minecraft-regular text-sm sm:text-base border-2 border-black active:translate-y-[1px] select-none shadow-[inset_-2px_-2px_0px_0px_#373737,inset_2px_2px_0px_0px_#ffffff] hover:bg-[#8b8b8b] hover:text-[#ffff55] transition-colors"
-          style={{ imageRendering: 'pixelated' }}
+          className="inline-flex items-center justify-center px-5 py-2 sm:px-7 sm:py-2.5 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          style={{
+            backgroundColor: '#747474',
+            border: '2px solid #000000',
+            boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+            imageRendering: 'pixelated',
+          }}
         >
-          <span
-            className="text-center"
-            style={{ textShadow: '2px 2px 0px #222222' }}
-          >
+          <span style={{ textShadow: '2px 2px 0px #373737' }}>
             {preventOrphans("Return to world")}
           </span>
         </Link>

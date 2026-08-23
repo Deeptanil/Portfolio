@@ -130,7 +130,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="overscroll-y-none">
+    <html lang="en" className="overscroll-y-none" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -139,6 +139,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${syne.variable} ${cormorant.variable} ${jakarta.variable} font-sans antialiased bg-[#0a0a0c] text-white`}
+        suppressHydrationWarning
       >
         {children}
       </body>
