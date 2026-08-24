@@ -1,8 +1,8 @@
 'use client';
 
-import { Text, useProgress } from "@react-three/drei";
+import { Text, useProgress, useTexture } from "@react-three/drei";
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import { useScrollStore } from "@stores";
@@ -20,6 +20,18 @@ const SkipButton3D = () => {
   const buttonWidth = isMobile ? 4.8 : 6.2;
   const buttonHeight = isMobile ? 0.9 : 1.15;
   const borderWidth = 0.07;
+
+  // Real Minecraft dirt-block texture on the face instead of a flat color, so it reads as
+  // an actual in-game UI button rather than a generic bevel.
+  const dirtTexture = useTexture('/minecraft_dirt.webp');
+  const faceTexture = useMemo(() => {
+    const tex = dirtTexture.clone();
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(isMobile ? 3.5 : 4.5, 1);
+    tex.magFilter = THREE.NearestFilter;
+    tex.needsUpdate = true;
+    return tex;
+  }, [dirtTexture]);
 
   return (
     <group
@@ -56,10 +68,10 @@ const SkipButton3D = () => {
         <meshBasicMaterial color="#373737" />
       </mesh>
 
-      {/* Button Center Face */}
+      {/* Button Center Face — real dirt-block texture, tinted yellow on hover */}
       <mesh position={[0, 0, 0.01]}>
         <planeGeometry args={[buttonWidth - borderWidth * 2, buttonHeight - borderWidth * 2]} />
-        <meshBasicMaterial color={hovered ? "#8b8b8b" : "#747474"} />
+        <meshBasicMaterial map={faceTexture} color={hovered ? "#ffff55" : "#ffffff"} />
       </mesh>
 
       {/* Text Shadow */}
@@ -140,8 +152,11 @@ const Hero = () => {
 
       <group position={[0, -25, 5.69]}>
         <ambientLight intensity={1.5} />
+        {/* Only one shadow-casting light — the window's handle/pane rotate continuously
+            during this scroll range, so every additional shadow-casting light doubles the
+            shadow-map recompute cost for the entire time it's on screen. */}
         <directionalLight position={[3, 5, 4]} intensity={3.5} castShadow />
-        <pointLight castShadow position={[1, 1, -2.5]} intensity={60} distance={10} />
+        <pointLight position={[1, 1, -2.5]} intensity={60} distance={10} />
         <WindowModel receiveShadow />
         <TextWindow />
       </group>

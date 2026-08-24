@@ -1,8 +1,136 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+
+const CREDITS = [
+  {
+    text: "Minecraft Phantom model by TR1STAN",
+    href: "https://sketchfab.com/3d-models/minecraft-phantom-1af8ac6951544fb0a401b8c479fbc8ab",
+    note: "Sketchfab, CC BY 4.0",
+  },
+  {
+    text: "Minecraft Bee model by kuzneciv",
+    href: "https://sketchfab.com/3d-models/bee-minecraft-b883baf691204b4d9a618e5e5841adf1",
+    note: "Sketchfab, CC BY 4.0",
+  },
+  {
+    text: "Minecraft Sky model by Walingtone Studios",
+    href: "https://sketchfab.com/3d-models/minecraft-sky-4c1a6aef599641c6b0a6aee95e64001a",
+    note: "Sketchfab, CC BY 4.0",
+  },
+  {
+    text: "Residential Window model by AleixoAlonso",
+    href: "https://sketchfab.com/3d-models/residential-window-ae11104237314463a61251fd46ded4b4",
+    note: "Sketchfab, CC BY 4.0",
+  },
+  {
+    text: "Minecraft font by JDGraphics (Jacob Debono)",
+    href: null,
+    note: null,
+  },
+  {
+    text: "Soria font by Bydani",
+    href: "https://www.behance.net/danibydani",
+    note: "CC BY-ND 4.0",
+  },
+  {
+    text: "Vercetti font by Filippos Fragkogiannis & Richard Mandona",
+    href: "https://www.filipposfragkogiannis.com",
+    note: null,
+  },
+  {
+    text: "Design inspired by Mohit Virli",
+    href: null,
+    note: null,
+  },
+];
+
+function CreditsPopup() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center justify-center px-5 py-2 sm:px-7 sm:py-2.5 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+        style={{
+          backgroundColor: '#747474',
+          border: '2px solid #000000',
+          boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+          imageRendering: 'pixelated',
+        }}
+      >
+        <span style={{ textShadow: '2px 2px 0px #373737' }}>Credits &amp; Attributions</span>
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="w-full max-w-lg max-h-[80vh] overflow-y-auto p-6 sm:p-8 space-y-5"
+            style={{
+              backgroundColor: '#402c1b',
+              backgroundImage: "url('/minecraft_dirt.webp')",
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+              border: '3px solid #000000',
+              boxShadow: 'inset -3px -3px 0px 0px #1a1108, inset 3px 3px 0px 0px #8b8b8b',
+              imageRendering: 'pixelated',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2
+              className="text-xl sm:text-2xl font-bold text-white uppercase tracking-widest font-minecraft-regular text-center"
+              style={{ textShadow: '2px 2px 0px #000000' }}
+            >
+              Credits &amp; Attributions
+            </h2>
+            <ul className="space-y-3 text-sm sm:text-base text-white font-sans list-none text-center" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}>
+              {CREDITS.map((c, i) => (
+                <li key={i}>
+                  {c.href ? (
+                    <a
+                      href={c.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-white/40 hover:text-[#ffff55] hover:decoration-[#ffff55] transition-colors"
+                    >
+                      {c.text}
+                    </a>
+                  ) : (
+                    c.text
+                  )}
+                  {c.note ? ` (${c.note})` : ''}
+                </li>
+              ))}
+            </ul>
+            <div className="flex justify-center pt-2">
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center justify-center px-5 py-2 select-none font-minecraft-regular text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                style={{
+                  backgroundColor: '#747474',
+                  border: '2px solid #000000',
+                  boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+                  imageRendering: 'pixelated',
+                }}
+              >
+                <span style={{ textShadow: '2px 2px 0px #373737' }}>Close</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 function preventOrphans(str: string): string {
   const lastSpaceIndex = str.lastIndexOf(' ');
@@ -34,15 +162,6 @@ const ABOUT_SECTIONS = [
     text: [
       "I leverage modern technologies like Next.js, React Three Fiber, WebGL, Node.js, and Supabase alongside AI-assisted development tools (Codex, Antigravity, Claude Code).",
       "I believe every user interaction should be fast, visually captivating, intuitive, and built on rock-solid architectural foundations."
-    ]
-  },
-  {
-    title: "HOW THIS SITE WAS BUILT",
-    subtitle: "A Custom WebGL Experience, Not a Template",
-    text: [
-      "This portfolio is a fully custom 3D scene, built from scratch with Next.js, React Three Fiber, and Three.js. The Minecraft-inspired aesthetic was a deliberate choice — a nostalgic, universally recognizable visual language that let me demonstrate real-time 3D rendering, scroll-driven camera choreography, and portal-based navigation without defaulting to a generic portfolio template.",
-      "Every creature and structure in the scene — the gliding phantom, the flying bee, the drifting sky, the window you fly through — is a rigged 3D model, individually loaded, optimized, and re-oriented to animate in sync with scroll position. GSAP drives the tweened transitions, Zustand handles lightweight shared state like theme and scroll progress, and the whole site ships as a statically exported, performance-tuned build despite the WebGL payload.",
-      "Built iteratively with AI-assisted engineering tools (Codex, Antigravity, Claude Code) alongside hands-on tuning of every animation, camera path, and rotation until it felt right."
     ]
   },
   {
@@ -213,6 +332,9 @@ export default function AboutPage() {
           >
             {preventOrphans("Open to Internships • Remote / Hybrid (Bengaluru, India)")}
           </p>
+          <div className="pt-4">
+            <CreditsPopup />
+          </div>
           <p
             className="text-white text-xs sm:text-sm tracking-widest uppercase font-minecraft-regular opacity-80"
             style={{ textShadow: '1px 1px 0px #000000' }}

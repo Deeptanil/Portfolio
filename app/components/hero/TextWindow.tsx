@@ -1,18 +1,34 @@
 'use client';
 
 import { Text } from "@react-three/drei";
-import { useRef } from "react";
+import { useThree } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
 const TextWindow = () => {
   const windowRef = useRef<THREE.Group>(null);
+  const size = useThree((state) => state.size);
 
   const fontProps = {
     font: "./soria-font.ttf",
   };
 
+  // The camera flies directly along its own view axis through this text ensemble as the
+  // user scrolls, so there's a narrow window where all four sides (top/bottom/left/right)
+  // are simultaneously close and readable before perspective distortion takes over. On a
+  // narrow/tall mobile aspect, horizontal FOV is much tighter, so that "all four visible"
+  // window is much smaller and easy to miss (e.g. after the auto-scroll-to-bottom that runs
+  // when returning from /about or /work lands at a slightly different scroll position than
+  // a fresh visit). Shrinking the whole ensemble on narrower aspects buys back that margin.
+  // Desktop-ish aspect (~16:9) keeps scale at 1 (unchanged); narrower aspects shrink down,
+  // floored so text never becomes illegibly small.
+  const textScale = useMemo(() => {
+    const aspect = size.width / size.height;
+    return THREE.MathUtils.clamp(aspect / 1.6, 0.5, 1);
+  }, [size.width, size.height]);
+
   return (
-    <group position={[0, -0.3, 0]} ref={windowRef}>
+    <group position={[0, -0.3, 0]} scale={textScale} ref={windowRef}>
 
       <Text color="white" anchorX="left" anchorY="middle"
         fontSize={1.3}

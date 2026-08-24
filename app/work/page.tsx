@@ -219,8 +219,8 @@ export default function WorkPage() {
                   alt={`Screenshot of the ${item.title} website homepage`}
                   className="w-full h-auto"
                   style={{
-                    border: '2px solid #000000',
-                    boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+                    border: '18px solid #3b2415',
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
                   }}
                   loading="lazy"
                 />
