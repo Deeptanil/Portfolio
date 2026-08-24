@@ -59,8 +59,14 @@ const MinecraftBee = () => {
   // Reused every frame
   const scratchPos = useMemo(() => new THREE.Vector3(), []);
   const scratchNextPos = useMemo(() => new THREE.Vector3(), []);
+  // The rest of the scene (camera, clouds, stars) moves via THREE.MathUtils.damp — an
+  // exponential smoothing that inherently absorbs frame-to-frame jitter. This model's
+  // position used to be a direct, undamped function of the raw scroll value each frame,
+  // which is why its motion read as comparatively less smooth. Damping the progress value
+  // itself brings it in line with everything else's feel.
+  const dampedLinearTRef = useRef(0);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!groupRef.current || !scroll) return;
 
     // Bee flies ONLY in Day mode (when not dark)
@@ -76,8 +82,11 @@ const MinecraftBee = () => {
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
+      dampedLinearTRef.current = THREE.MathUtils.damp(dampedLinearTRef.current, linearT, 8, delta);
+      const smoothedT = dampedLinearTRef.current;
+
       // Cosine ease curve so progress lingers near center of screen
-      const t = 0.5 - 0.5 * Math.cos(Math.PI * linearT);
+      const t = 0.5 - 0.5 * Math.cos(Math.PI * smoothedT);
 
       scratchPos.copy(startLocal).lerp(endLocal, t);
 
@@ -88,13 +97,16 @@ const MinecraftBee = () => {
       groupRef.current.position.copy(scratchPos);
 
       // Orient toward travel direction
-      const nextLinearT = Math.min(1, linearT + 0.03);
-      const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextLinearT);
+      const nextSmoothedT = Math.min(1, smoothedT + 0.03);
+      const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextSmoothedT);
       scratchNextPos.copy(startLocal).lerp(endLocal, nextT);
       state.camera.localToWorld(scratchNextPos);
 
       groupRef.current.lookAt(scratchNextPos);
       groupRef.current.rotateY(Math.PI);
+    } else {
+      // Stay in sync so it doesn't visibly "catch up" the next time it becomes visible
+      dampedLinearTRef.current = linearT;
     }
   });
 

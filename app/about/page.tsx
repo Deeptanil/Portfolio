@@ -61,7 +61,7 @@ function CreditsPopup() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+        className="inline-flex items-center justify-center min-w-[190px] sm:min-w-[230px] h-[40px] sm:h-[46px] px-5 sm:px-7 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
         style={{
           backgroundColor: '#707070',
           border: '2px solid #000000',
@@ -125,7 +125,7 @@ function CreditsPopup() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="px-6 py-2 text-sm font-minecraft-regular text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                className="inline-flex items-center justify-center min-w-[120px] h-[36px] sm:h-[40px] px-6 text-xs sm:text-sm font-minecraft-regular text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                 style={{
                   backgroundColor: '#707070',
                   border: '2px solid #000000',
@@ -242,11 +242,11 @@ export default function AboutPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button matching official Minecraft main menu screenshot */}
+      {/* Minecraft UI Return Button with standardized responsive proportions matching Minecraft main menu */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
-          className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[200px] h-[38px] sm:h-[44px] px-5 sm:px-7 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
             backgroundColor: '#707070',
             border: '2px solid #000000',

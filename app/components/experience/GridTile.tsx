@@ -36,36 +36,6 @@ const GridTile = (props: GridTileProps) => {
 
   const isWork = id === 'work';
 
-  // MeshPortalMaterial's inner content (the Work/Projects children) only gets its first-ever
-  // real render — and thus its one-time shader-compile + texture-upload cost — once this
-  // outer mesh is actually rendered while inside the camera's frustum (drei's useIntersect
-  // gates the portal's RenderTexture on a genuine onBeforeRender call, not on gl.compile(),
-  // so <Preload all/> can't warm this up). Without this, that cost lands on the first real
-  // scroll into the Experience section instead. Fix: briefly place the tile right in front
-  // of wherever the camera starts (still hidden behind the fading-in loading screen), let a
-  // couple of real frames render it there, then move it back to its real position.
-  useEffect(() => {
-    if (!gridRef.current) return;
-    const originalPosition = gridRef.current.position.clone();
-
-    const warmupPos = new THREE.Vector3(0, 0, -3);
-    camera.localToWorld(warmupPos);
-    gridRef.current.position.copy(warmupPos);
-
-    let rafId2 = 0;
-    const rafId1 = requestAnimationFrame(() => {
-      rafId2 = requestAnimationFrame(() => {
-        if (gridRef.current) gridRef.current.position.copy(originalPosition);
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(rafId1);
-      cancelAnimationFrame(rafId2);
-      if (gridRef.current) gridRef.current.position.copy(originalPosition);
-    };
-  }, [camera]);
-
   useEffect(() => {
     if (isMobile && titleRef.current) {
       /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -181,6 +151,13 @@ const GridTile = (props: GridTileProps) => {
   return (
     <mesh ref={gridRef}
       position={position}
+      // The parent Experience group stays .visible=false until scrolled into range, and a
+      // real render pass (with this tile in-frustum) never happens before then — which is
+      // what the portal's inner content (see MeshPortalMaterial's useIntersect) needs to
+      // compile its shaders/upload its textures. frustumCulled=false, combined with the
+      // brief forced-visible warmup in Experience's useFrame, lets that first real render
+      // happen during the loading screen instead of on the first real scroll here.
+      frustumCulled={false}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerOver={onPointerOver}

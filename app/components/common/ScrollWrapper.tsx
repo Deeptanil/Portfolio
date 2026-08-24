@@ -2,7 +2,6 @@
 
 import { useProgress, useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import gsap from "gsap";
 import { useEffect, useRef } from 'react';
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
@@ -10,23 +9,27 @@ import { useScrollStore } from "@stores";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 // Shared "smoothly scroll to the very bottom" behavior — used both when returning from
-// /about or /work with ?scroll=footer, and when a visitor clicks the "Skip to Experience"
-// button. Pauses itself if the tab loses focus/visibility mid-scroll, and jumps instantly
-// instead of tweening for prefers-reduced-motion users.
+// /about or /work with ?scroll=footer, and when a visitor clicks the "Skip to Portfolio"
+// button. If tab loses focus or is put in the background mid-scroll, it completes the scroll
+// instantly to the target position so it always finishes scrolling reliably.
 function runAutoScrollToBottom(
   targetEl: HTMLElement,
   options: { resetToTop: boolean; clearUrlParam: boolean; reducedMotion: boolean }
 ) {
   const { resetToTop, clearUrlParam, reducedMotion } = options;
 
-  // Only run if screen/tab is currently in focus and visible
-  if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
-    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
-    return () => {};
-  }
-
   if (resetToTop) {
     targetEl.scrollTop = 0;
+  }
+
+  const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
+
+  // If the document/tab is currently hidden or out of focus when triggered, or if reduced motion is requested,
+  // finish the scroll immediately so the target position is reached 100% reliably.
+  if (reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
+    targetEl.scrollTop = targetScroll;
+    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
+    return () => {};
   }
 
   // Prevent user scroll inputs during auto-scroll
@@ -51,30 +54,27 @@ function runAutoScrollToBottom(
     if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
   };
 
-  let scrollTween: gsap.core.Tween | null = null;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  let scrollTween: any = null;
 
+  // When browser tab is switched or put in the background mid-scroll, finish scrolling to target position instantly!
   const handleFocusLoss = () => {
     if (scrollTween) {
       scrollTween.kill();
     }
+    targetEl.scrollTop = targetScroll;
     unlockScroll();
   };
 
   window.addEventListener('blur', handleFocusLoss, { passive: true });
   document.addEventListener('visibilitychange', handleFocusLoss, { passive: true });
 
-  const timer = setTimeout(() => {
-    const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
-
-    if (reducedMotion) {
-      targetEl.scrollTop = targetScroll;
-      unlockScroll();
-      return;
-    }
-
+  const timer = setTimeout(async () => {
+    const gsapModule = await import('gsap');
+    const gsap = gsapModule.default || gsapModule;
     scrollTween = gsap.to(targetEl, {
       scrollTop: targetScroll,
-      duration: 2.8,
+      duration: 4.2,
       ease: "power2.inOut",
       onComplete: unlockScroll
     });
@@ -111,7 +111,7 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   }, [data, progress, prefersReducedMotion]);
 
   useEffect(() => {
-    // Skip the initial mount value — only react to actual "Skip to Experience" presses
+    // Skip the initial mount value — only react to actual "Skip to Portfolio" presses
     if (skipToEndToken === skipTokenSeenRef.current) return;
     skipTokenSeenRef.current = skipToEndToken;
 

@@ -66,8 +66,15 @@ const MinecraftPhantom = () => {
   // Reused every frame
   const scratchPos = useMemo(() => new THREE.Vector3(), []);
   const scratchNextPos = useMemo(() => new THREE.Vector3(), []);
+  // The rest of the scene (camera, clouds, stars) moves via THREE.MathUtils.damp — an
+  // exponential smoothing that inherently absorbs frame-to-frame jitter. This model's
+  // position used to be a direct, undamped function of the raw scroll value each frame,
+  // which is why its motion read as comparatively less smooth. Damping the progress value
+  // itself brings it in line with everything else's feel. Purely a position-smoothing
+  // change — does not touch orientation/rotation logic.
+  const dampedLinearTRef = useRef(0);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!groupRef.current || !scroll) return;
 
     if (!isDark) {
@@ -82,20 +89,26 @@ const MinecraftPhantom = () => {
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
+      dampedLinearTRef.current = THREE.MathUtils.damp(dampedLinearTRef.current, linearT, 8, delta);
+      const smoothedT = dampedLinearTRef.current;
+
       // Ease curve (cosine ease) so progress lingers near center of screen
-      const t = 0.5 - 0.5 * Math.cos(Math.PI * linearT);
+      const t = 0.5 - 0.5 * Math.cos(Math.PI * smoothedT);
 
       scratchPos.copy(startLocal).lerp(endLocal, t);
       state.camera.localToWorld(scratchPos);
       groupRef.current.position.copy(scratchPos);
 
       // Point toward end of path
-      const nextLinearT = Math.min(1, linearT + 0.03);
-      const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextLinearT);
+      const nextSmoothedT = Math.min(1, smoothedT + 0.03);
+      const nextT = 0.5 - 0.5 * Math.cos(Math.PI * nextSmoothedT);
       scratchNextPos.copy(startLocal).lerp(endLocal, nextT);
       state.camera.localToWorld(scratchNextPos);
 
       groupRef.current.lookAt(scratchNextPos);
+    } else {
+      // Stay in sync so it doesn't visibly "catch up" the next time it becomes visible
+      dampedLinearTRef.current = linearT;
     }
   });
 
