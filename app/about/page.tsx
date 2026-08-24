@@ -4,6 +4,12 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
+function preventOrphans(str: string): string {
+  const lastSpaceIndex = str.lastIndexOf(' ');
+  if (lastSpaceIndex === -1) return str;
+  return str.slice(0, lastSpaceIndex) + '\u00A0' + str.slice(lastSpaceIndex + 1);
+}
+
 const CREDITS = [
   {
     text: "Minecraft Phantom model by TR1STAN",
@@ -55,21 +61,26 @@ function CreditsPopup() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center justify-center px-5 py-2 sm:px-7 sm:py-2.5 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+        className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
         style={{
-          backgroundColor: '#747474',
+          backgroundColor: '#6a6a6a',
           border: '2px solid #000000',
-          boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+          outline: 'none',
+          boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+          fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+          textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
           imageRendering: 'pixelated',
         }}
       >
-        <span style={{ textShadow: '2px 2px 0px #373737' }}>Credits &amp; Attributions</span>
+        <span>Credits &amp; Attributions</span>
       </button>
 
       {open && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
+          style={{
+            background: 'radial-gradient(circle at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.95) 100%), rgba(0, 0, 0, 0.75)',
+          }}
           onClick={() => setOpen(false)}
         >
           <div
@@ -99,30 +110,31 @@ function CreditsPopup() {
                       href={c.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline decoration-white/40 hover:text-[#ffff55] hover:decoration-[#ffff55] transition-colors"
+                      className="underline hover:text-[#ffff55] transition-colors"
                     >
                       {c.text}
                     </a>
                   ) : (
-                    c.text
+                    <span>{c.text}</span>
                   )}
-                  {c.note ? ` (${c.note})` : ''}
+                  {c.note && <span className="opacity-75 text-xs sm:text-sm block sm:inline sm:ml-2">({c.note})</span>}
                 </li>
               ))}
             </ul>
-            <div className="flex justify-center pt-2">
+            <div className="pt-4 text-center">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center px-5 py-2 select-none font-minecraft-regular text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                className="px-6 py-2 text-sm font-minecraft-regular text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                 style={{
-                  backgroundColor: '#747474',
+                  backgroundColor: '#6a6a6a',
                   border: '2px solid #000000',
-                  boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
-                  imageRendering: 'pixelated',
+                  boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+                  fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                  textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
                 }}
               >
-                <span style={{ textShadow: '2px 2px 0px #373737' }}>Close</span>
+                Close
               </button>
             </div>
           </div>
@@ -132,51 +144,27 @@ function CreditsPopup() {
   );
 }
 
-function preventOrphans(str: string): string {
-  const lastSpaceIndex = str.lastIndexOf(' ');
-  if (lastSpaceIndex === -1) return str;
-  return str.slice(0, lastSpaceIndex) + '\u00A0' + str.slice(lastSpaceIndex + 1);
-}
-
 const ABOUT_SECTIONS = [
   {
-    title: "ABOUT DEEPTANIL",
-    subtitle: "Product Engineer, UX Specialist & Entrepreneur",
+    title: "MY JOURNEY",
+    subtitle: "How It All Started",
     text: [
-      "Hello! I am Deeptanil Sinha, a Product Engineer based in Bengaluru, India.",
-      "Currently pursuing B.Tech in Information Technology at Manipal Institute of Technology, Bengaluru ('28) and working towards the Google UX Design Professional Certificate.",
-      "I bridge frontend software engineering, user experience design, and digital e-commerce systems."
+      "My passion for technology began with Minecraft — tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, graphics programming, and e-commerce infrastructure.",
+      "Today, I co-found digital brands and build high-performance web applications that bridge intuitive design with robust software architecture."
     ]
   },
   {
-    title: "VENTURES & LEADERSHIP",
-    subtitle: "Building Brands & E-commerce Infrastructure",
+    title: "WHAT DRIVES ME",
+    subtitle: "Product Thinking & Execution",
     text: [
-      "As Co-Founder & Technical Director of STRAYED and Co-Founder & Digital Director of Prettiva & Co., I lead end-to-end digital product strategy.",
-      "From architecting custom e-commerce engines with sub-second load times and 100/100 PageSpeed scores to engineering payment gateways and real-time inventory tools, I build products designed for high scale and conversions."
+      "I believe great software lives at the intersection of speed, simplicity, and delight. Whether optimizing 3D web graphics to run smoothly on mobile devices or crafting seamless e-commerce checkout flows, I focus on shipping products that deliver measurable real-world impact."
     ]
   },
   {
-    title: "ENGINEERING PHILOSOPHY",
-    subtitle: "Crafting High-Performance Digital Products",
+    title: "CURRENT FOCUS",
+    subtitle: "Building & Scaling",
     text: [
-      "I leverage modern technologies like Next.js, React Three Fiber, WebGL, Node.js, and Supabase alongside AI-assisted development tools (Codex, Antigravity, Claude Code).",
-      "I believe every user interaction should be fast, visually captivating, intuitive, and built on rock-solid architectural foundations."
-    ]
-  },
-  {
-    title: "INTERESTS & BEYOND",
-    subtitle: "Motorsports, Drums & Sports",
-    text: [
-      "Outside of software engineering and digital design, I am passionate about motorsports, playing the drums, swimming, sports, and culinary experiences.",
-      "Driven by curiosity, creativity, and relentless execution."
-    ]
-  },
-  {
-    title: "OPPORTUNITIES & AVAILABILITY",
-    subtitle: "Open to Internships & Roles",
-    text: [
-      "I am actively open to internship opportunities and engineering roles.",
+      "Pursuing B.Tech in Information Technology at Manipal Institute of Technology, Bengaluru ('28), while co-founding Prettiva & Co. and Strayed.in.",
       "Looking for Remote positions or Hybrid roles in Bengaluru, India."
     ]
   }
@@ -188,10 +176,8 @@ export default function AboutPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    // Respect prefers-reduced-motion — don't auto-scroll visitors who asked not to be moved
     if (prefersReducedMotion) return;
 
-    // Start slow auto-scroll after 15 seconds only if screen is in focus and visible
     const timer = setTimeout(() => {
       isAutoScrollingRef.current = true;
       scrollIntervalRef.current = setInterval(() => {
@@ -203,10 +189,9 @@ export default function AboutPage() {
         ) {
           window.scrollBy({ top: 1, behavior: 'auto' });
         }
-      }, 40); // Slow 25px/sec auto-scroll
+      }, 40);
     }, 15000);
 
-    // Stop auto-scroll on user interaction or when screen loses focus / tab changes
     const handleInteract = () => {
       isAutoScrollingRef.current = false;
       if (scrollIntervalRef.current) {
@@ -256,27 +241,28 @@ export default function AboutPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button */}
+      {/* Minecraft UI Return Button styled after danbovey/MinecraftSplashScreen */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
-          className="inline-flex items-center justify-center px-5 py-2 sm:px-7 sm:py-2.5 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
-            backgroundColor: '#747474',
+            backgroundColor: '#6a6a6a',
             border: '2px solid #000000',
-            boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+            outline: 'none',
+            boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+            fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+            textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
             imageRendering: 'pixelated',
           }}
         >
-          <span style={{ textShadow: '2px 2px 0px #373737' }}>
-            {preventOrphans("Return to world")}
-          </span>
+          <span>{preventOrphans("Return to world")}</span>
         </Link>
       </div>
 
       {/* Minecraft End Credits Roll */}
       <div className="w-full max-w-[94vw] sm:max-w-3xl px-4 sm:px-8 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-24">
-        {/* Header: Minecraft Font for Heading, Normal Font for Subtitle */}
+        {/* Header */}
         <div className="space-y-4 pt-10 sm:pt-14">
           <h1
             className="text-3xl sm:text-5xl font-bold tracking-widest text-white uppercase font-minecraft-regular"
@@ -295,21 +281,18 @@ export default function AboutPage() {
         {/* About Sections */}
         {ABOUT_SECTIONS.map((item, idx) => (
           <div key={idx} className="w-full space-y-5 max-w-2xl">
-            {/* Heading: Minecraft font */}
             <h2
               className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
               {preventOrphans(item.title)}
             </h2>
-            {/* Subtitle: Normal font */}
             <h3
               className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
               style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
             >
               {preventOrphans(item.subtitle)}
             </h3>
-            {/* Body: Normal font */}
             <div className="space-y-4 pt-2">
               {item.text.map((paragraph, pIdx) => (
                 <p

@@ -165,7 +165,7 @@ const GridTile = (props: GridTileProps) => {
               transparent={true}
               opacity={0.3}
             />
-            <Edges color="white" lineWidth={3} />
+            <Edges color="white" lineWidth={1.5} />
           </mesh>
         )}
         <Text position={textPosition} {...fontProps} ref={titleRef}>
@@ -176,7 +176,7 @@ const GridTile = (props: GridTileProps) => {
         <color attach="background" args={[color]} />
         {children}
       </MeshPortalMaterial>
-      {isMobile && <Edges color="white" lineWidth={2} />}
+      {isMobile && <Edges color="white" lineWidth={1} />}
     </mesh>
   );
 };

@@ -83,10 +83,8 @@ export default function WorkPage() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    // Respect prefers-reduced-motion — don't auto-scroll visitors who asked not to be moved
     if (prefersReducedMotion) return;
 
-    // Start slow auto-scroll after 15 seconds only if screen is in focus and visible
     const timer = setTimeout(() => {
       isAutoScrollingRef.current = true;
       scrollIntervalRef.current = setInterval(() => {
@@ -98,10 +96,9 @@ export default function WorkPage() {
         ) {
           window.scrollBy({ top: 1, behavior: 'auto' });
         }
-      }, 40); // Slow 25px/sec auto-scroll
+      }, 40);
     }, 15000);
 
-    // Stop auto-scroll on user interaction or when screen loses focus / tab changes
     const handleInteract = () => {
       isAutoScrollingRef.current = false;
       if (scrollIntervalRef.current) {
@@ -151,27 +148,28 @@ export default function WorkPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button */}
+      {/* Minecraft UI Return Button styled after danbovey/MinecraftSplashScreen */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
-          className="inline-flex items-center justify-center px-5 py-2 sm:px-7 sm:py-2.5 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
-            backgroundColor: '#747474',
+            backgroundColor: '#6a6a6a',
             border: '2px solid #000000',
-            boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+            outline: 'none',
+            boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+            fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+            textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
             imageRendering: 'pixelated',
           }}
         >
-          <span style={{ textShadow: '2px 2px 0px #373737' }}>
-            {preventOrphans("Return to world")}
-          </span>
+          <span>{preventOrphans("Return to world")}</span>
         </Link>
       </div>
 
       {/* Minecraft End Credits Roll */}
       <div className="w-full max-w-[94vw] sm:max-w-3xl px-4 sm:px-8 py-12 sm:py-16 z-10 flex flex-col items-center text-center space-y-16 sm:space-y-24">
-        {/* Header: Minecraft Font for Heading, Normal Font for Subtitle */}
+        {/* Header */}
         <div className="space-y-4 pt-10 sm:pt-14">
           <h1
             className="text-3xl sm:text-5xl font-bold tracking-widest text-white uppercase font-minecraft-regular"
@@ -190,28 +188,25 @@ export default function WorkPage() {
         {/* Work Timeline Sections */}
         {WORK_EXPERIENCE.map((item, idx) => (
           <div key={idx} className="w-full space-y-5 max-w-2xl">
-            {/* Heading: Minecraft font */}
             <h2
               className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
               {preventOrphans(item.title)}
             </h2>
-            {/* Subtitle: Normal font */}
             <h3
               className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
               style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
             >
               {preventOrphans(item.subtitle)}
             </h3>
-            {/* Date: Minecraft font */}
             <p
               className="text-xs sm:text-sm text-white tracking-widest uppercase font-minecraft-regular opacity-90"
               style={{ textShadow: '1px 1px 0px #000000' }}
             >
               [{item.date}]
             </p>
-            {/* Live site screenshot — real evidence of the shipped product, not just a claim */}
+            {/* Live site screenshot with half-width brown border (9px) */}
             {item.screenshot && (
               <div className="pt-2">
                 <img
@@ -219,14 +214,13 @@ export default function WorkPage() {
                   alt={`Screenshot of the ${item.title} website homepage`}
                   className="w-full h-auto"
                   style={{
-                    border: '18px solid #3b2415',
+                    border: '9px solid #3b2415',
                     boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
                   }}
                   loading="lazy"
                 />
               </div>
             )}
-            {/* Body: Normal font */}
             {item.description && item.description.length > 0 && (
               <div className="space-y-4 pt-2">
                 {item.description.map((line, lIdx) => (
@@ -263,24 +257,25 @@ export default function WorkPage() {
               </div>
             )}
 
-            {/* Optional Website Link Button */}
+            {/* Optional Website Link Button styled after danbovey/MinecraftSplashScreen */}
             {item.url && (
               <div className="pt-2 flex justify-center">
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 py-2 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                  className="inline-flex items-center justify-center px-5 py-2 sm:px-6 sm:py-2.5 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                   style={{
-                    backgroundColor: '#747474',
+                    backgroundColor: '#6a6a6a',
                     border: '2px solid #000000',
-                    boxShadow: 'inset -2px -2px 0px 0px #373737, inset 2px 2px 0px 0px #ffffff',
+                    outline: 'none',
+                    boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+                    fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                    textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
                     imageRendering: 'pixelated',
                   }}
                 >
-                  <span style={{ textShadow: '2px 2px 0px #373737' }}>
-                    {preventOrphans(item.buttonText || "Visit Website ↗")}
-                  </span>
+                  <span>{preventOrphans(item.buttonText || "Visit Website ↗")}</span>
                 </a>
               </div>
             )}

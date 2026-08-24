@@ -1,8 +1,8 @@
 'use client';
 
-import { Text, useProgress, useTexture } from "@react-three/drei";
+import { Text, useProgress } from "@react-three/drei";
 import gsap from "gsap";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import { useScrollStore } from "@stores";
@@ -17,21 +17,9 @@ const SkipButton3D = () => {
   const requestSkipToEnd = useScrollStore((state) => state.requestSkipToEnd);
   const [hovered, setHovered] = useState(false);
 
-  const buttonWidth = isMobile ? 4.8 : 6.2;
-  const buttonHeight = isMobile ? 0.9 : 1.15;
-  const borderWidth = 0.07;
-
-  // Real Minecraft dirt-block texture on the face instead of a flat color, so it reads as
-  // an actual in-game UI button rather than a generic bevel.
-  const dirtTexture = useTexture('/minecraft_dirt.webp');
-  const faceTexture = useMemo(() => {
-    const tex = dirtTexture.clone();
-    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(isMobile ? 3.5 : 4.5, 1);
-    tex.magFilter = THREE.NearestFilter;
-    tex.needsUpdate = true;
-    return tex;
-  }, [dirtTexture]);
+  const buttonWidth = isMobile ? 4.8 : 6.0;
+  const buttonHeight = isMobile ? 0.9 : 1.1;
+  const borderWidth = 0.06;
 
   return (
     <group
@@ -50,35 +38,35 @@ const SkipButton3D = () => {
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Outer Black Border */}
+      {/* Outer Black Border (from danbovey/MinecraftSplashScreen border: 2px solid #000) */}
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[buttonWidth + borderWidth * 2, buttonHeight + borderWidth * 2]} />
         <meshBasicMaterial color="#000000" />
       </mesh>
 
-      {/* Top/Left White Bevel Highlight */}
+      {/* Top/Left Inset Highlight Bevel (inset 2px 2px 0 rgba(255, 255, 255, 0.3)) */}
       <mesh position={[-borderWidth / 2, borderWidth / 2, 0.005]}>
         <planeGeometry args={[buttonWidth, buttonHeight]} />
-        <meshBasicMaterial color="#ffffff" />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
       </mesh>
 
-      {/* Bottom/Right Dark Bevel Shadow */}
+      {/* Bottom/Right Inset Dark Shadow Bevel (inset 0px -4px 0 rgba(0, 0, 0, 0.3)) */}
       <mesh position={[borderWidth / 2, -borderWidth / 2, 0.006]}>
         <planeGeometry args={[buttonWidth, buttonHeight]} />
         <meshBasicMaterial color="#373737" />
       </mesh>
 
-      {/* Button Center Face — real dirt-block texture, tinted yellow on hover */}
+      {/* Button Center Face (danbovey/MinecraftSplashScreen background: #6A6A6A / hover #8b8b8b) */}
       <mesh position={[0, 0, 0.01]}>
         <planeGeometry args={[buttonWidth - borderWidth * 2, buttonHeight - borderWidth * 2]} />
-        <meshBasicMaterial map={faceTexture} color={hovered ? "#ffff55" : "#ffffff"} />
+        <meshBasicMaterial color={hovered ? "#8b8b8b" : "#6a6a6a"} />
       </mesh>
 
-      {/* Text Shadow */}
+      {/* Text Shadow (Minecraft text shadow: 2px 2px 0 rgba(0, 0, 0, 0.6)) */}
       <Text
-        position={[0.018, -0.018, 0.015]}
+        position={[0.016, -0.016, 0.015]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.32 : 0.48}
+        fontSize={isMobile ? 0.32 : 0.44}
         color="#373737"
         anchorX="center"
         anchorY="middle"
@@ -86,11 +74,11 @@ const SkipButton3D = () => {
         Skip to Portfolio
       </Text>
 
-      {/* Main Text */}
+      {/* Main Text in Minecraft Font */}
       <Text
         position={[0, 0, 0.02]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.32 : 0.48}
+        fontSize={isMobile ? 0.32 : 0.44}
         color={hovered ? "#ffff55" : "#ffffff"}
         anchorX="center"
         anchorY="middle"
@@ -141,7 +129,10 @@ const Hero = () => {
           Product Engineer
         </Text>
 
-        {/* 3D Native Canvas Button with authentic Minecraft bevel styling and enlarged dimensions */}
+        {/* 
+          Native 3D Mesh SkipButton3D pinned inside titleGroupRef using Minecraft font and
+          danbovey/MinecraftSplashScreen button colors (#6A6A6A, inset highlights, #000 border)
+        */}
         <SkipButton3D />
       </group>
 
@@ -152,11 +143,8 @@ const Hero = () => {
 
       <group position={[0, -25, 5.69]}>
         <ambientLight intensity={1.5} />
-        {/* Only one shadow-casting light — the window's handle/pane rotate continuously
-            during this scroll range, so every additional shadow-casting light doubles the
-            shadow-map recompute cost for the entire time it's on screen. */}
         <directionalLight position={[3, 5, 4]} intensity={3.5} castShadow />
-        <pointLight position={[1, 1, -2.5]} intensity={60} distance={10} />
+        <pointLight castShadow position={[1, 1, -2.5]} intensity={60} distance={10} />
         <WindowModel receiveShadow />
         <TextWindow />
       </group>

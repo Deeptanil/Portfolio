@@ -20,6 +20,23 @@ const MinecraftBee = () => {
   const isDark = useThemeStore((state) => state.theme.type === 'dark');
   const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera;
   const size = useThree((state) => state.size);
+  const gl = useThree((state) => state.gl);
+  const rootScene = useThree((state) => state.scene);
+
+  // WebGLRenderer.compile() (which <Preload all/> calls) only visits currently-visible
+  // objects via traverseVisible() — since this group starts (and mostly stays) hidden
+  // until its scroll range is reached, its shader never gets precompiled up front. Without
+  // this, the very first frame it becomes visible mid-scroll pays a real, synchronous
+  // shader-compile stall — exactly the "lag right as it enters" symptom. Force-compile it
+  // once here, while still hidden behind the loading screen, so that cost never happens
+  // mid-flight.
+  useEffect(() => {
+    if (!groupRef.current) return;
+    const wasVisible = groupRef.current.visible;
+    groupRef.current.visible = true;
+    gl.compile(rootScene, camera);
+    groupRef.current.visible = wasVisible;
+  }, [gl, rootScene, camera]);
 
   useEffect(() => {
     if (actions && Object.keys(actions).length > 0) {
