@@ -63,12 +63,12 @@ function CreditsPopup() {
         onClick={() => setOpen(true)}
         className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
         style={{
-          backgroundColor: '#6a6a6a',
+          backgroundColor: '#707070',
           border: '2px solid #000000',
           outline: 'none',
-          boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+          boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
           fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
-          textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
+          textShadow: '2px 2px 0px #373737',
           imageRendering: 'pixelated',
         }}
       >
@@ -127,11 +127,12 @@ function CreditsPopup() {
                 onClick={() => setOpen(false)}
                 className="px-6 py-2 text-sm font-minecraft-regular text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                 style={{
-                  backgroundColor: '#6a6a6a',
+                  backgroundColor: '#707070',
                   border: '2px solid #000000',
-                  boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+                  outline: 'none',
+                  boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
                   fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
-                  textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
+                  textShadow: '2px 2px 0px #373737',
                 }}
               >
                 Close
@@ -241,18 +242,18 @@ export default function AboutPage() {
       {/* Heavy Vignette + Dark Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
 
-      {/* Minecraft UI Return Button styled after danbovey/MinecraftSplashScreen */}
+      {/* Minecraft UI Return Button matching official Minecraft main menu screenshot */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
         <Link
           href="/?scroll=footer"
           className="inline-flex items-center justify-center px-5 py-2.5 sm:px-7 sm:py-3 select-none font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
-            backgroundColor: '#6a6a6a',
+            backgroundColor: '#707070',
             border: '2px solid #000000',
             outline: 'none',
-            boxShadow: 'inset 2px 2px 0 rgba(255, 255, 255, 0.3), inset -2px 2px 0 rgba(255, 255, 255, 0.3), inset 0px -4px 0 rgba(0, 0, 0, 0.3)',
+            boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
             fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
-            textShadow: '2px 2px 0 rgba(0, 0, 0, 0.6)',
+            textShadow: '2px 2px 0px #373737',
             imageRendering: 'pixelated',
           }}
         >

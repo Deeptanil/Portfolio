@@ -17,9 +17,9 @@ const SkipButton3D = () => {
   const requestSkipToEnd = useScrollStore((state) => state.requestSkipToEnd);
   const [hovered, setHovered] = useState(false);
 
-  const buttonWidth = isMobile ? 4.8 : 6.0;
-  const buttonHeight = isMobile ? 0.9 : 1.1;
-  const borderWidth = 0.06;
+  const w = isMobile ? 4.8 : 5.8;
+  const h = isMobile ? 0.85 : 1.0;
+  const b = 0.06; // border bevel thickness
 
   return (
     <group
@@ -38,35 +38,47 @@ const SkipButton3D = () => {
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Outer Black Border (from danbovey/MinecraftSplashScreen border: 2px solid #000) */}
+      {/* 1. Outer Black Container Border */}
       <mesh position={[0, 0, 0]}>
-        <planeGeometry args={[buttonWidth + borderWidth * 2, buttonHeight + borderWidth * 2]} />
+        <planeGeometry args={[w, h]} />
         <meshBasicMaterial color="#000000" />
       </mesh>
 
-      {/* Top/Left Inset Highlight Bevel (inset 2px 2px 0 rgba(255, 255, 255, 0.3)) */}
-      <mesh position={[-borderWidth / 2, borderWidth / 2, 0.005]}>
-        <planeGeometry args={[buttonWidth, buttonHeight]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
+      {/* 2. Top Inner Highlight (White) */}
+      <mesh position={[0, h / 2 - b, 0.005]}>
+        <planeGeometry args={[w - b * 2, b]} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
 
-      {/* Bottom/Right Inset Dark Shadow Bevel (inset 0px -4px 0 rgba(0, 0, 0, 0.3)) */}
-      <mesh position={[borderWidth / 2, -borderWidth / 2, 0.006]}>
-        <planeGeometry args={[buttonWidth, buttonHeight]} />
+      {/* 3. Left Inner Highlight (White) */}
+      <mesh position={[-w / 2 + b, 0, 0.005]}>
+        <planeGeometry args={[b, h - b * 2]} />
+        <meshBasicMaterial color="#ffffff" />
+      </mesh>
+
+      {/* 4. Bottom Inner Shadow (Dark Grey #373737) */}
+      <mesh position={[0, -h / 2 + b, 0.005]}>
+        <planeGeometry args={[w - b * 2, b]} />
         <meshBasicMaterial color="#373737" />
       </mesh>
 
-      {/* Button Center Face (danbovey/MinecraftSplashScreen background: #6A6A6A / hover #8b8b8b) */}
-      <mesh position={[0, 0, 0.01]}>
-        <planeGeometry args={[buttonWidth - borderWidth * 2, buttonHeight - borderWidth * 2]} />
-        <meshBasicMaterial color={hovered ? "#8b8b8b" : "#6a6a6a"} />
+      {/* 5. Right Inner Shadow (Dark Grey #373737) */}
+      <mesh position={[w / 2 - b, 0, 0.005]}>
+        <planeGeometry args={[b, h - b * 2]} />
+        <meshBasicMaterial color="#373737" />
       </mesh>
 
-      {/* Text Shadow (Minecraft text shadow: 2px 2px 0 rgba(0, 0, 0, 0.6)) */}
+      {/* 6. Button Center Face (#707070, hover #8b8b8b) */}
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[w - b * 3, h - b * 3]} />
+        <meshBasicMaterial color={hovered ? "#8b8b8b" : "#707070"} />
+      </mesh>
+
+      {/* 7. Text Drop Shadow (#373737) */}
       <Text
-        position={[0.016, -0.016, 0.015]}
+        position={[0.02, -0.02, 0.015]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.32 : 0.44}
+        fontSize={isMobile ? 0.30 : 0.42}
         color="#373737"
         anchorX="center"
         anchorY="middle"
@@ -74,11 +86,11 @@ const SkipButton3D = () => {
         Skip to Portfolio
       </Text>
 
-      {/* Main Text in Minecraft Font */}
+      {/* 8. Main Text (White #ffffff, hover #ffff55) */}
       <Text
         position={[0, 0, 0.02]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.32 : 0.44}
+        fontSize={isMobile ? 0.30 : 0.42}
         color={hovered ? "#ffff55" : "#ffffff"}
         anchorX="center"
         anchorY="middle"
@@ -130,8 +142,8 @@ const Hero = () => {
         </Text>
 
         {/* 
-          Native 3D Mesh SkipButton3D pinned inside titleGroupRef using Minecraft font and
-          danbovey/MinecraftSplashScreen button colors (#6A6A6A, inset highlights, #000 border)
+          Native 3D Mesh SkipButton3D pinned inside titleGroupRef matching authentic Minecraft button
+          design from user screenshot (black container, 4-sided inner highlight/shadow bevels, #707070 face)
         */}
         <SkipButton3D />
       </group>
