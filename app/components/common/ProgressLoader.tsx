@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const ProgressLoader = ({ progress }: { progress: number }) => {
+const ProgressLoader = ({ progress, isWarmedUp = true }: { progress: number; isWarmedUp?: boolean }) => {
   const [displayProgress, setDisplayProgress] = useState(0);
   const simProgressRef = useRef(0);
 
@@ -20,19 +20,21 @@ const ProgressLoader = ({ progress }: { progress: number }) => {
 
       setDisplayProgress((prev) => {
         const actualClamped = Math.min(100, Math.round(progress));
-        if (actualClamped === 100) return 100;
+        if (actualClamped === 100) {
+          return isWarmedUp ? 100 : 99;
+        }
         return Math.max(prev, actualClamped, Math.round(simProgressRef.current));
       });
     }, 50);
 
     return () => clearInterval(interval);
-  }, [progress]);
+  }, [progress, isWarmedUp]);
 
   useEffect(() => {
-    if (progress === 100) {
+    if (progress === 100 && isWarmedUp) {
       setDisplayProgress(100);
     }
-  }, [progress]);
+  }, [progress, isWarmedUp]);
 
   return (
     <div

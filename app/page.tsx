@@ -16,9 +16,14 @@ const Home = () => {
           Note: only the CSS-consumed MinecraftRegular file could be converted to WOFF2 —
           troika-three-text (the 3D <Text> mesh renderer) only supports WOFF1/OTF/TTF, so
           soria-font and Vercetti-Regular stay in their original formats. */}
+      {/* Preload fonts and critical canvas textures so they download immediately in parallel */}
       <link rel="preload" href="/fonts/MinecraftRegular-Bmg3.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       <link rel="preload" href="/soria-font.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
       <link rel="preload" href="/Vercetti-Regular.woff" as="font" type="font/woff" crossOrigin="anonymous" />
+      <link rel="preload" href="/painting.webp" as="image" type="image/webp" />
+      <link rel="preload" href="/painting_m.webp" as="image" type="image/webp" />
+      <link rel="preload" href="/Enchanted_Book.webp" as="image" type="image/webp" />
+      <link rel="preload" href="/Stone_Pickaxe.png" as="image" type="image/png" />
       <main suppressHydrationWarning className="w-full h-full">
         <Scene />
       </main>

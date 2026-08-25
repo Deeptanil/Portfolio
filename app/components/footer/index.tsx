@@ -1,6 +1,6 @@
 'use client';
 
-import { Html, Image, Text, useCursor, useScroll } from "@react-three/drei";
+import { Html, Image, Text, useCursor, useScroll, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
@@ -230,5 +230,10 @@ const Footer = () => {
     </>
   );
 };
+
+useTexture.preload('/icons/linkedin.svg');
+useTexture.preload('/icons/github.svg');
+useTexture.preload('/icons/gmail.svg');
+useTexture.preload('/icons/file.svg');
 
 export default Footer;

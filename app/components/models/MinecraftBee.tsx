@@ -30,6 +30,8 @@ const MinecraftBee = () => {
   // shader-compile stall — exactly the "lag right as it enters" symptom. Force-compile it
   // once here, while still hidden behind the loading screen, so that cost never happens
   // mid-flight.
+  const warmupFramesRef = useRef(6);
+
   useEffect(() => {
     if (!groupRef.current) return;
     const wasVisible = groupRef.current.visible;
@@ -59,11 +61,6 @@ const MinecraftBee = () => {
   // Reused every frame
   const scratchPos = useMemo(() => new THREE.Vector3(), []);
   const scratchNextPos = useMemo(() => new THREE.Vector3(), []);
-  // The rest of the scene (camera, clouds, stars) moves via THREE.MathUtils.damp — an
-  // exponential smoothing that inherently absorbs frame-to-frame jitter. This model's
-  // position used to be a direct, undamped function of the raw scroll value each frame,
-  // which is why its motion read as comparatively less smooth. Damping the progress value
-  // itself brings it in line with everything else's feel.
   const dampedLinearTRef = useRef(0);
 
   useFrame((state, delta) => {
@@ -75,6 +72,13 @@ const MinecraftBee = () => {
       return;
     }
 
+    // Allow forced visible passes during loading screen warmup
+    if (warmupFramesRef.current > 0) {
+      groupRef.current.visible = true;
+      warmupFramesRef.current -= 1;
+      return;
+    }
+
     // Starts at 0.30 (around the time it used to end) and spans 0.30 distance for smooth leisurely flight
     const linearT = scroll.range(0.30, 0.30);
 
@@ -82,7 +86,8 @@ const MinecraftBee = () => {
     groupRef.current.visible = isVisible;
 
     if (isVisible) {
-      dampedLinearTRef.current = THREE.MathUtils.damp(dampedLinearTRef.current, linearT, 8, delta);
+      const safeDelta = Math.min(delta, 0.033);
+      dampedLinearTRef.current = THREE.MathUtils.damp(dampedLinearTRef.current, linearT, 8, safeDelta);
       const smoothedT = dampedLinearTRef.current;
 
       // Cosine ease curve so progress lingers near center of screen

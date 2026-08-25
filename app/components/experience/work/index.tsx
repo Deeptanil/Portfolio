@@ -1,7 +1,7 @@
 'use client';
 
 import { Image, useTexture } from '@react-three/drei';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 
 const Work = () => {
@@ -20,6 +20,12 @@ const Work = () => {
     }
     return tex;
   }, [paintingTexture, isMobile]);
+
+  useEffect(() => {
+    return () => {
+      if (bgTexture) bgTexture.dispose();
+    };
+  }, [bgTexture]);
 
   return (
     <group position={[0, 0, 0]}>
@@ -43,5 +49,9 @@ const Work = () => {
     </group>
   );
 };
+
+useTexture.preload('/painting.webp');
+useTexture.preload('/painting_m.webp');
+useTexture.preload('/Enchanted_Book.webp');
 
 export default Work;

@@ -8,12 +8,15 @@ import { Suspense, useRef, useSyncExternalStore } from "react";
 import { isMobile } from "react-device-detect";
 
 import { useThemeStore } from "@stores";
+import { useCallback, useState } from "react";
 
+import "../../utils/assetPreloader";
 import ProgressLoader from "./ProgressLoader";
 import { ScrollHint } from "./ScrollHint";
 import SkipToPortfolioButton from "./SkipToPortfolioButton";
 import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
+import WebGLWarmup from "./WebGLWarmup";
 
 const CanvasLoader = (props: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,6 +24,11 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   const backgroundColor = useThemeStore((state) => state.theme.color);
   const { progress } = useProgress();
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
+  const [isWarmedUp, setIsWarmedUp] = useState(false);
+
+  const handleWarmupComplete = useCallback(() => {
+    setIsWarmedUp(true);
+  }, []);
 
   const canvasStyle: React.CSSProperties = {
     position: "absolute",
@@ -33,10 +41,10 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   };
 
   useGSAP(() => {
-    if (progress === 100) {
-      gsap.to('.base-canvas', { opacity: 1, duration: 2, delay: 0.5 });
+    if (progress === 100 && isWarmedUp) {
+      gsap.to('.base-canvas', { opacity: 1, duration: 2, delay: 0.2 });
     }
-  }, [progress]);
+  }, [progress, isWarmedUp]);
 
   useGSAP(() => {
     if (ref.current) {
@@ -82,11 +90,12 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
               {props.children}
             </ScrollControls>
 
+            <WebGLWarmup progress={progress} onWarmupComplete={handleWarmupComplete} />
             <Preload all />
           </Suspense>
           <AdaptiveDpr pixelated />
         </Canvas>
-        <ProgressLoader progress={progress} />
+        <ProgressLoader progress={progress} isWarmedUp={isWarmedUp} />
       </div>
       <SoundToggle />
       <ThemeSwitcher />

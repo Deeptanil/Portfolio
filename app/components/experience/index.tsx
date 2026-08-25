@@ -22,7 +22,7 @@ const Experience = () => {
   // textures) until the user actually scrolls here. Force it visible for a handful of
   // frames right after mount, while still hidden behind the loading screen's fade-in, so
   // that one-time cost happens up front instead of showing up as a lag spike later.
-  const warmupFramesRef = useRef(5);
+  const warmupFramesRef = useRef(8);
 
   const fontProps = {
     font: "./soria-font.ttf",
@@ -36,7 +36,7 @@ const Experience = () => {
     const d = data.range(0.74, 0.24);
 
     if (groupRef.current && !isActive) {
-      groupRef.current.position.y = d > 0 ? -1 : -30;
+      groupRef.current.position.y = (d > 0 || warmupFramesRef.current > 0) ? -1 : -30;
       if (warmupFramesRef.current > 0) {
         groupRef.current.visible = true;
         warmupFramesRef.current -= 1;
