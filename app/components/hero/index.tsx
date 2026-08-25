@@ -1,8 +1,9 @@
 'use client';
 
 import { Text, useProgress } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { isMobile } from "react-device-detect";
 import * as THREE from "three";
 import { useScrollStore } from "@stores";
@@ -16,14 +17,23 @@ import TextWindow from "./TextWindow";
 const SkipButton3D = () => {
   const requestSkipToEnd = useScrollStore((state) => state.requestSkipToEnd);
   const [hovered, setHovered] = useState(false);
+  const size = useThree((state) => state.size);
 
-  const w = isMobile ? 3.4 : 5.4;
-  const h = isMobile ? 0.60 : 0.90;
-  const b = isMobile ? 0.04 : 0.05; // border bevel thickness
+  const { w, h, b, fontSize, posY } = useMemo(() => {
+    const aspect = size.width / size.height;
+    const isNarrow = aspect < 1.1;
+    return {
+      w: isNarrow ? 3.6 : 5.4,
+      h: isNarrow ? 0.65 : 0.90,
+      b: isNarrow ? 0.04 : 0.05,
+      fontSize: isNarrow ? 0.24 : 0.38,
+      posY: isNarrow ? 0.2 : -0.85,
+    };
+  }, [size.width, size.height]);
 
   return (
     <group
-      position={[0, isMobile ? 0.2 : -0.85, -10]}
+      position={[0, posY, -10]}
       onClick={(e) => {
         e.stopPropagation();
         requestSkipToEnd();
@@ -78,7 +88,7 @@ const SkipButton3D = () => {
       <Text
         position={[0.015, -0.015, 0.015]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.22 : 0.38}
+        fontSize={fontSize}
         color="#373737"
         anchorX="center"
         anchorY="middle"
@@ -90,7 +100,7 @@ const SkipButton3D = () => {
       <Text
         position={[0, 0, 0.02]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.22 : 0.38}
+        fontSize={fontSize}
         color={hovered ? "#ffff55" : "#ffffff"}
         anchorX="center"
         anchorY="middle"
