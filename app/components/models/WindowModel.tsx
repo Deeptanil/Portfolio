@@ -30,6 +30,8 @@ const WindowModel = (props: Partial<THREE.Object3D>) => {
       mat.roughness = 0.35;
       mat.metalness = 0.15;
       mat.envMapIntensity = 1.8;
+      mat.side = THREE.DoubleSide;
+      mat.shadowSide = THREE.DoubleSide;
       mat.needsUpdate = true;
     }
   }, [materials]);

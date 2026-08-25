@@ -1,42 +1,32 @@
 'use client';
 
-import { Text } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { Text, useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 import * as THREE from "three";
-import { useIsMobile } from "../../hooks/useIsMobile";
 
 const TextWindow = () => {
+  const data = useScroll();
   const windowRef = useRef<THREE.Group>(null);
-  const size = useThree((state) => state.size);
-  const isMobile = useIsMobile();
+
+  useFrame(() => {
+    if (!data) return;
+    const c = data.range(0.65, 0.15);
+
+    if (windowRef.current) {
+      windowRef.current.setRotationFromAxisAngle(new THREE.Vector3(0, -1, 0), 0.5 * Math.PI * c);
+      windowRef.current.position.x = -0.6 * c;
+      windowRef.current.position.z = -0.6 * c;
+    }
+  });
 
   const fontProps = {
     font: "./soria-font.ttf",
-    frustumCulled: false,
-    side: THREE.DoubleSide, // Guarantees text faces are never culled by WebGL backface culling
+    side: THREE.DoubleSide,
   };
 
-  const { textScale, sideX } = useMemo(() => {
-    const aspect = size.width / size.height;
-    // Desktop aspect (~1.6 or wider) uses scale 1, sideX = 0.45.
-    const scaleFactor = THREE.MathUtils.clamp(aspect / 1.6, 0.45, 1.0);
-    const sideXVal = 0.45 * THREE.MathUtils.clamp(aspect / 1.4, 0.75, 1.0);
-    return {
-      textScale: scaleFactor,
-      sideX: sideXVal,
-    };
-  }, [size.width, size.height]);
-
-  // On mobile screens, omit the 3D text tunnel inside the window aperture matching mohitvirli.github.io
-  if (isMobile) {
-    return null;
-  }
-
   return (
-    <group position={[0, -0.3, 0]} scale={textScale} ref={windowRef}>
-
-      {/* Bottom Wall */}
+    <group position={[0, -0.3, 0]} ref={windowRef}>
       <Text
         color="white"
         anchorX="left"
@@ -50,7 +40,6 @@ const TextWindow = () => {
         PRODUCT ENGINEER
       </Text>
 
-      {/* Top Wall */}
       <Text
         color="white"
         anchorX="right"
@@ -64,8 +53,7 @@ const TextWindow = () => {
         UI/UX & E-COMMERCE
       </Text>
 
-      {/* Left Wall */}
-      <group position={[-sideX, 0, -0.3]}>
+      <group position={[-0.45, 0, -0.3]}>
         <Text
           color="white"
           anchorX="left"
@@ -92,8 +80,7 @@ const TextWindow = () => {
         </Text>
       </group>
 
-      {/* Right Wall */}
-      <group position={[sideX, 0, -0.3]}>
+      <group position={[0.45, 0, -0.3]}>
         <Text
           color="white"
           anchorX="right"
@@ -105,6 +92,7 @@ const TextWindow = () => {
         >
           DIGITAL PRODUCT DEV
         </Text>
+
         <Text
           color="white"
           anchorX="right"
