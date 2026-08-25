@@ -15,73 +15,97 @@ const TextWindow = () => {
   const fontProps = {
     font: "./soria-font.ttf",
     frustumCulled: false,
+    side: THREE.DoubleSide, // Guarantees text faces are never culled by WebGL backface culling
   };
 
   const textScale = useMemo(() => {
     const aspect = size.width / size.height;
     if (isMobile) {
-      return THREE.MathUtils.clamp(aspect / 1.1, 0.65, 1);
+      return THREE.MathUtils.clamp(aspect / 1.5, 0.45, 0.8);
     }
     return THREE.MathUtils.clamp(aspect / 1.6, 0.5, 1);
   }, [size.width, size.height, isMobile]);
 
-  const primaryFontSize = isMobile ? 0.65 : 1.3;
-  const secondaryFontSize = isMobile ? 0.42 : 0.8;
+  const primaryFontSize = isMobile ? 0.75 : 1.3;
+  const secondaryFontSize = isMobile ? 0.48 : 0.8;
+  const sideX = isMobile ? 0.38 : 0.45;
 
   return (
     <group position={[0, -0.3, 0]} scale={textScale} ref={windowRef}>
 
-      <Text color="white" anchorX="left" anchorY="middle"
+      {/* Bottom Wall */}
+      <Text
+        color="white"
+        anchorX="left"
+        anchorY="middle"
         fontSize={primaryFontSize}
-        position={[0.12, 0, 0]}
+        position={[isMobile ? 0.08 : 0.12, 0, 0]}
         {...fontProps}
-        scale={[1, -1, 1]}
-        rotation={[0, 0, -Math.PI / 2]}>
+        rotation={[0, 0, -Math.PI / 2]}
+      >
         PRODUCT ENGINEER
       </Text>
 
-      <Text color="white" anchorX="right" anchorY="middle"
+      {/* Top Wall */}
+      <Text
+        color="white"
+        anchorX="right"
+        anchorY="middle"
         {...fontProps}
-        scale={[-1, -1, 1]}
         fontSize={primaryFontSize}
         position={[-0.05, 0, -1.4]}
-        rotation={[0, 0, -Math.PI / 2]}>
+        rotation={[0, 0, -Math.PI / 2]}
+      >
         UI/UX & E-COMMERCE
       </Text>
 
-      <group position={[isMobile ? -0.70 : -0.45, 0, -0.3]}>
-        <Text color="white" anchorX="left" anchorY="middle"
+      {/* Left Wall */}
+      <group position={[-sideX, 0, -0.3]}>
+        <Text
+          color="white"
+          anchorX="left"
+          anchorY="middle"
           {...fontProps}
-          scale={[1, -1, 1]}
           fontSize={secondaryFontSize}
-          rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
+          rotation={[0, -Math.PI / 2, -Math.PI / 2]}
+        >
           STRAYED & PRETTIVA
         </Text>
 
-        <Text color="white" anchorX="left" anchorY="middle"
+        <Text
+          color="white"
+          anchorX="left"
+          anchorY="middle"
           {...fontProps}
-          scale={[1, -1, 1]}
           fontSize={secondaryFontSize}
           position={[0, 0, -0.6]}
-          rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
+          rotation={[0, -Math.PI / 2, -Math.PI / 2]}
+        >
           MIT BENGALURU '28
         </Text>
       </group>
 
-      <group position={[isMobile ? 0.70 : 0.45, 0, -0.3]}>
-        <Text color="white" anchorX="right" anchorY="middle"
+      {/* Right Wall */}
+      <group position={[sideX, 0, -0.3]}>
+        <Text
+          color="white"
+          anchorX="right"
+          anchorY="middle"
           {...fontProps}
-          scale={[-1, -1, 1]}
           fontSize={secondaryFontSize}
-          rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
+          rotation={[0, -Math.PI / 2, -Math.PI / 2]}
+        >
           DIGITAL PRODUCT DEV
         </Text>
-        <Text color="white" anchorX="right" anchorY="middle"
+        <Text
+          color="white"
+          anchorX="right"
+          anchorY="middle"
           {...fontProps}
-          scale={[-1, -1, 1]}
           fontSize={secondaryFontSize}
           position={[0, 0, -0.6]}
-          rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
+          rotation={[0, -Math.PI / 2, -Math.PI / 2]}
+        >
           WEB PERFORMANCE & SEO
         </Text>
       </group>

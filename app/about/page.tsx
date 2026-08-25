@@ -77,9 +77,13 @@ function CreditsPopup() {
 
       {open && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 select-none"
           style={{
-            background: 'radial-gradient(circle at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.95) 100%), rgba(0, 0, 0, 0.75)',
+            backgroundColor: '#402c1b',
+            backgroundImage: "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.88) 65%, rgba(0,0,0,0.98) 100%), url('/minecraft_dirt.webp')",
+            backgroundRepeat: 'no-repeat, repeat',
+            backgroundSize: 'cover, 160px 160px',
+            imageRendering: 'pixelated',
           }}
           onClick={() => setOpen(false)}
         >
