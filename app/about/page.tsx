@@ -87,9 +87,9 @@ function CreditsPopup() {
             className="w-full max-w-lg max-h-[80vh] overflow-y-auto p-6 sm:p-8 space-y-5"
             style={{
               backgroundColor: '#402c1b',
-              backgroundImage: "url('/minecraft_dirt.webp')",
-              backgroundRepeat: 'repeat',
-              backgroundSize: '128px 128px',
+              backgroundImage: "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.95) 100%), url('/minecraft_dirt.webp')",
+              backgroundRepeat: 'no-repeat, repeat',
+              backgroundSize: 'cover, 128px 128px',
               border: '3px solid #000000',
               boxShadow: 'inset -3px -3px 0px 0px #1a1108, inset 3px 3px 0px 0px #8b8b8b',
               imageRendering: 'pixelated',
