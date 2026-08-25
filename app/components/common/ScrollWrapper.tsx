@@ -14,22 +14,12 @@ import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 // instantly to the target position so it always finishes scrolling reliably.
 function runAutoScrollToBottom(
   targetEl: HTMLElement,
-  options: { resetToTop: boolean; clearUrlParam: boolean; reducedMotion: boolean }
+  options: { clearUrlParam: boolean; reducedMotion: boolean }
 ) {
-  const { resetToTop, clearUrlParam, reducedMotion } = options;
+  const { clearUrlParam, reducedMotion } = options;
 
-  if (resetToTop) {
-    targetEl.scrollTop = 0;
-  }
-
-  const targetScroll = targetEl.scrollHeight - targetEl.clientHeight;
-
-  // If the document/tab is currently hidden or out of focus when triggered, or if reduced motion is requested,
-  // finish the scroll immediately so the target position is reached 100% reliably.
-  if (reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
-    targetEl.scrollTop = targetScroll;
-    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
-    return () => {};
+  if (clearUrlParam && typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
+    window.history.replaceState(null, '', window.location.pathname);
   }
 
   // Prevent user scroll inputs during auto-scroll
@@ -51,40 +41,34 @@ function runAutoScrollToBottom(
     window.removeEventListener('touchstart', blockScrollInput, { capture: true });
     window.removeEventListener('touchmove', blockScrollInput, { capture: true });
     window.removeEventListener('keydown', blockScrollInput, { capture: true });
-    if (clearUrlParam) window.history.replaceState(null, '', window.location.pathname);
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let scrollTween: any = null;
 
-  // When browser tab is switched or put in the background mid-scroll, finish scrolling to target position instantly!
-  const handleFocusLoss = () => {
-    if (scrollTween) {
-      scrollTween.kill();
-    }
-    targetEl.scrollTop = targetScroll;
-    unlockScroll();
-  };
-
-  window.addEventListener('blur', handleFocusLoss, { passive: true });
-  document.addEventListener('visibilitychange', handleFocusLoss, { passive: true });
-
+  // Defer execution by 100ms so DOM layout geometry on mobile (100dvh & pages=4) is fully calculated
   const timer = setTimeout(async () => {
+    const targetScroll = Math.max(0, targetEl.scrollHeight - targetEl.clientHeight);
+
+    if (reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
+      targetEl.scrollTop = targetScroll;
+      unlockScroll();
+      return;
+    }
+
     const gsapModule = await import('gsap');
     const gsap = gsapModule.default || gsapModule;
     scrollTween = gsap.to(targetEl, {
       scrollTop: targetScroll,
-      duration: 4.2,
+      duration: 3.5,
       ease: "power2.inOut",
       onComplete: unlockScroll
     });
-  }, 50);
+  }, 100);
 
   return () => {
     clearTimeout(timer);
     if (scrollTween) scrollTween.kill();
-    window.removeEventListener('blur', handleFocusLoss);
-    document.removeEventListener('visibilitychange', handleFocusLoss);
     unlockScroll();
   };
 }
@@ -102,7 +86,6 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
       if (data && data.el && progress === 100) {
         return runAutoScrollToBottom(data.el, {
-          resetToTop: true,
           clearUrlParam: true,
           reducedMotion: prefersReducedMotion,
         });
@@ -117,7 +100,6 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
 
     if (data && data.el) {
       return runAutoScrollToBottom(data.el, {
-        resetToTop: false,
         clearUrlParam: false,
         reducedMotion: prefersReducedMotion,
       });

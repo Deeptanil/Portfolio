@@ -17,13 +17,13 @@ const SkipButton3D = () => {
   const requestSkipToEnd = useScrollStore((state) => state.requestSkipToEnd);
   const [hovered, setHovered] = useState(false);
 
-  const w = isMobile ? 4.8 : 5.8;
-  const h = isMobile ? 0.85 : 1.0;
-  const b = 0.06; // border bevel thickness
+  const w = isMobile ? 3.4 : 5.4;
+  const h = isMobile ? 0.60 : 0.90;
+  const b = isMobile ? 0.04 : 0.05; // border bevel thickness
 
   return (
     <group
-      position={[0, isMobile ? 0.0 : -0.85, -10]}
+      position={[0, isMobile ? 0.2 : -0.85, -10]}
       onClick={(e) => {
         e.stopPropagation();
         requestSkipToEnd();
@@ -76,9 +76,9 @@ const SkipButton3D = () => {
 
       {/* 7. Text Drop Shadow (#373737) */}
       <Text
-        position={[0.02, -0.02, 0.015]}
+        position={[0.015, -0.015, 0.015]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.30 : 0.42}
+        fontSize={isMobile ? 0.22 : 0.38}
         color="#373737"
         anchorX="center"
         anchorY="middle"
@@ -90,7 +90,7 @@ const SkipButton3D = () => {
       <Text
         position={[0, 0, 0.02]}
         font="./fonts/MinecraftRegular-Bmg3.otf"
-        fontSize={isMobile ? 0.30 : 0.42}
+        fontSize={isMobile ? 0.22 : 0.38}
         color={hovered ? "#ffff55" : "#ffffff"}
         anchorX="center"
         anchorY="middle"

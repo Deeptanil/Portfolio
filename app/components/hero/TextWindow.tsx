@@ -5,33 +5,34 @@ import { useThree } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
+import { useIsMobile } from "../../hooks/useIsMobile";
+
 const TextWindow = () => {
   const windowRef = useRef<THREE.Group>(null);
   const size = useThree((state) => state.size);
+  const isMobile = useIsMobile();
 
   const fontProps = {
     font: "./soria-font.ttf",
+    frustumCulled: false,
   };
 
-  // The camera flies directly along its own view axis through this text ensemble as the
-  // user scrolls, so there's a narrow window where all four sides (top/bottom/left/right)
-  // are simultaneously close and readable before perspective distortion takes over. On a
-  // narrow/tall mobile aspect, horizontal FOV is much tighter, so that "all four visible"
-  // window is much smaller and easy to miss (e.g. after the auto-scroll-to-bottom that runs
-  // when returning from /about or /work lands at a slightly different scroll position than
-  // a fresh visit). Shrinking the whole ensemble on narrower aspects buys back that margin.
-  // Desktop-ish aspect (~16:9) keeps scale at 1 (unchanged); narrower aspects shrink down,
-  // floored so text never becomes illegibly small.
   const textScale = useMemo(() => {
     const aspect = size.width / size.height;
+    if (isMobile) {
+      return THREE.MathUtils.clamp(aspect / 1.1, 0.65, 1);
+    }
     return THREE.MathUtils.clamp(aspect / 1.6, 0.5, 1);
-  }, [size.width, size.height]);
+  }, [size.width, size.height, isMobile]);
+
+  const primaryFontSize = isMobile ? 0.65 : 1.3;
+  const secondaryFontSize = isMobile ? 0.42 : 0.8;
 
   return (
     <group position={[0, -0.3, 0]} scale={textScale} ref={windowRef}>
 
       <Text color="white" anchorX="left" anchorY="middle"
-        fontSize={1.3}
+        fontSize={primaryFontSize}
         position={[0.12, 0, 0]}
         {...fontProps}
         scale={[1, -1, 1]}
@@ -42,17 +43,17 @@ const TextWindow = () => {
       <Text color="white" anchorX="right" anchorY="middle"
         {...fontProps}
         scale={[-1, -1, 1]}
-        fontSize={1.3}
+        fontSize={primaryFontSize}
         position={[-0.05, 0, -1.4]}
         rotation={[0, 0, -Math.PI / 2]}>
         UI/UX & E-COMMERCE
       </Text>
 
-      <group position={[-0.45, 0, -0.3]}>
+      <group position={[isMobile ? -0.70 : -0.45, 0, -0.3]}>
         <Text color="white" anchorX="left" anchorY="middle"
           {...fontProps}
           scale={[1, -1, 1]}
-          fontSize={0.8}
+          fontSize={secondaryFontSize}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
           STRAYED & PRETTIVA
         </Text>
@@ -60,25 +61,25 @@ const TextWindow = () => {
         <Text color="white" anchorX="left" anchorY="middle"
           {...fontProps}
           scale={[1, -1, 1]}
-          fontSize={0.8}
+          fontSize={secondaryFontSize}
           position={[0, 0, -0.6]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
           MIT BENGALURU '28
         </Text>
       </group>
 
-      <group position={[0.45, 0, -0.3]}>
+      <group position={[isMobile ? 0.70 : 0.45, 0, -0.3]}>
         <Text color="white" anchorX="right" anchorY="middle"
           {...fontProps}
           scale={[-1, -1, 1]}
-          fontSize={0.8}
+          fontSize={secondaryFontSize}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
           DIGITAL PRODUCT DEV
         </Text>
         <Text color="white" anchorX="right" anchorY="middle"
           {...fontProps}
           scale={[-1, -1, 1]}
-          fontSize={0.8}
+          fontSize={secondaryFontSize}
           position={[0, 0, -0.6]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
           WEB PERFORMANCE & SEO
