@@ -22,11 +22,12 @@ const TextWindow = () => {
 
   const fontProps = {
     font: "./soria-font.ttf",
-    side: THREE.DoubleSide,
+    frustumCulled: false,
   };
 
   return (
     <group position={[0, -0.3, 0]} ref={windowRef}>
+      {/* Bottom Wall */}
       <Text
         color="white"
         anchorX="left"
@@ -34,17 +35,20 @@ const TextWindow = () => {
         fontSize={1.3}
         position={[0.12, 0, 0]}
         {...fontProps}
+        material-side={THREE.DoubleSide}
         scale={[1, -1, 1]}
         rotation={[0, 0, -Math.PI / 2]}
       >
         PRODUCT ENGINEER
       </Text>
 
+      {/* Top Wall */}
       <Text
         color="white"
         anchorX="right"
         anchorY="middle"
         {...fontProps}
+        material-side={THREE.DoubleSide}
         fontSize={1.3}
         position={[-0.05, 0, -1.4]}
         scale={[-1, -1, 1]}
@@ -53,12 +57,14 @@ const TextWindow = () => {
         UI/UX & E-COMMERCE
       </Text>
 
+      {/* Left Wall */}
       <group position={[-0.45, 0, -0.3]}>
         <Text
           color="white"
           anchorX="left"
           anchorY="middle"
           {...fontProps}
+          material-side={THREE.DoubleSide}
           fontSize={0.8}
           scale={[1, -1, 1]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
@@ -71,6 +77,7 @@ const TextWindow = () => {
           anchorX="left"
           anchorY="middle"
           {...fontProps}
+          material-side={THREE.DoubleSide}
           fontSize={0.8}
           position={[0, 0, -0.6]}
           scale={[1, -1, 1]}
@@ -80,12 +87,14 @@ const TextWindow = () => {
         </Text>
       </group>
 
+      {/* Right Wall */}
       <group position={[0.45, 0, -0.3]}>
         <Text
           color="white"
           anchorX="right"
           anchorY="middle"
           {...fontProps}
+          material-side={THREE.DoubleSide}
           fontSize={0.8}
           scale={[-1, -1, 1]}
           rotation={[0, -Math.PI / 2, -Math.PI / 2]}
@@ -98,6 +107,7 @@ const TextWindow = () => {
           anchorX="right"
           anchorY="middle"
           {...fontProps}
+          material-side={THREE.DoubleSide}
           fontSize={0.8}
           position={[0, 0, -0.6]}
           scale={[-1, -1, 1]}
