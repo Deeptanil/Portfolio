@@ -56,7 +56,7 @@ function runAutoScrollToBottom(
   const timer = setTimeout(async () => {
     const targetScroll = Math.max(0, targetEl.scrollHeight - targetEl.clientHeight);
 
-    if (reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
+    if ((isMobile && clearUrlParam) || reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
       targetEl.scrollTop = targetScroll;
       unlockScroll();
       return;
