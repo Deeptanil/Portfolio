@@ -121,12 +121,21 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
   const materialsRef = useRef<THREE.MeshStandardMaterial[]>([]);
   const scroll = useScroll();
   const isAutoScrolling = useScrollStore((state) => state.isAutoScrolling);
+  const warmupFramesRef = useRef(10);
 
   useFrame((_, delta) => {
     if (!cloudGroupRef.current || !scroll) return;
 
-    // Keep visible = true always so cloud materials & shaders stay compiled
-    cloudGroupRef.current.visible = true;
+    // Allow forced visible passes during loading screen warmup for shader pre-compilation
+    if (warmupFramesRef.current > 0) {
+      cloudGroupRef.current.visible = true;
+      warmupFramesRef.current -= 1;
+    } else {
+      // Hide clouds completely once past the window section (offset >= 0.40) to prevent footer blinking
+      cloudGroupRef.current.visible = scroll.offset < 0.40;
+    }
+
+    if (!cloudGroupRef.current.visible) return;
 
     const windowRange = scroll.range(0.10, 0.30);
     const dampSpeed = isAutoScrolling ? 25 : 6;
