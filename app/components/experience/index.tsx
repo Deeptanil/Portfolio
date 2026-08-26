@@ -2,7 +2,7 @@
 
 import { Text, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { usePortalStore } from "@stores";
+import { usePortalStore, useScrollStore } from "@stores";
 import { useRef } from "react";
 import * as THREE from 'three';
 import GridTile from "./GridTile";
@@ -16,13 +16,7 @@ const Experience = () => {
   const data = useScroll();
   const isActive = usePortalStore((state) => !!state.activePortalId);
   const isMobile = useIsMobile();
-  // This whole section (title letters + both portal tiles) normally stays .visible=false
-  // until scrolled into range — meaning its content, including the portals' inner scenes,
-  // never gets a real render pass (and thus never compiles its shaders / uploads its
-  // textures) until the user actually scrolls here. Force it visible for a handful of
-  // frames right after mount, while still hidden behind the loading screen's fade-in, so
-  // that one-time cost happens up front instead of showing up as a lag spike later.
-  const warmupFramesRef = useRef(8);
+  const isAutoScrolling = useScrollStore((state) => state.isAutoScrolling);
 
   const fontProps = {
     font: "./soria-font.ttf",
@@ -36,21 +30,18 @@ const Experience = () => {
     const d = data.range(0.74, 0.24);
 
     if (groupRef.current && !isActive) {
-      groupRef.current.position.y = (d > 0 || warmupFramesRef.current > 0) ? -1 : -30;
-      if (warmupFramesRef.current > 0) {
-        groupRef.current.visible = true;
-        warmupFramesRef.current -= 1;
-      } else {
-        groupRef.current.visible = d > 0;
-      }
+      // Keep group visible = true always so portal material shaders stay precompiled
+      groupRef.current.visible = true;
+      groupRef.current.position.y = d > 0 ? -1 : -300;
     }
 
     if (titleRef.current) {
+      const textDamp = isAutoScrolling ? 25 : 7;
       titleRef.current.children.forEach((text, i) => {
         // Mobile target Y: 0.0 (sitting at Y=0.95 in parent space, lower down right above Work button)
         const yTarget = isMobile ? 0.0 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
-        text.position.y = THREE.MathUtils.damp(text.position.y, y, 7, delta);
+        text.position.y = THREE.MathUtils.damp(text.position.y, y, textDamp, delta);
         /* eslint-disable  @typescript-eslint/no-explicit-any */
         (text as any).fillOpacity = d > 0 ? 1 : 0;
       });

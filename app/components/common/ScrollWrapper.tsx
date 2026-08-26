@@ -14,9 +14,14 @@ import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 // instantly to the target position so it always finishes scrolling reliably.
 function runAutoScrollToBottom(
   targetEl: HTMLElement,
-  options: { clearUrlParam: boolean; reducedMotion: boolean }
+  options: {
+    clearUrlParam: boolean;
+    reducedMotion: boolean;
+    onStartAutoScroll?: () => void;
+    onEndAutoScroll?: () => void;
+  }
 ) {
-  const { clearUrlParam, reducedMotion } = options;
+  const { clearUrlParam, reducedMotion, onStartAutoScroll, onEndAutoScroll } = options;
 
   if (clearUrlParam && typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
     window.history.replaceState(null, '', window.location.pathname);
@@ -41,6 +46,7 @@ function runAutoScrollToBottom(
     window.removeEventListener('touchstart', blockScrollInput, { capture: true });
     window.removeEventListener('touchmove', blockScrollInput, { capture: true });
     window.removeEventListener('keydown', blockScrollInput, { capture: true });
+    if (onEndAutoScroll) onEndAutoScroll();
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -56,12 +62,14 @@ function runAutoScrollToBottom(
       return;
     }
 
+    if (onStartAutoScroll) onStartAutoScroll();
+
     const gsapModule = await import('gsap');
     const gsap = gsapModule.default || gsapModule;
     scrollTween = gsap.to(targetEl, {
       scrollTop: targetScroll,
-      duration: 3.5,
-      ease: "power2.inOut",
+      duration: 5.5,
+      ease: "power1.inOut",
       onComplete: unlockScroll
     });
   }, 100);
@@ -79,6 +87,9 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   const { progress } = useProgress();
   const setScrollProgress = useScrollStore((state) => state.setScrollProgress);
   const skipToEndToken = useScrollStore((state) => state.skipToEndToken);
+  const setIsAutoScrolling = useScrollStore((state) => state.setIsAutoScrolling);
+  const isAutoScrolling = useScrollStore((state) => state.isAutoScrolling);
+
   const skipTokenSeenRef = useRef(skipToEndToken);
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -88,10 +99,12 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
         return runAutoScrollToBottom(data.el, {
           clearUrlParam: true,
           reducedMotion: prefersReducedMotion,
+          onStartAutoScroll: () => setIsAutoScrolling(true),
+          onEndAutoScroll: () => setIsAutoScrolling(false),
         });
       }
     }
-  }, [data, progress, prefersReducedMotion]);
+  }, [data, progress, prefersReducedMotion, setIsAutoScrolling]);
 
   useEffect(() => {
     // Skip the initial mount value — only react to actual "Skip to Portfolio" presses
@@ -102,9 +115,11 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
       return runAutoScrollToBottom(data.el, {
         clearUrlParam: false,
         reducedMotion: prefersReducedMotion,
+        onStartAutoScroll: () => setIsAutoScrolling(true),
+        onEndAutoScroll: () => setIsAutoScrolling(false),
       });
     }
-  }, [skipToEndToken, data, prefersReducedMotion]);
+  }, [skipToEndToken, data, prefersReducedMotion, setIsAutoScrolling]);
 
   useFrame((state, delta) => {
     // Pause frame updates if window is out of focus or tab is hidden
@@ -117,9 +132,14 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
       const b = data.range(0.3, 0.5);
       const d = data.range(0.85, 0.18);
 
-      camera.rotation.x = THREE.MathUtils.damp(camera.rotation.x, -0.5 * Math.PI * a, 5, delta);
-      camera.position.y = THREE.MathUtils.damp(camera.position.y, -37 * b, 7, delta);
-      camera.position.z = THREE.MathUtils.damp(camera.position.z, 5 + 10 * d, 7, delta);
+      // Higher damping factor during auto-scroll ensures camera stays in frame-perfect lockstep with GSAP smooth scroll
+      const rotDamp = isAutoScrolling ? 25 : 5;
+      const posYDamp = isAutoScrolling ? 25 : 7;
+      const posZDamp = isAutoScrolling ? 25 : 7;
+
+      camera.rotation.x = THREE.MathUtils.damp(camera.rotation.x, -0.5 * Math.PI * a, rotDamp, delta);
+      camera.position.y = THREE.MathUtils.damp(camera.position.y, -37 * b, posYDamp, delta);
+      camera.position.z = THREE.MathUtils.damp(camera.position.z, 5 + 10 * d, posZDamp, delta);
 
       setScrollProgress(data.range(0, 1));
 

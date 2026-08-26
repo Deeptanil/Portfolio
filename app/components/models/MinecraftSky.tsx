@@ -4,7 +4,7 @@ import { useGLTF, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { ComponentProps, useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { useThemeStore } from '@stores';
+import { useThemeStore, useScrollStore } from '@stores';
 
 // Shared material setup for a cloned scene
 const createSceneClone = (
@@ -120,37 +120,37 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
   const cloudGroupRef = useRef<THREE.Group>(null);
   const materialsRef = useRef<THREE.MeshStandardMaterial[]>([]);
   const scroll = useScroll();
+  const isAutoScrolling = useScrollStore((state) => state.isAutoScrolling);
 
   useFrame((_, delta) => {
     if (!cloudGroupRef.current || !scroll) return;
 
+    // Keep visible = true always so cloud materials & shaders stay compiled
+    cloudGroupRef.current.visible = true;
+
     const windowRange = scroll.range(0.10, 0.30);
+    const dampSpeed = isAutoScrolling ? 25 : 6;
 
     const targetScale = 1 + 8 * windowRange * windowRange;
     cloudGroupRef.current.scale.setScalar(
-      THREE.MathUtils.damp(cloudGroupRef.current.scale.x, targetScale, 6, delta)
+      THREE.MathUtils.damp(cloudGroupRef.current.scale.x, targetScale, dampSpeed, delta)
     );
 
     const targetY = 180 * windowRange;
     const targetZ = 220 * windowRange;
     cloudGroupRef.current.position.y = THREE.MathUtils.damp(
-      cloudGroupRef.current.position.y, targetY, 6, delta
+      cloudGroupRef.current.position.y, targetY, dampSpeed, delta
     );
     cloudGroupRef.current.position.z = THREE.MathUtils.damp(
-      cloudGroupRef.current.position.z, targetZ, 6, delta
+      cloudGroupRef.current.position.z, targetZ, dampSpeed, delta
     );
 
     const fadeRange = scroll.range(0.10, 0.32);
     const targetOpacity = Math.max(0, 1 - fadeRange);
 
-    const isVisible = targetOpacity > 0.001;
-    cloudGroupRef.current.visible = isVisible;
-
-    if (isVisible) {
-      materialsRef.current.forEach((mat) => {
-        mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, 6, delta);
-      });
-    }
+    materialsRef.current.forEach((mat) => {
+      mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, dampSpeed, delta);
+    });
   });
 
   return (

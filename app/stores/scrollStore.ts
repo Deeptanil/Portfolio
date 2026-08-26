@@ -5,6 +5,8 @@ interface ScrollStore {
   setScrollProgress: (progress: number) => void;
   skipToEndToken: number;
   requestSkipToEnd: () => void;
+  isAutoScrolling: boolean;
+  setIsAutoScrolling: (isAutoScrolling: boolean) => void;
 }
 
 export const useScrollStore = create<ScrollStore>((set) => ({
@@ -17,4 +19,6 @@ export const useScrollStore = create<ScrollStore>((set) => ({
     }),
   skipToEndToken: 0,
   requestSkipToEnd: () => set((state) => ({ skipToEndToken: state.skipToEndToken + 1 })),
+  isAutoScrolling: false,
+  setIsAutoScrolling: (isAutoScrolling) => set({ isAutoScrolling }),
 }));

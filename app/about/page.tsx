@@ -55,13 +55,41 @@ const CREDITS = [
 ];
 
 function CreditsPopup() {
-  const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsMounted(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsOpen(true);
+      });
+    });
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(() => {
+      setIsMounted(false);
+    }, 250);
+  };
+
+  useEffect(() => {
+    if (!isMounted) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isMounted]);
 
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         className="inline-flex items-center justify-center min-w-[190px] sm:min-w-[230px] h-[40px] sm:h-[46px] px-5 sm:px-7 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
         style={{
           backgroundColor: '#707070',
@@ -76,16 +104,20 @@ function CreditsPopup() {
         <span>Credits &amp; Attributions</span>
       </button>
 
-      {open && (
+      {isMounted && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 select-none backdrop-blur-md"
+          className={`fixed inset-0 z-[100] flex items-center justify-center p-4 select-none backdrop-blur-md transition-opacity duration-250 ease-out ${
+            isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
           style={{
             background: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.92) 65%, rgba(0, 0, 0, 0.99) 100%), rgba(0, 0, 0, 0.85)',
           }}
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
         >
           <div
-            className="w-full max-w-lg max-h-[80vh] overflow-y-auto p-6 sm:p-8 space-y-5"
+            className={`w-full max-w-lg max-h-[80vh] overflow-y-auto p-6 sm:p-8 space-y-5 transform transition-all duration-250 ease-out ${
+              isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 -translate-y-2'
+            }`}
             style={{
               backgroundColor: '#402c1b',
               backgroundImage: "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.95) 100%), url('/minecraft_dirt.webp')",
@@ -125,7 +157,7 @@ function CreditsPopup() {
             <div className="pt-4 text-center">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="inline-flex items-center justify-center min-w-[120px] h-[36px] sm:h-[40px] px-6 text-xs sm:text-sm font-minecraft-regular text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                 style={{
                   backgroundColor: '#707070',
