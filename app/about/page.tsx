@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import VideoBackground from '../components/common/VideoBackground';
 
 function preventOrphans(str: string): string {
   const lastSpaceIndex = str.lastIndexOf(' ');
@@ -239,8 +240,8 @@ export default function AboutPage() {
       }}
       suppressHydrationWarning
     >
-      {/* Heavy Vignette + Dark Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.88)_65%,rgba(0,0,0,0.98)_100%)]" />
+      {/* Video Background with dirt fallback */}
+      <VideoBackground />
 
       {/* Minecraft UI Return Button with standardized responsive proportions matching Minecraft main menu */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
