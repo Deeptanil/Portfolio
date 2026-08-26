@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import SoundToggle from "./components/common/SoundToggle";
 import "./globals.css";
 
 const syne = Syne({
@@ -167,6 +168,7 @@ export default function RootLayout({
         className={`${syne.variable} ${cormorant.variable} ${jakarta.variable} font-sans antialiased bg-[#0a0a0c] text-white`}
         suppressHydrationWarning
       >
+        <SoundToggle />
         {children}
         <Analytics />
       </body>

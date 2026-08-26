@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
+import { usePathname } from 'next/navigation';
+import { useSoundStore } from '@stores';
 
 // C418 "Subwoofer Lullaby" main theme note sequence (frequencies in Hz)
 const SUBWOOFER_LULLABY_NOTES = [
@@ -24,10 +26,18 @@ const SUBWOOFER_LULLABY_NOTES = [
 ];
 
 const SoundToggle = () => {
-  const [isPlaying, setIsPlaying] = useState(false); // Default muted for clean initial user experience
+  const isPlaying = useSoundStore((state) => state.isPlaying);
+  const setIsPlaying = useSoundStore((state) => state.setIsPlaying);
+  const pathname = usePathname();
+
   const isPlayingRef = useRef(false); // ref mirrors state so handlers always read current value
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Keep ref updated with store state
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
 
   const toggleSound = () => {
     if (!isPlaying) {
@@ -141,7 +151,12 @@ const SoundToggle = () => {
     };
   }, []); // empty dep — register once on mount only
 
-  const positionClass = isMobile ? 'top-2 left-2' : 'top-6 left-6';
+  const isAboutOrWork = pathname === '/about' || pathname === '/work';
+  const positionClass = isAboutOrWork
+    ? 'top-4 right-4 sm:top-6 sm:right-6'
+    : isMobile
+    ? 'top-2 left-2'
+    : 'top-6 left-6';
 
   return (
     <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }} suppressHydrationWarning>

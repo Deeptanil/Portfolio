@@ -14,7 +14,6 @@ import "../../utils/assetPreloader";
 import ProgressLoader from "./ProgressLoader";
 import { ScrollHint } from "./ScrollHint";
 import SkipToPortfolioButton from "./SkipToPortfolioButton";
-import SoundToggle from "./SoundToggle";
 import ThemeSwitcher from "./ThemeSwitcher";
 import WebGLWarmup from "./WebGLWarmup";
 
@@ -97,7 +96,6 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
         </Canvas>
         <ProgressLoader progress={progress} isWarmedUp={isWarmedUp} />
       </div>
-      <SoundToggle />
       <ThemeSwitcher />
       <ScrollHint />
       <SkipToPortfolioButton />
