@@ -27,6 +27,8 @@ function runAutoScrollToBottom(
     window.history.replaceState(null, '', window.location.pathname);
   }
 
+  const getTargetScroll = () => Math.max(0, targetEl.scrollHeight - targetEl.clientHeight);
+
   // Prevent user scroll inputs during auto-scroll
   const blockScrollInput = (e: Event) => {
     e.preventDefault();
@@ -40,7 +42,10 @@ function runAutoScrollToBottom(
   window.addEventListener('touchmove', blockScrollInput, { capture: true, passive: false });
   window.addEventListener('keydown', blockScrollInput, { capture: true, passive: false });
 
+  let unlocked = false;
   const unlockScroll = () => {
+    if (unlocked) return;
+    unlocked = true;
     targetEl.style.pointerEvents = 'auto';
     window.removeEventListener('wheel', blockScrollInput, { capture: true });
     window.removeEventListener('touchstart', blockScrollInput, { capture: true });
@@ -52,13 +57,35 @@ function runAutoScrollToBottom(
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let scrollTween: any = null;
 
+  const jumpToFooterImmediately = () => {
+    if (scrollTween) {
+      scrollTween.kill();
+      scrollTween = null;
+    }
+    targetEl.scrollTop = getTargetScroll();
+    unlockScroll();
+  };
+
+  const handleScreenChange = () => {
+    if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+      jumpToFooterImmediately();
+    }
+  };
+
+  window.addEventListener('visibilitychange', handleScreenChange);
+  window.addEventListener('blur', handleScreenChange);
+  window.addEventListener('pagehide', handleScreenChange);
+
   // Defer execution by 40ms so DOM layout geometry on mobile (100dvh & pages=4) is fully calculated
   const timer = setTimeout(async () => {
-    const targetScroll = Math.max(0, targetEl.scrollHeight - targetEl.clientHeight);
+    const targetScroll = getTargetScroll();
 
-    if ((isMobile && clearUrlParam) || reducedMotion || (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))) {
-      targetEl.scrollTop = targetScroll;
-      unlockScroll();
+    if (
+      (isMobile && clearUrlParam) ||
+      reducedMotion ||
+      (typeof document !== 'undefined' && (document.hidden || !document.hasFocus()))
+    ) {
+      jumpToFooterImmediately();
       return;
     }
 
@@ -76,6 +103,9 @@ function runAutoScrollToBottom(
 
   return () => {
     clearTimeout(timer);
+    window.removeEventListener('visibilitychange', handleScreenChange);
+    window.removeEventListener('blur', handleScreenChange);
+    window.removeEventListener('pagehide', handleScreenChange);
     if (scrollTween) scrollTween.kill();
     unlockScroll();
   };

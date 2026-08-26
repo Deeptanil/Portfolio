@@ -52,34 +52,73 @@ const GridTile = (props: GridTileProps) => {
     }
   });
 
+  const navigatingRef = useRef(false);
+
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const handlePointerDown = (e: any) => {
     const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0;
     const clientY = e.clientY ?? e.nativeEvent?.clientY ?? 0;
     touchStartRef.current = { x: clientX, y: clientY, time: Date.now() };
+
+    if (isMobile && gridRef.current) {
+      gsap.to(gridRef.current.scale, {
+        x: 0.92,
+        y: 0.92,
+        z: 0.92,
+        duration: 0.1,
+        ease: 'power1.out'
+      });
+    }
+  };
+
+  const resetMobileScale = () => {
+    if (isMobile && gridRef.current) {
+      gsap.to(gridRef.current.scale, {
+        x: 1,
+        y: 1,
+        z: 1,
+        duration: 0.25,
+        ease: 'back.out(2)'
+      });
+    }
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const handlePointerUp = (e: any) => {
+    if (isMobile) {
+      resetMobileScale();
+    }
+
+    if (!isMobile) {
+      portalInto(e);
+      return;
+    }
+
     if (!touchStartRef.current) return;
     const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0;
     const clientY = e.clientY ?? e.nativeEvent?.clientY ?? 0;
     const moveDist = Math.hypot(clientX - touchStartRef.current.x, clientY - touchStartRef.current.y);
-    const duration = Date.now() - touchStartRef.current.time;
     touchStartRef.current = null;
 
-    // Mistouch Prevention: If finger moved > 12px or tap was < 40ms, treat as scroll swipe & ignore!
-    if (moveDist > 12 || duration < 40) {
+    // Mobile swipe prevention: if finger moved > 12px, treat as scroll swipe & ignore tap
+    if (moveDist > 12) {
       return;
     }
 
     portalInto(e);
   };
 
-  const portalInto = (e: React.SyntheticEvent | Event) => {
-    if (e && 'stopPropagation' in e) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const portalInto = (e?: any) => {
+    if (e && typeof e.stopPropagation === 'function') {
       e.stopPropagation();
     }
+
+    if (navigatingRef.current) return;
+    navigatingRef.current = true;
+    setTimeout(() => {
+      navigatingRef.current = false;
+    }, 1000);
 
     if (id === 'work') {
       router.push('/work');
@@ -130,7 +169,10 @@ const GridTile = (props: GridTileProps) => {
   };
 
   const onPointerOut = () => {
-    if (isMobile) return;
+    if (isMobile) {
+      resetMobileScale();
+      return;
+    }
     document.body.style.cursor = 'auto';
     gsap.to(titleRef.current, {
       fillOpacity: 0
@@ -158,6 +200,11 @@ const GridTile = (props: GridTileProps) => {
       // brief forced-visible warmup in Experience's useFrame, lets that first real render
       // happen during the loading screen instead of on the first real scroll here.
       frustumCulled={false}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (isMobile) resetMobileScale();
+        portalInto(e);
+      }}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerOver={onPointerOver}
@@ -165,7 +212,15 @@ const GridTile = (props: GridTileProps) => {
       { getGeometry() }
       <group>
         {!isMobile && (
-          <mesh position={[0, 0, -0.01]} ref={hoverBoxRef} scale={[0, 0, 0]}>
+          <mesh
+            position={[0, 0, -0.01]}
+            ref={hoverBoxRef}
+            scale={[0, 0, 0]}
+            onClick={(e) => {
+              e.stopPropagation();
+              portalInto(e);
+            }}
+          >
             <boxGeometry args={[4, 4, 0.5]} />
             <meshPhysicalMaterial
               color="#444"
@@ -175,7 +230,16 @@ const GridTile = (props: GridTileProps) => {
             <Edges color="white" lineWidth={1.5} />
           </mesh>
         )}
-        <Text position={textPosition} {...fontProps} ref={titleRef}>
+        <Text
+          position={textPosition}
+          {...fontProps}
+          ref={titleRef}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isMobile) resetMobileScale();
+            portalInto(e);
+          }}
+        >
           {title}
         </Text>
       </group>
