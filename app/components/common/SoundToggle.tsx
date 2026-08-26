@@ -156,6 +156,9 @@ const SoundToggle = () => {
     window.addEventListener('touchstart', handleFirstInteraction, { once: true });
     window.addEventListener('touchend', handleFirstInteraction, { once: true });
     window.addEventListener('keydown', handleFirstInteraction, { once: true });
+    window.addEventListener('wheel', handleFirstInteraction, { once: true });
+    window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
+    window.addEventListener('scroll', handleFirstInteraction, { once: true });
 
     return () => {
       stopSubwooferLullaby();
@@ -163,6 +166,9 @@ const SoundToggle = () => {
       window.removeEventListener('touchstart', handleFirstInteraction);
       window.removeEventListener('touchend', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('wheel', handleFirstInteraction);
+      window.removeEventListener('pointerdown', handleFirstInteraction);
+      window.removeEventListener('scroll', handleFirstInteraction);
     };
   }, []);
 
