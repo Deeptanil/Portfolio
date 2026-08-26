@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { usePathname } from 'next/navigation';
 import { useSoundStore } from '@stores';
@@ -30,6 +30,7 @@ const SoundToggle = () => {
   const setIsPlaying = useSoundStore((state) => state.setIsPlaying);
   const pathname = usePathname();
 
+  const [isActivelyPlaying, setIsActivelyPlaying] = useState(false);
   const isPlayingRef = useRef(false); // ref mirrors state so handlers always read current value
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -37,17 +38,20 @@ const SoundToggle = () => {
   // Keep ref updated with store state
   useEffect(() => {
     isPlayingRef.current = isPlaying;
+    if (!isPlaying) {
+      stopSubwooferLullaby();
+    }
   }, [isPlaying]);
 
   const toggleSound = () => {
-    if (!isPlaying) {
+    if (!isPlaying || !isActivelyPlaying) {
       isPlayingRef.current = true;
-      startSubwooferLullaby();
       setIsPlaying(true);
+      startSubwooferLullaby();
     } else {
       isPlayingRef.current = false;
-      stopSubwooferLullaby();
       setIsPlaying(false);
+      stopSubwooferLullaby();
     }
   };
 
@@ -78,9 +82,12 @@ const SoundToggle = () => {
 
   const startSubwooferLullaby = () => {
     if (audioCtxRef.current) {
-      // Resume if suspended (browser policy)
       if (audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume();
+        audioCtxRef.current.resume().then(() => {
+          setIsActivelyPlaying(true);
+        }).catch(() => {});
+      } else {
+        setIsActivelyPlaying(true);
       }
       return;
     }
@@ -89,9 +96,12 @@ const SoundToggle = () => {
       const ctx = new AudioCtx();
       audioCtxRef.current = ctx;
 
-      // Resume if browser auto-suspended it
       if (ctx.state === 'suspended') {
-        ctx.resume();
+        ctx.resume().then(() => {
+          setIsActivelyPlaying(true);
+        }).catch(() => {});
+      } else {
+        setIsActivelyPlaying(true);
       }
 
       let noteIdx = 0;
@@ -118,6 +128,7 @@ const SoundToggle = () => {
   };
 
   const stopSubwooferLullaby = () => {
+    setIsActivelyPlaying(false);
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
@@ -129,7 +140,6 @@ const SoundToggle = () => {
   };
 
   // Register first-user-interaction listener ONCE on mount only.
-  // Uses isPlayingRef so the handler always reads the current playing state.
   useEffect(() => {
     const handleFirstInteraction = () => {
       if (isPlayingRef.current) {
@@ -149,7 +159,7 @@ const SoundToggle = () => {
       window.removeEventListener('touchend', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
     };
-  }, []); // empty dep — register once on mount only
+  }, []);
 
   const isAboutOrWork = pathname === '/about' || pathname === '/work';
   const positionClass = isAboutOrWork
@@ -158,13 +168,15 @@ const SoundToggle = () => {
     ? 'top-2 left-2'
     : 'top-6 left-6';
 
+  const showActivePlayingIcon = isPlaying && isActivelyPlaying;
+
   return (
     <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }} suppressHydrationWarning>
       <div className="flex items-center justify-center">
         <a
           onClick={toggleSound}
           className="hover:cursor-pointer flex items-center justify-center"
-          title={isPlaying ? "Mute Sound" : "Enable Sound"}
+          title={showActivePlayingIcon ? "Mute Sound" : "Enable Sound"}
         >
           <svg
             width="24"
@@ -177,7 +189,7 @@ const SoundToggle = () => {
             strokeLinejoin="round"
             className="w-6 h-6 text-white"
           >
-            {isPlaying ? (
+            {showActivePlayingIcon ? (
               <>
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
