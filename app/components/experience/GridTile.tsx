@@ -54,39 +54,42 @@ const GridTile = (props: GridTileProps) => {
 
   const navigatingRef = useRef(false);
 
+  const activatePressEffect = () => {
+    if (isActive) return;
+    if (titleRef.current) {
+      gsap.to(titleRef.current, { fillOpacity: 1, duration: 0.3 });
+    }
+    if (gridRef.current && hoverBoxRef.current) {
+      gsap.to(gridRef.current.position, { z: 0.5, duration: 0.3 });
+      gsap.to(hoverBoxRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
+    }
+  };
+
+  const deactivatePressEffect = () => {
+    if (titleRef.current && !isMobile) {
+      gsap.to(titleRef.current, { fillOpacity: 0, duration: 0.3 });
+    }
+    if (gridRef.current && hoverBoxRef.current) {
+      gsap.to(gridRef.current.position, { z: 0, duration: 0.3 });
+      gsap.to(hoverBoxRef.current.scale, { x: 0, y: 0, z: 0, duration: 0.3 });
+    }
+  };
+
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const handlePointerDown = (e: any) => {
     const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0;
     const clientY = e.clientY ?? e.nativeEvent?.clientY ?? 0;
     touchStartRef.current = { x: clientX, y: clientY, time: Date.now() };
 
-    if (isMobile && gridRef.current) {
-      gsap.to(gridRef.current.scale, {
-        x: 0.92,
-        y: 0.92,
-        z: 0.92,
-        duration: 0.1,
-        ease: 'power1.out'
-      });
-    }
-  };
-
-  const resetMobileScale = () => {
-    if (isMobile && gridRef.current) {
-      gsap.to(gridRef.current.scale, {
-        x: 1,
-        y: 1,
-        z: 1,
-        duration: 0.25,
-        ease: 'back.out(2)'
-      });
+    if (isMobile) {
+      activatePressEffect();
     }
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const handlePointerUp = (e: any) => {
     if (isMobile) {
-      resetMobileScale();
+      deactivatePressEffect();
     }
 
     if (!isMobile) {
@@ -159,28 +162,16 @@ const GridTile = (props: GridTileProps) => {
   const onPointerOver = () => {
     if (isActive || isMobile) return;
     document.body.style.cursor = 'pointer';
-    gsap.to(titleRef.current, {
-      fillOpacity: 1
-    });
-    if (gridRef.current && hoverBoxRef.current) {
-      gsap.to(gridRef.current.position, { z: 0.5, duration: 0.4 });
-      gsap.to(hoverBoxRef.current.scale, { x: 1, y: 1, z: 1, duration: 0.4 });
-    }
+    activatePressEffect();
   };
 
   const onPointerOut = () => {
     if (isMobile) {
-      resetMobileScale();
+      deactivatePressEffect();
       return;
     }
     document.body.style.cursor = 'auto';
-    gsap.to(titleRef.current, {
-      fillOpacity: 0
-    });
-    if (gridRef.current && hoverBoxRef.current) {
-      gsap.to(gridRef.current.position, { z: 0, duration: 0.4 });
-      gsap.to(hoverBoxRef.current.scale, { x: 0, y: 0, z: 0, duration: 0.4 });
-    }
+    deactivatePressEffect();
   };
 
   const getGeometry = () => {
@@ -202,7 +193,7 @@ const GridTile = (props: GridTileProps) => {
       frustumCulled={false}
       onClick={(e) => {
         e.stopPropagation();
-        if (isMobile) resetMobileScale();
+        if (isMobile) deactivatePressEffect();
         portalInto(e);
       }}
       onPointerDown={handlePointerDown}
@@ -211,32 +202,30 @@ const GridTile = (props: GridTileProps) => {
       onPointerOut={onPointerOut}>
       { getGeometry() }
       <group>
-        {!isMobile && (
-          <mesh
-            position={[0, 0, -0.01]}
-            ref={hoverBoxRef}
-            scale={[0, 0, 0]}
-            onClick={(e) => {
-              e.stopPropagation();
-              portalInto(e);
-            }}
-          >
-            <boxGeometry args={[4, 4, 0.5]} />
-            <meshPhysicalMaterial
-              color="#444"
-              transparent={true}
-              opacity={0.3}
-            />
-            <Edges color="white" lineWidth={1.5} />
-          </mesh>
-        )}
+        <mesh
+          position={[0, 0, -0.01]}
+          ref={hoverBoxRef}
+          scale={[0, 0, 0]}
+          onClick={(e) => {
+            e.stopPropagation();
+            portalInto(e);
+          }}
+        >
+          <boxGeometry args={[isMobile ? 1.85 : 4, isMobile ? 1.85 : 4, 0.5]} />
+          <meshPhysicalMaterial
+            color="#444"
+            transparent={true}
+            opacity={0.3}
+          />
+          <Edges color="white" lineWidth={1.5} />
+        </mesh>
         <Text
           position={textPosition}
           {...fontProps}
           ref={titleRef}
           onClick={(e) => {
             e.stopPropagation();
-            if (isMobile) resetMobileScale();
+            if (isMobile) deactivatePressEffect();
             portalInto(e);
           }}
         >
