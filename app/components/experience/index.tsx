@@ -41,7 +41,11 @@ const Experience = () => {
         // Mobile target Y: 0.0 (sitting at Y=0.95 in parent space, lower down right above Work button)
         const yTarget = isMobile ? 0.0 : 0.5;
         const y = Math.max(Math.min((1 - d) * (10 - i), 10), yTarget);
-        text.position.y = THREE.MathUtils.damp(text.position.y, y, textDamp, delta);
+        if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+          text.position.y = y;
+        } else {
+          text.position.y = THREE.MathUtils.damp(text.position.y, y, textDamp, delta);
+        }
         /* eslint-disable  @typescript-eslint/no-explicit-any */
         (text as any).fillOpacity = d > 0 ? 1 : 0;
       });

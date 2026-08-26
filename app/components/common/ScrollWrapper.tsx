@@ -154,24 +154,33 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   }, [skipToEndToken, data, prefersReducedMotion, setIsAutoScrolling]);
 
   useFrame((state, delta) => {
-    // Pause frame updates if window is out of focus or tab is hidden
-    if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
-      return;
-    }
-
     if (data) {
       const a = data.range(0, 0.3);
       const b = data.range(0.3, 0.5);
       const d = data.range(0.85, 0.18);
+
+      const targetRotX = -0.5 * Math.PI * a;
+      const targetPosY = -37 * b;
+      const targetPosZ = 5 + 10 * d;
+
+      // When document is hidden or window is unfocused, snap camera instantly to current scroll position
+      // so 3D scene and DOM scrollbar stay in 100% lockstep at all times.
+      if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
+        camera.rotation.x = targetRotX;
+        camera.position.y = targetPosY;
+        camera.position.z = targetPosZ;
+        setScrollProgress(data.range(0, 1));
+        return;
+      }
 
       // Higher damping factor during auto-scroll ensures camera stays in frame-perfect lockstep with GSAP smooth scroll
       const rotDamp = isAutoScrolling ? 25 : 5;
       const posYDamp = isAutoScrolling ? 25 : 7;
       const posZDamp = isAutoScrolling ? 25 : 7;
 
-      camera.rotation.x = THREE.MathUtils.damp(camera.rotation.x, -0.5 * Math.PI * a, rotDamp, delta);
-      camera.position.y = THREE.MathUtils.damp(camera.position.y, -37 * b, posYDamp, delta);
-      camera.position.z = THREE.MathUtils.damp(camera.position.z, 5 + 10 * d, posZDamp, delta);
+      camera.rotation.x = THREE.MathUtils.damp(camera.rotation.x, targetRotX, rotDamp, delta);
+      camera.position.y = THREE.MathUtils.damp(camera.position.y, targetPosY, posYDamp, delta);
+      camera.position.z = THREE.MathUtils.damp(camera.position.z, targetPosZ, posZDamp, delta);
 
       setScrollProgress(data.range(0, 1));
 
