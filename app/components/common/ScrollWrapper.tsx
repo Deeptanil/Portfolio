@@ -52,7 +52,7 @@ function runAutoScrollToBottom(
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let scrollTween: any = null;
 
-  // Defer execution by 100ms so DOM layout geometry on mobile (100dvh & pages=4) is fully calculated
+  // Defer execution by 40ms so DOM layout geometry on mobile (100dvh & pages=4) is fully calculated
   const timer = setTimeout(async () => {
     const targetScroll = Math.max(0, targetEl.scrollHeight - targetEl.clientHeight);
 
@@ -68,11 +68,11 @@ function runAutoScrollToBottom(
     const gsap = gsapModule.default || gsapModule;
     scrollTween = gsap.to(targetEl, {
       scrollTop: targetScroll,
-      duration: 5.5,
-      ease: "power1.inOut",
+      duration: 3.0,
+      ease: "power2.out",
       onComplete: unlockScroll
     });
-  }, 100);
+  }, 40);
 
   return () => {
     clearTimeout(timer);
