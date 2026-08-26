@@ -10,7 +10,7 @@ interface SoundStore {
 export const useSoundStore = create<SoundStore>()(
   persist(
     (set) => ({
-      isPlaying: true,
+      isPlaying: false,
       setIsPlaying: (playing) => set({ isPlaying: playing }),
       toggleSound: () => set((state) => ({ isPlaying: !state.isPlaying })),
     }),

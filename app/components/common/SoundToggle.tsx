@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import { usePathname } from 'next/navigation';
 import { useSoundStore } from '@stores';
@@ -30,33 +30,24 @@ const SoundToggle = () => {
   const setIsPlaying = useSoundStore((state) => state.setIsPlaying);
   const pathname = usePathname();
 
-  const [mounted, setMounted] = useState(false);
-  const [isActivelyPlaying, setIsActivelyPlaying] = useState(false);
-  const isPlayingRef = useRef(false);
+  const isPlayingRef = useRef(false); // ref mirrors state so handlers always read current value
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Keep ref updated with store state
   useEffect(() => {
     isPlayingRef.current = isPlaying;
-    if (!isPlaying) {
-      stopSubwooferLullaby();
-    }
   }, [isPlaying]);
 
   const toggleSound = () => {
-    if (!isPlaying || !isActivelyPlaying) {
+    if (!isPlaying) {
       isPlayingRef.current = true;
-      setIsPlaying(true);
       startSubwooferLullaby();
+      setIsPlaying(true);
     } else {
       isPlayingRef.current = false;
-      setIsPlaying(false);
       stopSubwooferLullaby();
+      setIsPlaying(false);
     }
   };
 
@@ -87,12 +78,9 @@ const SoundToggle = () => {
 
   const startSubwooferLullaby = () => {
     if (audioCtxRef.current) {
+      // Resume if suspended (browser policy)
       if (audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume().then(() => {
-          setIsActivelyPlaying(true);
-        }).catch(() => {});
-      } else {
-        setIsActivelyPlaying(true);
+        audioCtxRef.current.resume();
       }
       return;
     }
@@ -101,12 +89,9 @@ const SoundToggle = () => {
       const ctx = new AudioCtx();
       audioCtxRef.current = ctx;
 
+      // Resume if browser auto-suspended it
       if (ctx.state === 'suspended') {
-        ctx.resume().then(() => {
-          setIsActivelyPlaying(true);
-        }).catch(() => {});
-      } else {
-        setIsActivelyPlaying(true);
+        ctx.resume();
       }
 
       let noteIdx = 0;
@@ -133,7 +118,6 @@ const SoundToggle = () => {
   };
 
   const stopSubwooferLullaby = () => {
-    setIsActivelyPlaying(false);
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
@@ -145,6 +129,7 @@ const SoundToggle = () => {
   };
 
   // Register first-user-interaction listener ONCE on mount only.
+  // Uses isPlayingRef so the handler always reads the current playing state.
   useEffect(() => {
     const handleFirstInteraction = () => {
       if (isPlayingRef.current) {
@@ -156,9 +141,6 @@ const SoundToggle = () => {
     window.addEventListener('touchstart', handleFirstInteraction, { once: true });
     window.addEventListener('touchend', handleFirstInteraction, { once: true });
     window.addEventListener('keydown', handleFirstInteraction, { once: true });
-    window.addEventListener('wheel', handleFirstInteraction, { once: true });
-    window.addEventListener('pointerdown', handleFirstInteraction, { once: true });
-    window.addEventListener('scroll', handleFirstInteraction, { once: true });
 
     return () => {
       stopSubwooferLullaby();
@@ -166,15 +148,8 @@ const SoundToggle = () => {
       window.removeEventListener('touchstart', handleFirstInteraction);
       window.removeEventListener('touchend', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
-      window.removeEventListener('wheel', handleFirstInteraction);
-      window.removeEventListener('pointerdown', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
     };
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  }, []); // empty dep — register once on mount only
 
   const isAboutOrWork = pathname === '/about' || pathname === '/work';
   const positionClass = isAboutOrWork
@@ -183,15 +158,13 @@ const SoundToggle = () => {
     ? 'top-2 left-2'
     : 'top-6 left-6';
 
-  const showActivePlayingIcon = isPlaying && isActivelyPlaying;
-
   return (
     <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }} suppressHydrationWarning>
-      <div className="flex items-center justify-center" suppressHydrationWarning>
+      <div className="flex items-center justify-center">
         <a
           onClick={toggleSound}
           className="hover:cursor-pointer flex items-center justify-center"
-          title={showActivePlayingIcon ? "Mute Sound" : "Enable Sound"}
+          title={isPlaying ? "Mute Sound" : "Enable Sound"}
         >
           <svg
             width="24"
@@ -204,7 +177,7 @@ const SoundToggle = () => {
             strokeLinejoin="round"
             className="w-6 h-6 text-white"
           >
-            {showActivePlayingIcon ? (
+            {isPlaying ? (
               <>
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
