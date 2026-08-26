@@ -27,7 +27,7 @@ const createSceneClone = (
           mat.emissiveIntensity = isNight ? 0.1 : 0.45;
           mat.roughness = 0.9;
           mat.transparent = true;
-          mat.opacity = 1.0;
+          mat.opacity = 0.0; // Start at 0 opacity to prevent 1-frame cloud flash on mount/footer
           mesh.material = mat;
           materialsRef.current.push(mat);
         }
@@ -125,9 +125,6 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
   useFrame((_, delta) => {
     if (!cloudGroupRef.current || !scroll) return;
 
-    // Keep visible = true always so cloud materials & shaders stay compiled
-    cloudGroupRef.current.visible = true;
-
     const windowRange = scroll.range(0.10, 0.30);
     const dampSpeed = isAutoScrolling ? 25 : 6;
 
@@ -147,10 +144,19 @@ const MinecraftSky = (props: ComponentProps<'group'>) => {
 
     const fadeRange = scroll.range(0.10, 0.32);
     const targetOpacity = Math.max(0, 1 - fadeRange);
+    const isVisible = targetOpacity > 0.001;
 
-    materialsRef.current.forEach((mat) => {
-      mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, dampSpeed, delta);
-    });
+    cloudGroupRef.current.visible = isVisible;
+
+    if (isVisible) {
+      materialsRef.current.forEach((mat) => {
+        mat.opacity = THREE.MathUtils.damp(mat.opacity, targetOpacity, dampSpeed, delta);
+      });
+    } else {
+      materialsRef.current.forEach((mat) => {
+        mat.opacity = 0;
+      });
+    }
   });
 
   return (
