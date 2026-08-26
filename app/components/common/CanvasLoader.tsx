@@ -7,8 +7,23 @@ import gsap from "gsap";
 import { Suspense, useRef, useSyncExternalStore } from "react";
 import { isMobile } from "react-device-detect";
 
+import * as THREE from "three";
 import { useThemeStore, useScrollStore } from "@stores";
 import { useCallback, useState } from "react";
+
+if (typeof window !== 'undefined') {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const origWarn = console.warn;
+  console.warn = (...args: any[]) => {
+    if (
+      typeof args[0] === 'string' &&
+      (args[0].includes('THREE.Clock') || args[0].includes('PCFSoftShadowMap'))
+    ) {
+      return;
+    }
+    origWarn.apply(console, args);
+  };
+}
 
 import "../../utils/assetPreloader";
 import ProgressLoader from "./ProgressLoader";
@@ -75,7 +90,7 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
       <div className="h-[100dvh] relative" ref={ref} suppressHydrationWarning>
         <Canvas
           className="base-canvas"
-          shadows={!isMobile}
+          shadows={!isMobile ? { type: THREE.PCFShadowMap } : false}
           style={canvasStyle}
           ref={canvasRef}
           dpr={[1, 2]}
