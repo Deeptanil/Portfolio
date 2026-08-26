@@ -7,6 +7,8 @@ interface ScrollStore {
   requestSkipToEnd: () => void;
   isAutoScrolling: boolean;
   setIsAutoScrolling: (isAutoScrolling: boolean) => void;
+  isWarmedUp: boolean;
+  setIsWarmedUp: (isWarmedUp: boolean) => void;
 }
 
 export const useScrollStore = create<ScrollStore>((set) => ({
@@ -21,4 +23,6 @@ export const useScrollStore = create<ScrollStore>((set) => ({
   requestSkipToEnd: () => set((state) => ({ skipToEndToken: state.skipToEndToken + 1 })),
   isAutoScrolling: false,
   setIsAutoScrolling: (isAutoScrolling) => set({ isAutoScrolling }),
+  isWarmedUp: false,
+  setIsWarmedUp: (isWarmedUp) => set({ isWarmedUp }),
 }));

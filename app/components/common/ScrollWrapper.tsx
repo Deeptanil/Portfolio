@@ -93,9 +93,11 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   const skipTokenSeenRef = useRef(skipToEndToken);
   const prefersReducedMotion = usePrefersReducedMotion();
 
+  const isWarmedUp = useScrollStore((state) => state.isWarmedUp);
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.search.includes('scroll=footer')) {
-      if (data && data.el && progress === 100) {
+      if (data && data.el && progress === 100 && isWarmedUp) {
         return runAutoScrollToBottom(data.el, {
           clearUrlParam: true,
           reducedMotion: prefersReducedMotion,
@@ -104,7 +106,7 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
         });
       }
     }
-  }, [data, progress, prefersReducedMotion, setIsAutoScrolling]);
+  }, [data, progress, isWarmedUp, prefersReducedMotion, setIsAutoScrolling]);
 
   useEffect(() => {
     // Skip the initial mount value — only react to actual "Skip to Portfolio" presses

@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { Suspense, useRef, useSyncExternalStore } from "react";
 import { isMobile } from "react-device-detect";
 
-import { useThemeStore } from "@stores";
+import { useThemeStore, useScrollStore } from "@stores";
 import { useCallback, useState } from "react";
 
 import "../../utils/assetPreloader";
@@ -21,13 +21,15 @@ const CanvasLoader = (props: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const backgroundColor = useThemeStore((state) => state.theme.color);
+  const setStoreWarmedUp = useScrollStore((state) => state.setIsWarmedUp);
   const { progress } = useProgress();
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
   const [isWarmedUp, setIsWarmedUp] = useState(false);
 
   const handleWarmupComplete = useCallback(() => {
     setIsWarmedUp(true);
-  }, []);
+    setStoreWarmedUp(true);
+  }, [setStoreWarmedUp]);
 
   const canvasStyle: React.CSSProperties = {
     position: "absolute",
