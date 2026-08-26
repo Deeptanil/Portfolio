@@ -44,12 +44,17 @@ export default function VideoBackground() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover object-center min-w-full min-h-full transition-opacity duration-700"
+          className="w-full h-full object-cover object-center min-w-full min-h-full transition-opacity duration-700 brightness-[0.85]"
           style={{ opacity: isPlaying ? 1 : 0 }}
         >
           <source src="/video_background.webm" type="video/webm" />
           <source src="/video_background.mp4" type="video/mp4" />
         </video>
+        {/* Subtle light dimming overlay for natural video brightness */}
+        <div
+          className="absolute inset-0 bg-black/15 transition-opacity duration-700 pointer-events-none"
+          style={{ opacity: isPlaying ? 1 : 0 }}
+        />
       </div>
 
       {/* Heavy Vignette + Dark Overlay (Active ONLY when video is NOT playing as fallback) */}
