@@ -144,7 +144,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="overscroll-y-none" suppressHydrationWarning>
-      <head>
+      <head suppressHydrationWarning>
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-D5W2EXXGEZ"

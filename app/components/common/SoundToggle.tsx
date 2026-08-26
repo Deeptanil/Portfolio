@@ -30,10 +30,15 @@ const SoundToggle = () => {
   const setIsPlaying = useSoundStore((state) => state.setIsPlaying);
   const pathname = usePathname();
 
+  const [mounted, setMounted] = useState(false);
   const [isActivelyPlaying, setIsActivelyPlaying] = useState(false);
-  const isPlayingRef = useRef(false); // ref mirrors state so handlers always read current value
+  const isPlayingRef = useRef(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Keep ref updated with store state
   useEffect(() => {
@@ -161,6 +166,10 @@ const SoundToggle = () => {
     };
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   const isAboutOrWork = pathname === '/about' || pathname === '/work';
   const positionClass = isAboutOrWork
     ? 'top-4 right-4 sm:top-6 sm:right-6'
@@ -172,7 +181,7 @@ const SoundToggle = () => {
 
   return (
     <div className={`fixed ${positionClass}`} style={{ opacity: 1, zIndex: 50 }} suppressHydrationWarning>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" suppressHydrationWarning>
         <a
           onClick={toggleSound}
           className="hover:cursor-pointer flex items-center justify-center"
