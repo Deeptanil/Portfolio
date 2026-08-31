@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "app/components/footer/index.tsx": {
-    "mtime": 1787634259.0809402,
-    "seen": 1788199336.6514714,
-    "ast_hash": "702b27029f10d3b2146fd5e0565387e4",
+    "mtime": 1788199839.9559798,
+    "seen": 1788199992.625839,
+    "ast_hash": "f79c136910fa5b75d76d6c95885f3941",
     "semantic_hash": ""
   },
   "app/components/hero/TextWindow.tsx": {
@@ -150,10 +150,10 @@
     "semantic_hash": ""
   },
   "app/constants/footer.ts": {
-    "mtime": 1787470983.9727397,
-    "seen": 1787578502.5482998,
-    "ast_hash": "69342f2a6643dd4e6ebaf3ffa74b27da",
-    "semantic_hash": "69342f2a6643dd4e6ebaf3ffa74b27da"
+    "mtime": 1788199873.647019,
+    "seen": 1788199992.625899,
+    "ast_hash": "cc7eef3976895068cd19bf82b79e0ee6",
+    "semantic_hash": ""
   },
   "app/constants/index.ts": {
     "mtime": 1787416914.056186,
@@ -519,6 +519,12 @@
     "mtime": 1787723596.3756783,
     "seen": 1788199336.6517901,
     "ast_hash": "38662e2e47e7b6b1bd27e8146ddc3f5c",
+    "semantic_hash": ""
+  },
+  "public/icons/call.svg": {
+    "mtime": 1788199800.6096325,
+    "seen": 1788199992.626153,
+    "ast_hash": "44b3f116cf3b7c876f7bb33c13ffbcc7",
     "semantic_hash": ""
   }
 }
