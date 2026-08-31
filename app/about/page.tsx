@@ -206,36 +206,58 @@ const ABOUT_SECTIONS = [
 
 export default function AboutPage() {
   const isAutoScrollingRef = useRef(false);
-  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number | null>(null);
+  const scrollAccumulatorRef = useRef(0);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) return;
 
+    // 90px/s provides smooth, responsive credits auto-scroll
+    const SPEED_PX_PER_SEC = 90;
+
+    const stopAutoScroll = () => {
+      isAutoScrollingRef.current = false;
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const step = (time: number) => {
+      if (!isAutoScrollingRef.current) return;
+
+      if (lastTimeRef.current !== null) {
+        const delta = (time - lastTimeRef.current) / 1000;
+        if (delta > 0 && delta < 0.1 && typeof document !== 'undefined' && !document.hidden && document.hasFocus()) {
+          scrollAccumulatorRef.current += SPEED_PX_PER_SEC * delta;
+          const pxToScroll = Math.floor(scrollAccumulatorRef.current);
+          if (pxToScroll >= 1) {
+            window.scrollBy(0, pxToScroll);
+            scrollAccumulatorRef.current -= pxToScroll;
+          }
+        }
+      }
+
+      lastTimeRef.current = time;
+      rafRef.current = requestAnimationFrame(step);
+    };
+
     const timer = setTimeout(() => {
       isAutoScrollingRef.current = true;
-      scrollIntervalRef.current = setInterval(() => {
-        if (
-          isAutoScrollingRef.current &&
-          typeof document !== 'undefined' &&
-          !document.hidden &&
-          document.hasFocus()
-        ) {
-          window.scrollBy({ top: 2, behavior: 'auto' });
-        }
-      }, 20);
+      lastTimeRef.current = null;
+      scrollAccumulatorRef.current = 0;
+      rafRef.current = requestAnimationFrame(step);
     }, 10000);
 
     const handleInteract = () => {
-      isAutoScrollingRef.current = false;
-      if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current);
-      }
+      stopAutoScroll();
     };
 
     const handleVisibilityChange = () => {
       if (typeof document !== 'undefined' && (document.hidden || !document.hasFocus())) {
-        handleInteract();
+        stopAutoScroll();
       }
     };
 
@@ -248,9 +270,7 @@ export default function AboutPage() {
 
     return () => {
       clearTimeout(timer);
-      if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current);
-      }
+      stopAutoScroll();
       window.removeEventListener('wheel', handleInteract);
       window.removeEventListener('touchstart', handleInteract);
       window.removeEventListener('touchmove', handleInteract);
@@ -262,7 +282,7 @@ export default function AboutPage() {
 
   return (
     <main
-      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white select-none scroll-smooth [text-wrap:pretty]"
+      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white select-none [text-wrap:pretty]"
       style={{
         backgroundColor: "#24170d",
         backgroundImage: "url('/minecraft_dirt.webp')",
