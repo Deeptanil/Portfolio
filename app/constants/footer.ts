@@ -2,6 +2,12 @@ import { FooterLink } from "../types";
 
 export const FOOTER_LINKS: FooterLink[] = [
   {
+    name: 'Call',
+    hoverText: 'WhatsApp Chat',
+    icon: 'icons/call.svg',
+    url: 'https://wa.me/917760343724?text=Hi',
+  },
+  {
     name: 'LinkedIn',
     hoverText: 'Connect with me',
     icon: 'icons/linkedin.svg',

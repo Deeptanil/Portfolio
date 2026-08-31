@@ -139,6 +139,8 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       iconScale = [0.25, 0.32];
     } else if (nameLower === 'github') {
       iconScale = [0.35, 0.35];
+    } else if (nameLower === 'call') {
+      iconScale = [0.35, 0.35];
     }
 
     return (
@@ -184,9 +186,11 @@ const Footer = () => {
   });
 
   const getLinks = () => {
+    const spacing = isMobile ? 0.95 : 2.5;
+    const startX = -((FOOTER_LINKS.length - 1) * spacing) / 2;
     return FOOTER_LINKS.map((link, i) => {
       return (
-        <group key={i} position={[i * (isMobile ? 0.95 : 2.5), 0, 0]}>
+        <group key={i} position={[startX + i * spacing, 0, 0]}>
           <FooterLinkItem link={link} onToast={handleToast} />
         </group>
       );
@@ -196,7 +200,7 @@ const Footer = () => {
   return (
     <>
       <group position={[0, -44, 18]} rotation={[-Math.PI / 2, 0, 0]} ref={groupRef}>
-        <group position={[isMobile ? -1.425 : -3.75, 0, 0]}>
+        <group position={[0, 0, 0]}>
           {getLinks()}
         </group>
       </group>
@@ -231,6 +235,7 @@ const Footer = () => {
   );
 };
 
+useTexture.preload('/icons/call.svg');
 useTexture.preload('/icons/linkedin.svg');
 useTexture.preload('/icons/github.svg');
 useTexture.preload('/icons/gmail.svg');
