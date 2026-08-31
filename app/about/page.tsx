@@ -183,7 +183,7 @@ const ABOUT_SECTIONS = [
     title: "MY JOURNEY",
     subtitle: "How It All Started",
     text: [
-      "My passion for technology began with Minecraft — tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, graphics programming, and e-commerce infrastructure.",
+      "My passion for technology began with Minecraft - tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, graphics programming, and e-commerce infrastructure.",
       "Today, I co-found digital brands and build high-performance web applications that bridge intuitive design with robust software architecture."
     ]
   },
@@ -221,10 +221,10 @@ export default function AboutPage() {
           !document.hidden &&
           document.hasFocus()
         ) {
-          window.scrollBy({ top: 1, behavior: 'auto' });
+          window.scrollBy({ top: 2, behavior: 'auto' });
         }
-      }, 40);
-    }, 15000);
+      }, 20);
+    }, 10000);
 
     const handleInteract = () => {
       isAutoScrollingRef.current = false;

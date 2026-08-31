@@ -185,7 +185,7 @@ const GridTile = (props: GridTileProps) => {
     <mesh ref={gridRef}
       position={position}
       // The parent Experience group stays .visible=false until scrolled into range, and a
-      // real render pass (with this tile in-frustum) never happens before then — which is
+      // real render pass (with this tile in-frustum) never happens before then - which is
       // what the portal's inner content (see MeshPortalMaterial's useIntersect) needs to
       // compile its shaders/upload its textures. frustumCulled=false, combined with the
       // brief forced-visible warmup in Experience's useFrame, lets that first real render

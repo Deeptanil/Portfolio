@@ -95,10 +95,10 @@ export default function WorkPage() {
           !document.hidden &&
           document.hasFocus()
         ) {
-          window.scrollBy({ top: 1, behavior: 'auto' });
+          window.scrollBy({ top: 2, behavior: 'auto' });
         }
-      }, 40);
-    }, 15000);
+      }, 20);
+    }, 5000);
 
     const handleInteract = () => {
       isAutoScrollingRef.current = false;

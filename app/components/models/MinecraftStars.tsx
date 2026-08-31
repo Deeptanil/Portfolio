@@ -34,11 +34,12 @@ const MinecraftStars = () => {
   }, [count]);
 
   // Each star's local transform (position/scale/rotation, looking at the origin) never
-  // changes after creation — only the whole field's position (tracks camera) and slow
-  // group rotation change per frame. This used to rebuild all 1000 instance matrices from
-  // scratch every single frame for an identical result every time; instead, compute them
+  // changes after creation - only the whole field's position (tracks camera) and slow
+  // rotation are updated per frame.
+  // Using explicit geometries avoids unnecessary CPU re-allocation on theme switch (no mesh
+  // remount - important since the mesh unmounts/remounts whenever the theme toggles) andstead, compute them
   // once per mesh instance (via this ref callback, which fires exactly once per mount/
-  // remount — important since the mesh unmounts/remounts whenever the theme toggles) and
+  // remount - important since the mesh unmounts/remounts whenever the theme toggles) and
   // just update position/rotation.y in useFrame.
   const setMeshRef = useCallback(
     (mesh: THREE.InstancedMesh | null) => {

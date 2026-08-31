@@ -149,7 +149,7 @@ const SoundToggle = () => {
       window.removeEventListener('touchend', handleFirstInteraction);
       window.removeEventListener('keydown', handleFirstInteraction);
     };
-  }, []); // empty dep — register once on mount only
+  }, []); // empty dep - register once on mount only
 
   const isAboutOrWork = pathname === '/about' || pathname === '/work';
   const positionClass = isAboutOrWork

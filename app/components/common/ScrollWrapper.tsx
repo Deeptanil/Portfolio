@@ -8,7 +8,7 @@ import * as THREE from "three";
 import { useScrollStore } from "@stores";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
-// Shared "smoothly scroll to the very bottom" behavior — used both when returning from
+// Shared "smoothly scroll to the very bottom" behavior - used both when returning from
 // /about or /work with ?scroll=footer, and when a visitor clicks the "Skip to Portfolio"
 // button. If tab loses focus or is put in the background mid-scroll, it completes the scroll
 // instantly to the target position so it always finishes scrolling reliably.
@@ -139,7 +139,7 @@ const ScrollWrapper = (props: { children: React.ReactNode | React.ReactNode[] })
   }, [data, progress, isWarmedUp, prefersReducedMotion, setIsAutoScrolling]);
 
   useEffect(() => {
-    // Skip the initial mount value — only react to actual "Skip to Portfolio" presses
+    // Skip the initial mount value - only react to actual "Skip to Portfolio" presses
     if (skipToEndToken === skipTokenSeenRef.current) return;
     skipTokenSeenRef.current = skipToEndToken;
 

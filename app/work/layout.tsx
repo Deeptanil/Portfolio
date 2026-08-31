@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Structured data for search engines / AI crawlers — the actual page content lives inside a
+// Structured data for search engines / AI crawlers - the actual page content lives inside a
 // 'use client' component (app/work/page.tsx's WORK_EXPERIENCE array) and is only reliably
 // readable here as plain markup, so this mirrors it. Keep this in sync if that list changes.
 const jsonLd = {
