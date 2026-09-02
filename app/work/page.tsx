@@ -45,7 +45,7 @@ const WORK_EXPERIENCE = [
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
     buttonText: "Visit manipal.edu ↗",
     description: [
-      "Pursuing B.Tech in Information Technology with a focus on web performance, graphics programming, and software architecture.",
+      "Pursuing B.Tech in Information Technology with a focus on web performance, frontend engineering, and software architecture.",
       "Specializing in bridging frontend UX design with backend systems and digital product infrastructure."
     ]
   },
@@ -68,7 +68,7 @@ const WORK_EXPERIENCE = [
     skillsList: [
       {
         category: "Development:",
-        items: "JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Three.js / React Three Fiber, Git, GitHub, Supabase"
+        items: "JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Git, GitHub, Supabase"
       },
       {
         category: "Product & Design:",

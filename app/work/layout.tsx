@@ -45,7 +45,7 @@ const jsonLd = {
     "url": "https://www.coursera.org/professional-certificates/google-ux-design"
   },
   "knowsAbout": [
-    "JavaScript", "Next.js", "React", "Node.js", "Three.js / React Three Fiber",
+    "JavaScript", "Next.js", "React", "Node.js", "Frontend Engineering",
     "UI/UX Design", "Web Performance Optimization", "SEO", "E-commerce Architecture"
   ]
 };

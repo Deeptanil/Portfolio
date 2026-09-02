@@ -35,14 +35,14 @@ export const metadata: Metadata = {
     default: "Deeptanil Sinha | Product Engineer & Creative Technologist",
     template: "%s | Deeptanil Sinha",
   },
-  description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+  description: "Product Engineer, Designer & Builder crafting high-performance web applications, e-commerce platforms, mobile apps, and scalable full-stack software.",
   keywords: [
     "Deeptanil Sinha",
     "Product Engineer",
     "Creative Technologist",
     "Full-Stack Developer",
-    "WebGL Developer",
-    "Three.js Developer",
+    "Web Developer",
+    "Frontend Developer",
     "UI/UX Designer",
     "MIT Bengaluru",
     "Portfolio",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Deeptanil Sinha | Product Engineer & Creative Technologist",
-    description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+    description: "Product Engineer, Designer & Builder crafting high-performance web applications, e-commerce platforms, mobile apps, and scalable full-stack software.",
     url: baseUrl,
     siteName: "Deeptanil Sinha Portfolio",
     images: [
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Deeptanil Sinha | Product Engineer & Creative Technologist",
-    description: "Product Engineer, Designer & Builder crafting high-performance WebGL 3D web experiences, mobile apps, and scalable full-stack software.",
+    description: "Product Engineer, Designer & Builder crafting high-performance web applications, e-commerce platforms, mobile apps, and scalable full-stack software.",
     images: ['/Deeptanil.webp'],
     creator: "@deeptanil",
   },
@@ -133,8 +133,7 @@ export default function RootLayout({
     "alumniOf": "MIT Bengaluru",
     "knowsAbout": [
       "Product Engineering",
-      "WebGL",
-      "Three.js",
+      "Web Development",
       "Next.js",
       "React",
       "UI/UX Design",

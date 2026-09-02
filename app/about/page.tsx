@@ -183,7 +183,7 @@ const ABOUT_SECTIONS = [
     title: "MY JOURNEY",
     subtitle: "How It All Started",
     text: [
-      "My passion for technology began with Minecraft - tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, graphics programming, and e-commerce infrastructure.",
+      "My passion for technology began with Minecraft - tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, modern frontend architecture, and e-commerce infrastructure.",
       "Today, I co-found digital brands and build high-performance web applications that bridge intuitive design with robust software architecture."
     ]
   },
@@ -191,7 +191,7 @@ const ABOUT_SECTIONS = [
     title: "WHAT DRIVES ME",
     subtitle: "Product Thinking & Execution",
     text: [
-      "I believe great software lives at the intersection of speed, simplicity, and delight. Whether optimizing 3D web graphics to run smoothly on mobile devices or crafting seamless e-commerce checkout flows, I focus on shipping products that deliver measurable real-world impact."
+      "I believe great software lives at the intersection of speed, simplicity, and delight. Whether optimizing web performance to run smoothly across all devices or crafting seamless e-commerce checkout flows, I focus on shipping products that deliver measurable real-world impact."
     ]
   },
   {
