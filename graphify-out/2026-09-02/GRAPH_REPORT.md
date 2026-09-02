@@ -1,11 +1,11 @@
 # Graph Report - Portfolio  (2026-09-02)
 
 ## Corpus Check
-- 55 files · ~39,891 words
+- 56 files · ~39,909 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 229 nodes · 321 edges · 24 communities (13 shown, 11 thin omitted)
+- 230 nodes · 329 edges · 25 communities (14 shown, 11 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
@@ -22,6 +22,7 @@
 - about/page.tsx
 - useIsMobile
 - assetPreloader.ts
+- Scene.tsx
 - include
 - package.json
 - app/layout.tsx
@@ -44,32 +45,32 @@
 3. `useIsMobile()` - 15 edges
 4. `useThemeStore` - 15 edges
 5. `usePrefersReducedMotion()` - 10 edges
-6. `include` - 7 edges
-7. `ScrollWrapper()` - 5 edges
-8. `Experience()` - 5 edges
-9. `usePortalStore` - 5 edges
-10. `scripts` - 5 edges
+6. `copyTextToClipboard()` - 8 edges
+7. `include` - 7 edges
+8. `ScrollWrapper()` - 5 edges
+9. `Experience()` - 5 edges
+10. `usePortalStore` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `ScrollWrapper()` --calls--> `usePrefersReducedMotion()`  [EXTRACTED]
+  app/components/common/ScrollWrapper.tsx → app/hooks/usePrefersReducedMotion.ts
 - `ScrollWrapper()` --calls--> `useScrollStore`  [EXTRACTED]
   app/components/common/ScrollWrapper.tsx → app/stores/scrollStore.ts
 - `Experience()` --calls--> `useScrollStore`  [EXTRACTED]
   app/components/experience/index.tsx → app/stores/scrollStore.ts
 - `FooterLinkItem()` --calls--> `useIsMobile()`  [EXTRACTED]
   app/components/footer/index.tsx → app/hooks/useIsMobile.ts
-- `SkipButton3D()` --calls--> `useScrollStore`  [EXTRACTED]
-  app/components/hero/index.tsx → app/stores/scrollStore.ts
-- `AboutPage()` --calls--> `usePrefersReducedMotion()`  [EXTRACTED]
-  app/about/page.tsx → app/hooks/usePrefersReducedMotion.ts
+- `FooterLinkItem()` --calls--> `copyTextToClipboard()`  [EXTRACTED]
+  app/components/footer/index.tsx → app/utils/clipboard.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (24 total, 11 thin omitted)
+## Communities (25 total, 11 thin omitted)
 
 ### Community 0 - "hero/index.tsx"
 Cohesion: 0.12
-Nodes (22): CanvasLoader(), ProgressLoader(), ScrollHint(), SkipToPortfolioButton(), ThemeSwitcher(), WebGLWarmup(), WebGLWarmupProps, Hero() (+14 more)
+Nodes (21): CanvasLoader(), ProgressLoader(), ScrollHint(), SkipToPortfolioButton(), ThemeSwitcher(), WebGLWarmup(), WebGLWarmupProps, SkipButton3D() (+13 more)
 
 ### Community 1 - "compilerOptions"
 Cohesion: 0.08
@@ -84,12 +85,16 @@ Cohesion: 0.11
 Nodes (19): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node (+11 more)
 
 ### Community 4 - "about/page.tsx"
-Cohesion: 0.16
-Nodes (16): ABOUT_SECTIONS, AboutPage(), CREDITS, EmailButton(), preventOrphans(), runAutoScrollToBottom(), ScrollWrapper(), VideoBackground() (+8 more)
+Cohesion: 0.19
+Nodes (14): ABOUT_SECTIONS, AboutPage(), CREDITS, preventOrphans(), VideoBackground(), getServerSnapshot(), getSnapshot(), subscribe() (+6 more)
 
 ### Community 5 - "useIsMobile"
-Cohesion: 0.12
-Nodes (17): GridTile(), GridTileProps, Experience(), Projects(), Work(), Footer(), FooterLinkItem(), ToastState (+9 more)
+Cohesion: 0.26
+Nodes (11): GridTile(), GridTileProps, Experience(), Projects(), Work(), getServerSnapshot(), getSnapshot(), subscribe() (+3 more)
+
+### Community 7 - "Scene.tsx"
+Cohesion: 0.15
+Nodes (9): runAutoScrollToBottom(), ScrollWrapper(), Footer(), FooterLinkItem(), ToastState, Hero(), FOOTER_LINKS, Scene (+1 more)
 
 ### Community 8 - "include"
 Cohesion: 0.20
@@ -119,17 +124,17 @@ Nodes (3): AvailableThemes, Theme, ThemeStore
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useScrollStore` connect `hero/index.tsx` to `about/page.tsx`, `useIsMobile`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
   _High betweenness centrality (0.032) - this node is a cross-community bridge._
+- **Why does `useScrollStore` connect `hero/index.tsx` to `useIsMobile`, `Scene.tsx`?**
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `usePrefersReducedMotion()` connect `about/page.tsx` to `Scene.tsx`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `useIsMobile()` (e.g. with `getServerSnapshot()` and `getSnapshot()`) actually correct?**
   _`useIsMobile()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `metadata`, `CREDITS`, `ABOUT_SECTIONS` to the rest of the system?**
   _88 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `hero/index.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11522048364153627 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12012012012012012 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
-- **Should `dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._

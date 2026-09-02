@@ -18,6 +18,8 @@ interface ToastState {
 const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: string, x?: number, y?: number) => void }) => {
   const textRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isMobile = useIsMobile();
   const onPointerOver = () => setHovered(true);
   const onPointerOut = () => setHovered(false);
@@ -38,8 +40,23 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
     if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
-        onToast('Copied!', clientX, clientY);
       }
+      onToast('Copied Email Address!', clientX, clientY);
+
+      setCopied(true);
+      const hoverDiv = document.getElementById(`footer-link-${link.name}`);
+      if (hoverDiv) {
+        hoverDiv.textContent = 'COPIED!';
+      }
+
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        if (hoverDiv) {
+          hoverDiv.textContent = link.hoverText ?? link.name.toUpperCase();
+        }
+      }, 3000);
+
       window.location.href = 'mailto:deeptanilsinha27@gmail.com';
       return;
     }
@@ -108,10 +125,10 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
 
     const hoverDiv = document.getElementById(`footer-link-${link.name}`);
 
-    if (hovered) {
-      gsap.fromTo(hoverDiv, { opacity: 0 }, { opacity: 0.8, delay: 0.1 });
+    if (hovered || copied) {
+      gsap.fromTo(hoverDiv, { opacity: 0 }, { opacity: 0.9, duration: 0.2 });
     } else {
-      gsap.to(hoverDiv, { opacity: 0 });
+      gsap.to(hoverDiv, { opacity: 0, duration: 0.2 });
     }
 
     if (textRef.current) {
@@ -125,7 +142,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       if (hoverDiv) gsap.killTweensOf(hoverDiv);
       if (textRef.current) gsap.killTweensOf(textRef.current);
     };
-  }, [hovered, link.name, isMobile]);
+  }, [hovered, copied, link.name, isMobile]);
 
   useCursor(hovered);
 
@@ -174,7 +191,7 @@ const Footer = () => {
     setToast({ message: msg, x, y });
     setTimeout(() => {
       setToast(null);
-    }, 2000);
+    }, 3000);
   };
 
   useFrame(() => {

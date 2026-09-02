@@ -6,6 +6,7 @@
   "4": "about/page.tsx",
   "5": "useIsMobile",
   "6": "assetPreloader.ts",
+  "7": "Scene.tsx",
   "8": "include",
   "9": "package.json",
   "10": "app/layout.tsx",

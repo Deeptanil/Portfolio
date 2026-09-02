@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import VideoBackground from '../components/common/VideoBackground';
 
@@ -9,6 +9,49 @@ function preventOrphans(str: string): string {
   const lastSpaceIndex = str.lastIndexOf(' ');
   if (lastSpaceIndex === -1) return str;
   return str.slice(0, lastSpaceIndex) + '\u00A0' + str.slice(lastSpaceIndex + 1);
+}
+
+function EmailButton() {
+  const [copied, setCopied] = useState(false);
+
+  const handleClick = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+    }
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
+
+  return (
+    <div className="relative inline-block">
+      <a
+        href="mailto:deeptanilsinha27@gmail.com"
+        onClick={handleClick}
+        className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+        style={{
+          backgroundColor: '#707070',
+          border: '2px solid #000000',
+          outline: 'none',
+          boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+          fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+          textShadow: '2px 2px 0px #373737',
+          imageRendering: 'pixelated',
+        }}
+      >
+        <span>{preventOrphans(copied ? "Copied Email Address!" : "Email Me ↗")}</span>
+      </a>
+      {copied && (
+        <div
+          className="absolute left-1/2 -top-10 -translate-x-1/2 px-3 py-1 bg-[#3c3c3c]/95 text-[#ffff55] border-2 border-black font-minecraft-regular text-xs tracking-wider uppercase select-none shadow-[inset_-2px_-2px_0px_0px_#262626,inset_2px_2px_0px_0px_#8b8b8b] animate-bounce whitespace-nowrap pointer-events-none z-50"
+          style={{ textShadow: '1px 1px 0px #000000' }}
+        >
+          Copied Email Address!
+        </div>
+      )}
+    </div>
+  );
 }
 
 const WORK_EXPERIENCE = [
@@ -329,21 +372,7 @@ export default function WorkPage() {
             >
               <span>{preventOrphans("WhatsApp Chat ↗")}</span>
             </a>
-            <a
-              href="mailto:deeptanilsinha27@gmail.com"
-              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
-              style={{
-                backgroundColor: '#707070',
-                border: '2px solid #000000',
-                outline: 'none',
-                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
-                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
-                textShadow: '2px 2px 0px #373737',
-                imageRendering: 'pixelated',
-              }}
-            >
-              <span>{preventOrphans("Email Me ↗")}</span>
-            </a>
+            <EmailButton />
           </div>
           <p
             className="text-white text-xs sm:text-sm tracking-widest uppercase font-minecraft-regular opacity-80"
