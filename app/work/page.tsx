@@ -14,15 +14,15 @@ function preventOrphans(str: string): string {
 const WORK_EXPERIENCE = [
   {
     title: "PRETTIVA & CO.",
-    subtitle: "Co-Founder & Digital Director",
+    subtitle: "Co-Founder & Lead Engineer",
     date: "2026 - PRESENT",
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co ↗",
     screenshot: "/prettiva-screenshot.webp",
     description: [
-      "Built and optimized a 45+ product e-commerce platform with 12K+ monthly visitors.",
-      "Achieved a 100/100 PageSpeed SEO score with sub-second page loading speeds.",
-      "Engineered high-converting storefront UI/UX, product catalog systems, and analytics funnels."
+      "Architected and deployed a 45+ product e-commerce storefront handling 12K+ monthly active visitors using Next.js & React.",
+      "Achieved a 100/100 Google PageSpeed SEO score with sub-second TTFB through image optimization and server-side rendering.",
+      "Engineered high-converting product catalog systems, custom analytics funnels, and responsive UI components."
     ]
   },
   {
@@ -33,9 +33,9 @@ const WORK_EXPERIENCE = [
     buttonText: "Visit strayed.in ↗",
     screenshot: "/strayed-screenshot.webp",
     description: [
-      "Architected and built a custom e-commerce platform from scratch with 90% lower load times.",
-      "Integrated secure payment gateways, cloud hosting infrastructure, order fulfillment, coupons, and customer loyalty rewards.",
-      "Utilized AI-assisted engineering and modern web technology stacks to scale brand operations."
+      "Built a custom e-commerce web platform from scratch, reducing overall page load latency by 90% compared to legacy templates.",
+      "Integrated secure payment gateways, automated order fulfillment systems, coupon engine, and customer loyalty workflows.",
+      "Leveraged modern web stacks (TypeScript, Next.js, Node.js, Supabase) and AI-assisted workflows to ship production features rapidly."
     ]
   },
   {
@@ -45,8 +45,8 @@ const WORK_EXPERIENCE = [
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
     buttonText: "Visit manipal.edu ↗",
     description: [
-      "Pursuing B.Tech in Information Technology with a focus on web performance, frontend engineering, and software architecture.",
-      "Specializing in bridging frontend UX design with backend systems and digital product infrastructure."
+      "Pursuing B.Tech in IT focusing on Data Structures & Algorithms, Web Systems Architecture, and Full-Stack Engineering.",
+      "Maintaining strong academic performance while building real-world digital products and scalable web applications."
     ]
   },
   {
@@ -56,8 +56,8 @@ const WORK_EXPERIENCE = [
     url: "https://www.coursera.org/professional-certificates/google-ux-design",
     buttonText: "View Course ↗",
     description: [
-      "Currently pursuing professional certification in end-to-end UX research, wireframing, prototyping, and usability testing.",
-      "Applying human-centered design principles to modern web applications and e-commerce platforms."
+      "Currently pursuing professional certification in end-to-end UX research, wireframing, high-fidelity prototyping, and usability testing.",
+      "Applying human-centered design principles and accessibility standards to modern web applications."
     ]
   },
   {
@@ -67,12 +67,12 @@ const WORK_EXPERIENCE = [
     description: [],
     skillsList: [
       {
-        category: "Development:",
-        items: "JavaScript, HTML5, CSS3, C, Python, Java, Next.js, React, Node.js, Git, GitHub, Supabase"
+        category: "Languages & Frameworks:",
+        items: "JavaScript, TypeScript, Next.js, React, Node.js, HTML5, CSS3/Tailwind CSS, C, Python, Java, Supabase, REST APIs"
       },
       {
-        category: "Product & Design:",
-        items: "UI/UX Design, Web Performance Optimization, SEO, E-commerce Architecture, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+        category: "Engineering & Design:",
+        items: "Full-Stack Architecture, Web Performance & SEO, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
       }
     ]
   }
@@ -306,7 +306,47 @@ export default function WorkPage() {
         {/* End Credits Footer Note */}
         <div className="pt-16 sm:pt-24 space-y-6 text-center pb-16">
           <p
-            className="text-white text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular opacity-80"
+            className="text-[#ffff55] text-xs sm:text-sm tracking-widest uppercase pt-4 font-minecraft-regular"
+            style={{ textShadow: '2px 2px 0px #000000' }}
+          >
+            {preventOrphans("Open to Software Engineering Internships • Remote / Hybrid (Bengaluru, India)")}
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <a
+              href="https://wa.me/917760343724?text=Hi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("WhatsApp Chat ↗")}</span>
+            </a>
+            <a
+              href="mailto:deeptanilsinha27@gmail.com"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("Email Me ↗")}</span>
+            </a>
+          </div>
+          <p
+            className="text-white text-xs sm:text-sm tracking-widest uppercase font-minecraft-regular opacity-80"
             style={{ textShadow: '1px 1px 0px #000000' }}
           >
             [End of Document]

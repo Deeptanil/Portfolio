@@ -181,25 +181,25 @@ function CreditsPopup() {
 const ABOUT_SECTIONS = [
   {
     title: "MY JOURNEY",
-    subtitle: "How It All Started",
+    subtitle: "Full-Stack Product Engineer",
     text: [
-      "My passion for technology began with Minecraft - tweaking configs, managing servers, and crafting custom experiences. That early curiosity naturally evolved into building full-stack web applications, modern frontend architecture, and e-commerce infrastructure.",
-      "Today, I co-found digital brands and build high-performance web applications that bridge intuitive design with robust software architecture."
+      "I'm a Product Engineer studying Information Technology at MIT Bengaluru ('28). My passion for technology began with Minecraft - tweaking server configs and crafting custom scripts, which evolved into building production web applications and scalable e-commerce infrastructure.",
+      "Today, I build high-performance web applications, co-found digital brands, and bridge intuitive UX design with robust full-stack software architecture."
     ]
   },
   {
     title: "WHAT DRIVES ME",
-    subtitle: "Product Thinking & Execution",
+    subtitle: "Performance, Simplicity & Scale",
     text: [
-      "I believe great software lives at the intersection of speed, simplicity, and delight. Whether optimizing web performance to run smoothly across all devices or crafting seamless e-commerce checkout flows, I focus on shipping products that deliver measurable real-world impact."
+      "I believe great software lives at the intersection of speed, simplicity, and delight. Whether optimizing web performance to achieve sub-second page loads, architecting secure payment flows, or crafting responsive interfaces, I focus on shipping products that deliver measurable real-world impact."
     ]
   },
   {
     title: "CURRENT FOCUS",
-    subtitle: "Building & Scaling",
+    subtitle: "Open to Engineering Opportunities",
     text: [
       "Pursuing B.Tech in Information Technology at Manipal Institute of Technology, Bengaluru ('28), while co-founding Prettiva & Co. and Strayed.in.",
-      "Looking for Remote positions or Hybrid roles in Bengaluru, India."
+      "Actively looking for Software Engineering Internships and Full-Stack / Frontend Roles (Remote or Hybrid in Bengaluru, India)."
     ]
   }
 ];
@@ -369,6 +369,40 @@ export default function AboutPage() {
           >
             {preventOrphans("Open to Internships • Remote / Hybrid (Bengaluru, India)")}
           </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <a
+              href="https://wa.me/917760343724?text=Hi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("WhatsApp Chat ↗")}</span>
+            </a>
+            <a
+              href="mailto:deeptanilsinha27@gmail.com"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("Email Me ↗")}</span>
+            </a>
+          </div>
           <div className="pt-4">
             <CreditsPopup />
           </div>
