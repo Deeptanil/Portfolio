@@ -40,7 +40,7 @@ function EmailButton() {
           imageRendering: 'pixelated',
         }}
       >
-        <span>{preventOrphans(copied ? "Copied Email Address!" : "Email Me ↗")}</span>
+        <span>{preventOrphans(copied ? "Copied Email Address!" : "Email Me")}</span>
       </a>
       {copied && (
         <div
@@ -60,7 +60,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Co-Founder & Lead Engineer",
     date: "2026 - PRESENT",
     url: "https://prettiva.co",
-    buttonText: "Visit prettiva.co ↗",
+    buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
     description: [
       "Architected and deployed a 45+ product e-commerce storefront handling 12K+ monthly active visitors using Next.js & React.",
@@ -73,7 +73,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Co-Founder & Technical Director",
     date: "2025 - PRESENT",
     url: "https://strayed.in",
-    buttonText: "Visit strayed.in ↗",
+    buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
     description: [
       "Built a custom e-commerce web platform from scratch, reducing overall page load latency by 90% compared to legacy templates.",
@@ -86,7 +86,7 @@ const WORK_EXPERIENCE = [
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
-    buttonText: "Visit manipal.edu ↗",
+    buttonText: "Visit manipal.edu",
     description: [
       "Pursuing B.Tech in IT focusing on Data Structures & Algorithms, Web Systems Architecture, and Full-Stack Engineering.",
       "Maintaining strong academic performance while building real-world digital products and scalable web applications."
@@ -97,7 +97,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
     url: "https://www.coursera.org/professional-certificates/google-ux-design",
-    buttonText: "View Course ↗",
+    buttonText: "View Course",
     description: [
       "Currently pursuing professional certification in end-to-end UX research, wireframing, high-fidelity prototyping, and usability testing.",
       "Applying human-centered design principles and accessibility standards to modern web applications."
@@ -212,11 +212,11 @@ export default function WorkPage() {
       {/* Video Background with dirt fallback */}
       <VideoBackground />
 
-      {/* Minecraft UI Return Button with standardized responsive proportions matching Minecraft main menu */}
-      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
+      {/* Minecraft UI Return Button & Navigation matching Minecraft main menu style */}
+      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 flex flex-wrap items-center gap-2 sm:gap-3">
         <Link
           href="/?scroll=footer"
-          className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[200px] h-[38px] sm:h-[44px] px-5 sm:px-7 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[180px] h-[38px] sm:h-[44px] px-4 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
             backgroundColor: '#707070',
             border: '2px solid #000000',
@@ -228,6 +228,21 @@ export default function WorkPage() {
           }}
         >
           <span>{preventOrphans("Return to world")}</span>
+        </Link>
+        <Link
+          href="/about"
+          className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[180px] h-[38px] sm:h-[44px] px-4 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          style={{
+            backgroundColor: '#707070',
+            border: '2px solid #000000',
+            outline: 'none',
+            boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+            fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+            textShadow: '2px 2px 0px #373737',
+            imageRendering: 'pixelated',
+          }}
+        >
+          <span>{preventOrphans("About Me")}</span>
         </Link>
       </div>
 
@@ -339,7 +354,7 @@ export default function WorkPage() {
                     imageRendering: 'pixelated',
                   }}
                 >
-                  <span>{preventOrphans(item.buttonText || "Visit Website ↗")}</span>
+                  <span>{preventOrphans(item.buttonText || "Visit Website")}</span>
                 </a>
               </div>
             )}
@@ -355,6 +370,21 @@ export default function WorkPage() {
             {preventOrphans("Open to Software Engineering Internships • Remote / Hybrid (Bengaluru, India)")}
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("About Me")}</span>
+            </Link>
             <a
               href="https://wa.me/917760343724?text=Hi"
               target="_blank"
@@ -370,7 +400,7 @@ export default function WorkPage() {
                 imageRendering: 'pixelated',
               }}
             >
-              <span>{preventOrphans("WhatsApp Chat ↗")}</span>
+              <span>{preventOrphans("WhatsApp Chat")}</span>
             </a>
             <EmailButton />
           </div>

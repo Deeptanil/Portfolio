@@ -83,7 +83,7 @@ function EmailButton() {
           imageRendering: 'pixelated',
         }}
       >
-        <span>{preventOrphans(copied ? "Copied Email Address!" : "Email Me ↗")}</span>
+        <span>{preventOrphans(copied ? "Copied Email Address!" : "Email Me")}</span>
       </a>
       {copied && (
         <div
@@ -338,11 +338,11 @@ export default function AboutPage() {
       {/* Video Background with dirt fallback */}
       <VideoBackground />
 
-      {/* Minecraft UI Return Button with standardized responsive proportions matching Minecraft main menu */}
-      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
+      {/* Minecraft UI Return Button & Navigation matching Minecraft main menu style */}
+      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 flex flex-wrap items-center gap-2 sm:gap-3">
         <Link
           href="/?scroll=footer"
-          className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[200px] h-[38px] sm:h-[44px] px-5 sm:px-7 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[180px] h-[38px] sm:h-[44px] px-4 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
           style={{
             backgroundColor: '#707070',
             border: '2px solid #000000',
@@ -354,6 +354,21 @@ export default function AboutPage() {
           }}
         >
           <span>{preventOrphans("Return to world")}</span>
+        </Link>
+        <Link
+          href="/work"
+          className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[180px] h-[38px] sm:h-[44px] px-4 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+          style={{
+            backgroundColor: '#707070',
+            border: '2px solid #000000',
+            outline: 'none',
+            boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+            fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+            textShadow: '2px 2px 0px #373737',
+            imageRendering: 'pixelated',
+          }}
+        >
+          <span>{preventOrphans("Work & Projects")}</span>
         </Link>
       </div>
 
@@ -413,6 +428,21 @@ export default function AboutPage() {
             {preventOrphans("Open to Internships • Remote / Hybrid (Bengaluru, India)")}
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/work"
+              className="inline-flex items-center justify-center min-w-[150px] h-[38px] px-5 select-none font-minecraft-regular text-xs text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+              style={{
+                backgroundColor: '#707070',
+                border: '2px solid #000000',
+                outline: 'none',
+                boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                textShadow: '2px 2px 0px #373737',
+                imageRendering: 'pixelated',
+              }}
+            >
+              <span>{preventOrphans("Work & Projects")}</span>
+            </Link>
             <a
               href="https://wa.me/917760343724?text=Hi"
               target="_blank"
@@ -428,7 +458,7 @@ export default function AboutPage() {
                 imageRendering: 'pixelated',
               }}
             >
-              <span>{preventOrphans("WhatsApp Chat ↗")}</span>
+              <span>{preventOrphans("WhatsApp Chat")}</span>
             </a>
             <EmailButton />
           </div>
