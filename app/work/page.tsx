@@ -88,8 +88,8 @@ export default function WorkPage() {
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    // 90px/s provides smooth, responsive chronicle auto-scroll
-    const SPEED_PX_PER_SEC = 90;
+    // 40px/s provides smooth, comfortable chronicle auto-scroll
+    const SPEED_PX_PER_SEC = 40;
 
     const stopAutoScroll = () => {
       isAutoScrollingRef.current = false;
