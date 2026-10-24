@@ -259,11 +259,11 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
-    title: "EATOPIA",
+    title: "PLATTER",
     subtitle: "Lead Mobile Architect & Product Designer",
     date: "2026 • FEATURED MOBILE APP",
-    url: "https://eatopia.deeptanil.in/",
-    buttonText: "Visit eatopia.deeptanil.in",
+    url: "https://platter.deeptanil.in/",
+    buttonText: "Visit platter.deeptanil.in",
     tags: ["MOBILE APP", "FOODTECH UX", "REACT NATIVE", "EXPO 57", "GLASSMORPHISM"],
     description: [
       "Architected a 13-screen mobile culinary discovery app on React Native 0.86, React 19, and Expo SDK 57 featuring fluid 60fps UI-thread animations via Reanimated and Native Stack transitions.",
