@@ -66,24 +66,171 @@ interface WorkItem {
   url?: string;
   buttonText?: string;
   screenshot?: string;
+  screenshots?: string[];
   tags?: string[];
   description: string[];
   skillsList?: SkillCategory[];
 }
 
+function ProjectGallery({ images, title }: { images: string[]; title: string }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  if (!images || images.length === 0) return null;
+
+  if (images.length === 1) {
+    return (
+      <div className="pt-2">
+        <img
+          src={images[0]}
+          alt={`Screenshot of the ${title} project`}
+          className="w-full h-auto"
+          style={{
+            border: '9px solid #3b2415',
+            boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
+          }}
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  const scrollTo = (index: number) => {
+    if (!scrollRef.current) return;
+    const targetIndex = (index + images.length) % images.length;
+    const width = scrollRef.current.clientWidth;
+    scrollRef.current.scrollTo({
+      left: targetIndex * width,
+      behavior: 'smooth',
+    });
+    setCurrentIndex(targetIndex);
+  };
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    if (clientWidth > 0) {
+      const newIndex = Math.round(scrollLeft / clientWidth);
+      if (newIndex !== currentIndex && newIndex >= 0 && newIndex < images.length) {
+        setCurrentIndex(newIndex);
+      }
+    }
+  };
+
+  return (
+    <div className="pt-2 w-full space-y-2">
+      {/* 1 image at a time scrolling container */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          border: '9px solid #3b2415',
+          boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
+        }}
+      >
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {images.map((src, i) => (
+            <div key={i} className="w-full flex-shrink-0 snap-center">
+              <img
+                src={src}
+                alt={`Screenshot ${i + 1} of ${title}`}
+                className="w-full h-auto block"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Overlay Navigation Arrows */}
+        <button
+          type="button"
+          onClick={() => scrollTo(currentIndex - 1)}
+          aria-label="Previous image"
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
+          style={{
+            backgroundColor: 'rgba(112, 112, 112, 0.9)',
+            border: '2px solid #000000',
+            boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+            textShadow: '1px 1px 0px #000000',
+          }}
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollTo(currentIndex + 1)}
+          aria-label="Next image"
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
+          style={{
+            backgroundColor: 'rgba(112, 112, 112, 0.9)',
+            border: '2px solid #000000',
+            boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+            textShadow: '1px 1px 0px #000000',
+          }}
+        >
+          ›
+        </button>
+      </div>
+
+      {/* Retro Pixel Slide Counter & Indicator */}
+      <div className="flex items-center justify-center gap-3 pt-1">
+        <button
+          type="button"
+          onClick={() => scrollTo(currentIndex - 1)}
+          className="px-2.5 py-1 font-minecraft-regular text-[10px] sm:text-xs text-white hover:text-[#ffff55] bg-[#4a4a4a] border border-black cursor-pointer shadow-[inset_1px_1px_0px_#8b8b8b,inset_-1px_-1px_0px_#262626]"
+          style={{ textShadow: '1px 1px 0px #000000' }}
+        >
+          PREV
+        </button>
+        <span
+          className="font-minecraft-regular text-xs text-[#ffff55] tracking-widest uppercase select-none"
+          style={{ textShadow: '1px 1px 0px #000000' }}
+        >
+          [ {currentIndex + 1} / {images.length} ]
+        </span>
+        <button
+          type="button"
+          onClick={() => scrollTo(currentIndex + 1)}
+          className="px-2.5 py-1 font-minecraft-regular text-[10px] sm:text-xs text-white hover:text-[#ffff55] bg-[#4a4a4a] border border-black cursor-pointer shadow-[inset_1px_1px_0px_#8b8b8b,inset_-1px_-1px_0px_#262626]"
+          style={{ textShadow: '1px 1px 0px #000000' }}
+        >
+          NEXT
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const WORK_EXPERIENCE: WorkItem[] = [
   {
     title: "PRETTIVA & CO.",
-    subtitle: "Co-Founder & Lead Engineer",
+    subtitle: "Co-Founder & Digital Director",
     date: "2026 - PRESENT",
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
-    tags: ["WEB APPLICATION", "E-COMMERCE", "FULL-STACK", "PERFORMANCE & SEO"],
+    tags: ["E-COMMERCE", "ODOO ERP", "CUSTOM FRONTEND", "PERFORMANCE & SEO"],
     description: [
-      "Architected and deployed a 45+ product e-commerce storefront handling 12K+ monthly active visitors using Next.js & React.",
-      "Achieved a 100/100 Google PageSpeed SEO score with sub-second TTFB through image optimization and server-side rendering.",
-      "Engineered high-converting product catalog systems, custom analytics funnels, and responsive UI components."
+      "Engineered and launched a 45+ product commercial e-commerce storefront on Odoo ERP handling 12K+ monthly active visitors.",
+      "Authored custom embedded frontend code, styling overrides, and interactive components to overcome rigid Odoo template restrictions.",
+      "Optimized catalog browsing, conversion funnels, and image delivery to secure a 100/100 Google PageSpeed SEO score with sub-second TTFB."
+    ],
+    skillsList: [
+      {
+        category: "Platform & Frontend Customization:",
+        items: "Odoo ERP, Embedded Frontend Code (HTML5 / CSS3 / JavaScript), Template Architecture Overrides, Custom Component Injection"
+      },
+      {
+        category: "Performance & Storefront Operations:",
+        items: "100/100 PageSpeed SEO, High-Converting Catalog Architecture, Analytics Tracking, 12K+ Monthly Active Visitors"
+      }
     ]
   },
   {
@@ -115,6 +262,8 @@ const WORK_EXPERIENCE: WorkItem[] = [
     title: "EATOPIA",
     subtitle: "Lead Mobile Architect & Product Designer",
     date: "2026 • FEATURED MOBILE APP",
+    url: "https://eatopia.deeptanil.in/",
+    buttonText: "Visit eatopia.deeptanil.in",
     tags: ["MOBILE APP", "FOODTECH UX", "REACT NATIVE", "EXPO 57", "GLASSMORPHISM"],
     description: [
       "Architected a 13-screen mobile culinary discovery app on React Native 0.86, React 19, and Expo SDK 57 featuring fluid 60fps UI-thread animations via Reanimated and Native Stack transitions.",
@@ -165,7 +314,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     skillsList: [
       {
         category: "Languages & Frameworks:",
-        items: "JavaScript, TypeScript, React, React Native, Next.js 15, Node.js, Expo, Medusa v2, HTML5, CSS3/Tailwind CSS, PostgreSQL, Redis, Supabase, C, Python, Java, REST APIs"
+        items: "JavaScript, TypeScript, React, React Native, Next.js 15, Node.js, Expo, Medusa v2, Odoo ERP, HTML5, CSS3/Tailwind CSS, PostgreSQL, Redis, Supabase, C, Python, Java, REST APIs"
       },
       {
         category: "Engineering, Cloud & Design:",
@@ -353,21 +502,17 @@ export default function WorkPage() {
                 ))}
               </div>
             )}
-            {/* Live site screenshot with half-width brown border (9px) */}
-            {item.screenshot && (
-              <div className="pt-2">
-                <img
-                  src={item.screenshot}
-                  alt={`Screenshot of the ${item.title} website homepage`}
-                  className="w-full h-auto"
-                  style={{
-                    border: '9px solid #3b2415',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
-                  }}
-                  loading="lazy"
-                />
-              </div>
-            )}
+            {/* Project Screenshot / Multi-Image Scrolling Showcase */}
+            <ProjectGallery
+              images={
+                item.screenshots && item.screenshots.length > 0
+                  ? item.screenshots
+                  : item.screenshot
+                  ? [item.screenshot]
+                  : []
+              }
+              title={item.title}
+            />
             {item.description && item.description.length > 0 && (
               <div className="space-y-4 pt-2">
                 {item.description.map((line, lIdx) => (

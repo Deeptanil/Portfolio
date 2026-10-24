@@ -1,16 +1,16 @@
 # Graph Report - Portfolio  (2026-10-24)
 
 ## Corpus Check
-- 55 files · ~40,407 words
+- 55 files · ~40,986 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 231 nodes · 323 edges · 24 communities (13 shown, 11 thin omitted)
+- 232 nodes · 324 edges · 24 communities (13 shown, 11 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5db6f226`
+- Built from commit: `9f6795df`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,7 @@
 - compilerOptions
 - dependencies
 - devDependencies
-- about/page.tsx
+- work/page.tsx
 - useIsMobile
 - assetPreloader.ts
 - Scene.tsx
@@ -83,7 +83,7 @@ Nodes (23): @gsap/react, next, dependencies, gsap, @gsap/react, next, react, rea
 Cohesion: 0.11
 Nodes (19): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node (+11 more)
 
-### Community 4 - "about/page.tsx"
+### Community 4 - "work/page.tsx"
 Cohesion: 0.14
 Nodes (18): ABOUT_SECTIONS, AboutPage(), CREDITS, EmailButton(), preventOrphans(), runAutoScrollToBottom(), ScrollWrapper(), VideoBackground() (+10 more)
 
@@ -119,10 +119,10 @@ Nodes (3): Deploy on Vercel, Getting Started, Learn More
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `useScrollStore` connect `hero/index.tsx` to `about/page.tsx`, `useIsMobile`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `useScrollStore` connect `hero/index.tsx` to `work/page.tsx`, `useIsMobile`?**
+  _High betweenness centrality (0.037) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `useIsMobile()` (e.g. with `getServerSnapshot()` and `getSnapshot()`) actually correct?**
   _`useIsMobile()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `metadata`, `CREDITS`, `ABOUT_SECTIONS` to the rest of the system?**

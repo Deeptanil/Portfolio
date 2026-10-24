@@ -45,7 +45,7 @@ const jsonLd = {
     "url": "https://www.coursera.org/professional-certificates/google-ux-design"
   },
   "knowsAbout": [
-    "JavaScript", "TypeScript", "React", "React Native", "Expo", "Next.js", "Node.js", "Medusa.js", "Docker", "PostgreSQL", "Redis",
+    "JavaScript", "TypeScript", "React", "React Native", "Expo", "Next.js", "Node.js", "Medusa.js", "Odoo ERP", "Docker", "PostgreSQL", "Redis",
     "Mobile App Development", "Frontend Engineering", "UI/UX Design", "Web Performance Optimization", "SEO", "Headless E-commerce Architecture"
   ]
 };
