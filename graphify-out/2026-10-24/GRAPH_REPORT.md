@@ -1,16 +1,16 @@
-# Graph Report - Portfolio  (2026-09-02)
+# Graph Report - Portfolio  (2026-10-24)
 
 ## Corpus Check
-- 55 files · ~39,891 words
+- 55 files · ~40,407 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 229 nodes · 321 edges · 24 communities (13 shown, 11 thin omitted)
+- 231 nodes · 323 edges · 24 communities (13 shown, 11 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `de2fd2d8`
+- Built from commit: `5db6f226`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,6 +22,7 @@
 - about/page.tsx
 - useIsMobile
 - assetPreloader.ts
+- Scene.tsx
 - include
 - package.json
 - app/layout.tsx
@@ -36,7 +37,6 @@
 - workflows/graphify.md
 - CLAUDE.md
 - copilot-instructions.md
-- themeStore.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `useScrollStore` - 17 edges
@@ -51,16 +51,16 @@
 10. `scripts` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `FooterLinkItem()` --calls--> `useIsMobile()`  [EXTRACTED]
+  app/components/footer/index.tsx → app/hooks/useIsMobile.ts
 - `ScrollWrapper()` --calls--> `useScrollStore`  [EXTRACTED]
   app/components/common/ScrollWrapper.tsx → app/stores/scrollStore.ts
 - `Experience()` --calls--> `useScrollStore`  [EXTRACTED]
   app/components/experience/index.tsx → app/stores/scrollStore.ts
-- `FooterLinkItem()` --calls--> `useIsMobile()`  [EXTRACTED]
+- `Footer()` --calls--> `useIsMobile()`  [EXTRACTED]
   app/components/footer/index.tsx → app/hooks/useIsMobile.ts
 - `SkipButton3D()` --calls--> `useScrollStore`  [EXTRACTED]
   app/components/hero/index.tsx → app/stores/scrollStore.ts
-- `AboutPage()` --calls--> `usePrefersReducedMotion()`  [EXTRACTED]
-  app/about/page.tsx → app/hooks/usePrefersReducedMotion.ts
 
 ## Import Cycles
 - None detected.
@@ -68,8 +68,8 @@
 ## Communities (24 total, 11 thin omitted)
 
 ### Community 0 - "hero/index.tsx"
-Cohesion: 0.12
-Nodes (22): CanvasLoader(), ProgressLoader(), ScrollHint(), SkipToPortfolioButton(), ThemeSwitcher(), WebGLWarmup(), WebGLWarmupProps, Hero() (+14 more)
+Cohesion: 0.10
+Nodes (24): CanvasLoader(), ProgressLoader(), ScrollHint(), SkipToPortfolioButton(), ThemeSwitcher(), WebGLWarmup(), WebGLWarmupProps, SkipButton3D() (+16 more)
 
 ### Community 1 - "compilerOptions"
 Cohesion: 0.08
@@ -84,12 +84,16 @@ Cohesion: 0.11
 Nodes (19): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node (+11 more)
 
 ### Community 4 - "about/page.tsx"
-Cohesion: 0.16
-Nodes (16): ABOUT_SECTIONS, AboutPage(), CREDITS, EmailButton(), preventOrphans(), runAutoScrollToBottom(), ScrollWrapper(), VideoBackground() (+8 more)
+Cohesion: 0.14
+Nodes (18): ABOUT_SECTIONS, AboutPage(), CREDITS, EmailButton(), preventOrphans(), runAutoScrollToBottom(), ScrollWrapper(), VideoBackground() (+10 more)
 
 ### Community 5 - "useIsMobile"
-Cohesion: 0.12
-Nodes (17): GridTile(), GridTileProps, Experience(), Projects(), Work(), Footer(), FooterLinkItem(), ToastState (+9 more)
+Cohesion: 0.26
+Nodes (11): GridTile(), GridTileProps, Experience(), Projects(), Work(), getServerSnapshot(), getSnapshot(), subscribe() (+3 more)
+
+### Community 7 - "Scene.tsx"
+Cohesion: 0.17
+Nodes (7): Footer(), FooterLinkItem(), ToastState, Hero(), FOOTER_LINKS, Scene, FooterLink
 
 ### Community 8 - "include"
 Cohesion: 0.20
@@ -107,12 +111,8 @@ Nodes (9): SoundToggle(), SUBWOOFER_LULLABY_NOTES, cormorant, jakarta, metadata,
 Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
-### Community 24 - "themeStore.ts"
-Cohesion: 0.50
-Nodes (3): AvailableThemes, Theme, ThemeStore
-
 ## Knowledge Gaps
-- **88 isolated node(s):** `metadata`, `CREDITS`, `ABOUT_SECTIONS`, `SUBWOOFER_LULLABY_NOTES`, `WebGLWarmupProps` (+83 more)
+- **90 isolated node(s):** `metadata`, `CREDITS`, `ABOUT_SECTIONS`, `SUBWOOFER_LULLABY_NOTES`, `WebGLWarmupProps` (+85 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -120,15 +120,15 @@ Nodes (3): AvailableThemes, Theme, ThemeStore
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `useScrollStore` connect `hero/index.tsx` to `about/page.tsx`, `useIsMobile`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `dependencies` to `package.json`?**
   _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `useIsMobile()` (e.g. with `getServerSnapshot()` and `getSnapshot()`) actually correct?**
   _`useIsMobile()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `metadata`, `CREDITS`, `ABOUT_SECTIONS` to the rest of the system?**
-  _88 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _90 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `hero/index.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11522048364153627 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10365853658536585 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `dependencies` be split into smaller, more focused modules?**

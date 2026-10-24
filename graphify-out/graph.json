@@ -577,7 +577,7 @@
       "file_type": "code",
       "norm_label": "workpage()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L167"
+      "source_location": "L178"
     },
     {
       "id": "app_components_experience_gridtile_gridtile",
@@ -3022,7 +3022,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L172",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -3034,7 +3034,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L273",
+      "source_location": "L284",
       "weight": 1.0
     },
     {
@@ -5594,7 +5594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L167",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -6373,5 +6373,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5db6f226d27dddb802010bd9eb3687897eac9d95"
+  "built_at_commit": "59f1a06b434310bccfc0654bf0bb2504194d041e"
 }

@@ -93,11 +93,22 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://strayed.in",
     buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
-    tags: ["WEB PLATFORM", "SUPABASE & NEXT.JS", "PAYMENTS ARCHITECTURE", "FULL-STACK"],
+    tags: ["HEADLESS DTC", "NEXT.JS 15 & MEDUSA V2", "DOCKER & OCI", "RAZORPAY & STRIPE"],
     description: [
-      "Built a custom e-commerce web platform from scratch, reducing overall page load latency by 90% compared to legacy templates.",
-      "Integrated secure payment gateways, automated order fulfillment systems, coupon engine, and customer loyalty workflows.",
-      "Leveraged modern web stacks (TypeScript, Next.js, Node.js, Supabase) and AI-assisted workflows to ship production features rapidly."
+      "Engineered a production-grade, headless direct-to-consumer e-commerce monorepo decoupling an SSR Next.js 15 storefront from a Medusa v2 Node.js backend engine with tag-based ISR revalidation.",
+      "Self-hosted and containerized full infrastructure on Oracle Cloud Infrastructure (OCI ARM Ampere) using multi-container Docker Compose, Nginx SSL reverse proxies, PostgreSQL, and Redis caching.",
+      "Integrated dual payment gateways (Razorpay dynamic SDK signature verification webhooks & Stripe Elements) alongside a 3-stage automated abandoned cart recovery drip engine via Resend.",
+      "Built an autonomous programmatic SEO engine seeding 20+ validated streetwear editorial guides into PostgreSQL, paired with PostHog client telemetry and custom 30-day analytics APIs."
+    ],
+    skillsList: [
+      {
+        category: "Cloud, Backend & Data Architecture:",
+        items: "Medusa v2 Headless Core, Next.js 15 (App Router / Server Actions), PostgreSQL (MikroORM 6.6 / Knex), Redis Caching, Docker Compose, OCI (Oracle Cloud), Nginx Reverse Proxy, Turborepo"
+      },
+      {
+        category: "Aesthetic, Motion & Integrations:",
+        items: "Luxury Minimalist (#0A0A0A & Gold), Playfair Display, GSAP 3.15, OGL WebGL Shaders, Razorpay & Stripe Webhooks, Resend Email Drip, PostHog Telemetry, Cloudinary Asset Pipeline"
+      }
     ]
   },
   {
@@ -149,16 +160,16 @@ const WORK_EXPERIENCE: WorkItem[] = [
     title: "SKILLS & TECHNOLOGIES",
     subtitle: "Technical & Product Stack",
     date: "CORE COMPETENCIES",
-    tags: ["FULL-STACK", "MOBILE", "SYSTEM DESIGN"],
+    tags: ["FULL-STACK", "MOBILE", "DEVOPS & CLOUD", "SYSTEM DESIGN"],
     description: [],
     skillsList: [
       {
         category: "Languages & Frameworks:",
-        items: "JavaScript, TypeScript, React, React Native, Next.js, Node.js, Expo, HTML5, CSS3/Tailwind CSS, C, Python, Java, Supabase, REST APIs"
+        items: "JavaScript, TypeScript, React, React Native, Next.js 15, Node.js, Expo, Medusa v2, HTML5, CSS3/Tailwind CSS, PostgreSQL, Redis, Supabase, C, Python, Java, REST APIs"
       },
       {
-        category: "Engineering & Design:",
-        items: "Full-Stack & Mobile Architecture, Glassmorphism & UI/UX Design, Web Performance & SEO, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+        category: "Engineering, Cloud & Design:",
+        items: "Full-Stack & Headless Architecture, Docker & Docker Compose, Oracle Cloud (OCI), Nginx, Web Performance & SEO, GSAP & WebGL Shaders, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
       }
     ]
   }
