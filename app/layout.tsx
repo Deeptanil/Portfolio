@@ -3,6 +3,7 @@ import { Syne, Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import SoundToggle from "./components/common/SoundToggle";
+import { PostHogProvider } from "./providers/PostHogProvider";
 import "./globals.css";
 
 const syne = Syne({
@@ -167,9 +168,11 @@ export default function RootLayout({
         className={`${syne.variable} ${cormorant.variable} ${jakarta.variable} font-sans antialiased bg-[#0a0a0c] text-white`}
         suppressHydrationWarning
       >
-        <SoundToggle />
-        {children}
-        <Analytics />
+        <PostHogProvider>
+          <SoundToggle />
+          {children}
+          <Analytics />
+        </PostHogProvider>
       </body>
     </html>
   );
