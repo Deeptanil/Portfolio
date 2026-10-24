@@ -691,8 +691,7 @@ export default function WorkPage() {
                       {m.value}
                     </span>
                     <span
-                      className="text-[10px] sm:text-[11px] text-[#cfcfcf] uppercase tracking-wider font-minecraft-regular mt-0.5"
-                      style={{ textShadow: '1px 1px 0px #000000' }}
+                      className="text-[11px] sm:text-xs text-[#cfcfcf] uppercase tracking-wider font-sans font-medium mt-0.5"
                     >
                       {m.label}
                     </span>
@@ -707,17 +706,14 @@ export default function WorkPage() {
                 {item.architecture.map((arch, aIdx) => (
                   <div
                     key={aIdx}
-                    className="inline-flex items-center gap-2 px-2.5 py-1.5 bg-[#181818]/90 border border-black shadow-[inset_1px_1px_0px_#444,inset_-1px_-1px_0px_#111]"
+                    className="inline-flex items-center gap-2.5 px-3 py-1.5 bg-[#181818]/95 border border-black shadow-[inset_1px_1px_0px_#444,inset_-1px_-1px_0px_#111]"
                   >
                     <TechIcon name={arch.icon} />
                     <div className="flex flex-col text-left">
-                      <span
-                        className="text-[11px] font-minecraft-regular text-white leading-tight"
-                        style={{ textShadow: '1px 1px 0px #000000' }}
-                      >
+                      <span className="text-xs sm:text-[13px] font-sans font-semibold text-white leading-tight">
                         {arch.name}
                       </span>
-                      <span className="text-[9px] text-[#55ffff] font-sans uppercase tracking-wider leading-tight">
+                      <span className="text-[10px] sm:text-[11px] text-[#55ffff] font-sans font-medium uppercase tracking-wider leading-tight mt-0.5">
                         {arch.role}
                       </span>
                     </div>
@@ -775,7 +771,7 @@ export default function WorkPage() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[190px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                    className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[180px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                     style={{
                       backgroundColor: '#707070',
                       border: '2px solid #000000',
@@ -794,9 +790,9 @@ export default function WorkPage() {
                     href={item.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                    className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[180px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
                     style={{
-                      backgroundColor: '#505050',
+                      backgroundColor: '#707070',
                       border: '2px solid #000000',
                       outline: 'none',
                       boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
