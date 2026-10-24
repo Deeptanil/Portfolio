@@ -22,5 +22,6 @@
   "20": "workflows/graphify.md",
   "21": "CLAUDE.md",
   "22": "copilot-instructions.md",
-  "23": "gsap"
+  "23": "gsap",
+  "24": "themeStore.ts"
 }

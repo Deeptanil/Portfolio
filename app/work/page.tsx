@@ -59,6 +59,17 @@ interface SkillCategory {
   items: string;
 }
 
+interface MetricItem {
+  value: string;
+  label: string;
+}
+
+interface ArchItem {
+  name: string;
+  role: string;
+  icon: string;
+}
+
 interface WorkItem {
   title: string;
   subtitle: string;
@@ -68,8 +79,91 @@ interface WorkItem {
   screenshot?: string;
   screenshots?: string[];
   tags?: string[];
+  metrics?: MetricItem[];
+  architecture?: ArchItem[];
   description: string[];
   skillsList?: SkillCategory[];
+}
+
+function TechIcon({ name }: { name: string }) {
+  const iconClass = "w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0";
+  switch (name) {
+    case 'nextjs':
+      return (
+        <svg className={iconClass} viewBox="0 0 180 180" fill="none">
+          <circle cx="90" cy="90" r="86" fill="black" stroke="#ffffff" strokeWidth="6" />
+          <path d="M149.508 157.52L69.142 54H54V125.97H66.0136V69.386L137.388 161.424C141.658 160.29 145.727 159.004 149.508 157.52Z" fill="#ffffff" />
+          <rect x="115" y="54" width="12" height="42" fill="#ffffff" />
+        </svg>
+      );
+    case 'react':
+      return (
+        <svg className={iconClass} viewBox="-11.5 -10.23174 23 20.46348" fill="none">
+          <circle cx="0" cy="0" r="2.05" fill="#61dafb" />
+          <g stroke="#61dafb" strokeWidth="1" fill="none">
+            <ellipse rx="11" ry="4.2" />
+            <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+            <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+          </g>
+        </svg>
+      );
+    case 'docker':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#0db7ed">
+          <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.186.185.186m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.714h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H5.136a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m-2.928 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H2.208a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185M23.79 11.77c-.41-.264-1.343-.372-2.162-.128-.15-.436-.407-.82-.74-1.127l-.427-.384-.33.473c-.567.81-.72 1.954-.42 2.94-.37.195-.89.324-1.52.348H1.272a.852.852 0 00-.83.693C-.07 16.924 1.488 20.5 7.03 20.5c5.38 0 9.878-3.056 11.492-7.568 1.48.066 3.655-.185 4.968-2.617.2-.37.33-.8.36-1.24a1.86 1.86 0 00-.06-.305z"/>
+        </svg>
+      );
+    case 'postgresql':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#336791">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2V7h2v10z"/>
+        </svg>
+      );
+    case 'redis':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#dc382d">
+          <path d="M2 7l10-4 10 4v10l-10 4-10-4V7zm10 2l-6-2.4v3.6L12 13l6-2.8V6.6L12 9z"/>
+        </svg>
+      );
+    case 'odoo':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#714B67">
+          <circle cx="12" cy="12" r="10" stroke="#A24689" strokeWidth="2" fill="none" />
+          <circle cx="12" cy="12" r="4" fill="#A24689" />
+        </svg>
+      );
+    case 'cloud':
+    case 'oci':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#F80000">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+        </svg>
+      );
+    case 'payments':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#00d66f">
+          <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+        </svg>
+      );
+    case 'mobile':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#a855f7">
+          <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+        </svg>
+      );
+    case 'database':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#38bdf8">
+          <path d="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.42 0 8 1.34 8 2s-3.58 2-8 2-8-1.34-8-2 3.58-2 8-2zm0 16c-4.42 0-8-1.34-8-2v-2.18c2.08 1.34 5.06 2.18 8 2.18s5.92-.84 8-2.18V18c0 .66-3.58 2-8 2zm0-4c-4.42 0-8-1.34-8-2v-2.18c2.08 1.34 5.06 2.18 8 2.18s5.92-.84 8-2.18V14c0 .66-3.58 2-8 2z"/>
+        </svg>
+      );
+    default:
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#ffff55">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      );
+  }
 }
 
 function ProjectGallery({ images, title }: { images: string[]; title: string }) {
@@ -216,21 +310,22 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
-    tags: ["E-COMMERCE", "ODOO ERP", "CUSTOM FRONTEND", "PERFORMANCE & SEO"],
-    description: [
-      "Engineered and launched a 45+ product commercial e-commerce storefront on Odoo ERP handling 12K+ monthly active visitors.",
-      "Authored custom embedded frontend code, styling overrides, and interactive components to overcome rigid Odoo template restrictions.",
-      "Optimized catalog browsing, conversion funnels, and image delivery to secure a 100/100 Google PageSpeed SEO score with sub-second TTFB."
+    tags: ["MINIMALIST", "E-COMMERCE", "ODOO ERP", "PERFORMANCE"],
+    metrics: [
+      { value: "12K+", label: "Monthly Users" },
+      { value: "100/100", label: "PageSpeed SEO" },
+      { value: "45+", label: "Live Catalog" },
+      { value: "<1s", label: "Sub-Sec TTFB" }
     ],
-    skillsList: [
-      {
-        category: "Platform & Frontend Customization:",
-        items: "Odoo ERP, Embedded Frontend Code (HTML5 / CSS3 / JavaScript), Template Architecture Overrides, Custom Component Injection"
-      },
-      {
-        category: "Performance & Storefront Operations:",
-        items: "100/100 PageSpeed SEO, High-Converting Catalog Architecture, Analytics Tracking, 12K+ Monthly Active Visitors"
-      }
+    architecture: [
+      { name: "Odoo ERP", role: "Store Core", icon: "odoo" },
+      { name: "Embedded Code", role: "Frontend UI", icon: "api" },
+      { name: "HTML / CSS", role: "Template Overrides", icon: "react" }
+    ],
+    description: [
+      "Engineered a high-converting 45+ product e-commerce storefront on Odoo ERP handling 12K+ monthly visitors.",
+      "Injected custom embedded frontend code and responsive overrides to break through rigid template boundaries.",
+      "Optimized asset pipelines and catalog flows to reach a 100/100 Google PageSpeed SEO score."
     ]
   },
   {
@@ -240,22 +335,25 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://strayed.in",
     buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
-    tags: ["HEADLESS DTC", "NEXT.JS 15 & MEDUSA V2", "DOCKER & OCI", "RAZORPAY & STRIPE"],
-    description: [
-      "Engineered a production-grade, headless direct-to-consumer e-commerce monorepo decoupling an SSR Next.js 15 storefront from a Medusa v2 Node.js backend engine with tag-based ISR revalidation.",
-      "Self-hosted and containerized full infrastructure on Oracle Cloud Infrastructure (OCI ARM Ampere) using multi-container Docker Compose, Nginx SSL reverse proxies, PostgreSQL, and Redis caching.",
-      "Integrated dual payment gateways (Razorpay dynamic SDK signature verification webhooks & Stripe Elements) alongside a 3-stage automated abandoned cart recovery drip engine via Resend.",
-      "Built an autonomous programmatic SEO engine seeding 20+ validated streetwear editorial guides into PostgreSQL, paired with PostHog client telemetry and custom 30-day analytics APIs."
+    tags: ["MINIMALIST", "HEADLESS DTC", "DOCKER & OCI", "NEXT.JS 15"],
+    metrics: [
+      { value: "90%", label: "Faster Load" },
+      { value: "Headless", label: "Decoupled Arch" },
+      { value: "Docker", label: "Multi-Container" },
+      { value: "Dual", label: "Stripe + Razorpay" }
     ],
-    skillsList: [
-      {
-        category: "Cloud, Backend & Data Architecture:",
-        items: "Medusa v2 Headless Core, Next.js 15 (App Router / Server Actions), PostgreSQL (MikroORM 6.6 / Knex), Redis Caching, Docker Compose, OCI (Oracle Cloud), Nginx Reverse Proxy, Turborepo"
-      },
-      {
-        category: "Aesthetic, Motion & Integrations:",
-        items: "Luxury Minimalist (#0A0A0A & Gold), Playfair Display, GSAP 3.15, OGL WebGL Shaders, Razorpay & Stripe Webhooks, Resend Email Drip, PostHog Telemetry, Cloudinary Asset Pipeline"
-      }
+    architecture: [
+      { name: "Next.js 15", role: "SSR Storefront", icon: "nextjs" },
+      { name: "Medusa v2", role: "Headless Core", icon: "headless" },
+      { name: "Docker", role: "Containerized", icon: "docker" },
+      { name: "Oracle OCI", role: "ARM Cloud Host", icon: "oci" },
+      { name: "PostgreSQL", role: "Primary DB", icon: "postgresql" },
+      { name: "Redis", role: "Cache Layer", icon: "redis" }
+    ],
+    description: [
+      "Architected a decoupled headless monorepo pairing an SSR Next.js 15 storefront with a Medusa v2 Node.js engine.",
+      "Self-hosted and containerized multi-service infrastructure on Oracle Cloud ARM with Nginx SSL reverse proxies.",
+      "Integrated dual payment gateways with webhook signatures and automated 3-stage cart recovery drip campaigns."
     ]
   },
   {
@@ -264,21 +362,23 @@ const WORK_EXPERIENCE: WorkItem[] = [
     date: "2026 • FEATURED MOBILE APP",
     url: "https://platter.deeptanil.in/",
     buttonText: "Visit platter.deeptanil.in",
-    tags: ["MOBILE APP", "FOODTECH UX", "REACT NATIVE", "EXPO 57", "GLASSMORPHISM"],
-    description: [
-      "Architected a 13-screen mobile culinary discovery app on React Native 0.86, React 19, and Expo SDK 57 featuring fluid 60fps UI-thread animations via Reanimated and Native Stack transitions.",
-      "Crafted an Apple-inspired glassmorphism aesthetic with floating translucent dock navigation (expo-blur), custom luxury editorial typography (Casko Luxury Demo), and tactile haptic feedback (expo-haptics).",
-      "Engineered mood-driven discovery and budget filters ('Under ₹250', Late Night, Street, Healthy) alongside localized geolocation calculations (expo-location) and offline-persisted cart state (AsyncStorage)."
+    tags: ["GLASSMORPHISM", "MOBILE APP", "REACT NATIVE", "EXPO 57"],
+    metrics: [
+      { value: "13", label: "Native Screens" },
+      { value: "60 FPS", label: "UI Thread Motion" },
+      { value: "< ₹250", label: "Budget Filter" },
+      { value: "Offline", label: "Persisted Cart" }
     ],
-    skillsList: [
-      {
-        category: "Aesthetic & Motion Language:",
-        items: "Glassmorphism, Floating Dock Bar, BlurView, Custom Casko Typography, Haptic Tactile Engine, Confetti Cannon Celebrations"
-      },
-      {
-        category: "Architecture & Hardware APIs:",
-        items: "Multi-Provider React Context (Cart, User, Theme, Settings), AsyncStorage Offline State, Expo Location, NetInfo, Reanimated 60fps Worklets"
-      }
+    architecture: [
+      { name: "React Native", role: "Mobile App", icon: "react" },
+      { name: "Expo 57", role: "Native Engine", icon: "mobile" },
+      { name: "Reanimated", role: "60fps Worklets", icon: "api" },
+      { name: "AsyncStorage", role: "Local Cache", icon: "database" }
+    ],
+    description: [
+      "Engineered a 13-screen culinary discovery mobile app on React Native 0.86, React 19, and Expo SDK 57.",
+      "Designed a floating translucent dock navigation bar with dynamic backdrop blur and tactile haptic feedback.",
+      "Implemented budget filters ('Under ₹250', Late Night, Street) alongside geolocation lookups and offline state."
     ]
   },
   {
@@ -286,11 +386,15 @@ const WORK_EXPERIENCE: WorkItem[] = [
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
     tags: ["ACADEMICS", "COMPUTER SCIENCE", "B.TECH IT"],
+    metrics: [
+      { value: "'28", label: "Graduating Class" },
+      { value: "IT & CS", label: "Specialization" }
+    ],
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
     buttonText: "Visit manipal.edu",
     description: [
-      "Pursuing B.Tech in IT focusing on Data Structures & Algorithms, Web Systems Architecture, and Full-Stack Engineering.",
-      "Maintaining strong academic performance while building real-world digital products and scalable web applications."
+      "Pursuing B.Tech in IT focusing on Data Structures, Algorithms, Distributed Systems, and Web Engineering.",
+      "Maintaining strong academic standing while engineering real-world scalable production web and mobile apps."
     ]
   },
   {
@@ -298,17 +402,21 @@ const WORK_EXPERIENCE: WorkItem[] = [
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
     tags: ["CERTIFICATION", "HUMAN-CENTERED DESIGN", "UX RESEARCH"],
+    metrics: [
+      { value: "UX / UI", label: "Certification" },
+      { value: "Google", label: "Credential" }
+    ],
     url: "https://www.coursera.org/professional-certificates/google-ux-design",
     buttonText: "View Course",
     description: [
-      "Currently pursuing professional certification in end-to-end UX research, wireframing, high-fidelity prototyping, and usability testing.",
-      "Applying human-centered design principles and accessibility standards to modern web applications."
+      "Pursuing professional certification covering end-to-end UX research, wireframing, and usability testing.",
+      "Applying human-centered design principles and accessibility standards to production web applications."
     ]
   },
   {
     title: "SKILLS & TECHNOLOGIES",
-    subtitle: "Technical & Product Stack",
-    date: "CORE COMPETENCIES",
+    subtitle: "Core Engineering & Design Stack",
+    date: "COMPETENCIES",
     tags: ["FULL-STACK", "MOBILE", "DEVOPS & CLOUD", "SYSTEM DESIGN"],
     description: [],
     skillsList: [
@@ -318,7 +426,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
       },
       {
         category: "Engineering, Cloud & Design:",
-        items: "Full-Stack & Headless Architecture, Docker & Docker Compose, Oracle Cloud (OCI), Nginx, Web Performance & SEO, GSAP & WebGL Shaders, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+        items: "Full-Stack & Headless Architecture, Docker Compose, Oracle Cloud (OCI), Nginx, Web Performance & SEO, GSAP, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
       }
     ]
   }
@@ -469,25 +577,31 @@ export default function WorkPage() {
 
         {/* Work Timeline Sections */}
         {WORK_EXPERIENCE.map((item, idx) => (
-          <div key={idx} className="w-full space-y-5 max-w-2xl">
+          <div key={idx} className="w-full space-y-4 max-w-2xl">
             <h2
               className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
               {preventOrphans(item.title)}
             </h2>
-            <h3
-              className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
-              style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
-            >
-              {preventOrphans(item.subtitle)}
-            </h3>
+
+            {/* Distinct Subtitle Badge */}
+            <div className="flex justify-center">
+              <h3
+                className="inline-block px-3 py-1 font-minecraft-regular text-xs sm:text-sm tracking-widest uppercase text-[#55ffff] bg-[#141e28]/95 border border-[#55ffff]/50 shadow-[inset_1px_1px_0px_#55ffff33,0_2px_8px_rgba(0,0,0,0.5)]"
+                style={{ textShadow: '1px 1px 0px #000000' }}
+              >
+                {preventOrphans(item.subtitle)}
+              </h3>
+            </div>
+
             <p
-              className="text-xs sm:text-sm text-white tracking-widest uppercase font-minecraft-regular opacity-90"
+              className="text-xs sm:text-sm text-[#aaaaaa] tracking-widest uppercase font-minecraft-regular opacity-90"
               style={{ textShadow: '1px 1px 0px #000000' }}
             >
               [{item.date}]
             </p>
+
             {/* Aesthetic & Tech Stack Badges */}
             {item.tags && item.tags.length > 0 && (
               <div className="flex flex-wrap justify-center gap-2 pt-1 pb-1">
@@ -502,6 +616,7 @@ export default function WorkPage() {
                 ))}
               </div>
             )}
+
             {/* Project Screenshot / Multi-Image Scrolling Showcase */}
             <ProjectGallery
               images={
@@ -513,33 +628,89 @@ export default function WorkPage() {
               }
               title={item.title}
             />
-            {item.description && item.description.length > 0 && (
-              <div className="space-y-4 pt-2">
-                {item.description.map((line, lIdx) => (
-                  <p
-                    key={lIdx}
-                    className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
-                    style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+
+            {/* Infographic Data Points HUD */}
+            {item.metrics && item.metrics.length > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                {item.metrics.map((m, mIdx) => (
+                  <div
+                    key={mIdx}
+                    className="p-2 sm:p-2.5 bg-[#1b1713]/90 border border-black shadow-[inset_1px_1px_0px_#555555,inset_-1px_-1px_0px_#111111] flex flex-col items-center justify-center text-center"
                   >
-                    {preventOrphans(line)}
-                  </p>
+                    <span
+                      className="text-base sm:text-xl font-bold font-minecraft-regular text-[#ffff55]"
+                      style={{ textShadow: '1px 1px 0px #000000' }}
+                    >
+                      {m.value}
+                    </span>
+                    <span
+                      className="text-[10px] sm:text-[11px] text-[#cfcfcf] uppercase tracking-wider font-minecraft-regular mt-0.5"
+                      style={{ textShadow: '1px 1px 0px #000000' }}
+                    >
+                      {m.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Architecture & Stack Badges */}
+            {item.architecture && item.architecture.length > 0 && (
+              <div className="pt-1 flex flex-wrap justify-center gap-2">
+                {item.architecture.map((arch, aIdx) => (
+                  <div
+                    key={aIdx}
+                    className="inline-flex items-center gap-2 px-2.5 py-1.5 bg-[#181818]/90 border border-black shadow-[inset_1px_1px_0px_#444,inset_-1px_-1px_0px_#111]"
+                  >
+                    <TechIcon name={arch.icon} />
+                    <div className="flex flex-col text-left">
+                      <span
+                        className="text-[11px] font-minecraft-regular text-white leading-tight"
+                        style={{ textShadow: '1px 1px 0px #000000' }}
+                      >
+                        {arch.name}
+                      </span>
+                      <span className="text-[9px] text-[#55ffff] font-sans uppercase tracking-wider leading-tight">
+                        {arch.role}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Concise Bullet Highlights */}
+            {item.description && item.description.length > 0 && (
+              <div className="space-y-2 pt-2 text-left max-w-xl mx-auto">
+                {item.description.map((line, lIdx) => (
+                  <div key={lIdx} className="flex items-start gap-2.5">
+                    <span className="text-[#ffff55] font-minecraft-regular text-xs sm:text-sm mt-0.5 select-none flex-shrink-0">
+                      ◆
+                    </span>
+                    <p
+                      className="text-xs sm:text-sm leading-relaxed tracking-wide text-[#e8e8e8] font-sans"
+                      style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+                    >
+                      {preventOrphans(line)}
+                    </p>
+                  </div>
                 ))}
               </div>
             )}
 
             {/* Skills List Rendering */}
             {item.skillsList && (
-              <div className="space-y-6 pt-2">
+              <div className="space-y-4 pt-2">
                 {item.skillsList.map((skill, sIdx) => (
-                  <div key={sIdx} className="space-y-2">
+                  <div key={sIdx} className="space-y-1">
                     <h4
-                      className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
-                      style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
+                      className="text-sm sm:text-base font-minecraft-regular text-[#ffff55] uppercase tracking-wider"
+                      style={{ textShadow: '1px 1px 0px #000000' }}
                     >
                       {preventOrphans(skill.category)}
                     </h4>
                     <p
-                      className="text-base sm:text-lg leading-relaxed tracking-wide text-white font-sans"
+                      className="text-xs sm:text-sm leading-relaxed tracking-wide text-white font-sans opacity-90"
                       style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.9)' }}
                     >
                       {preventOrphans(skill.items)}
