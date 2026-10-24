@@ -174,8 +174,8 @@
     "semantic_hash": "cd1877f445a063c661fbef2b8fbe57f5"
   },
   "app/layout.tsx": {
-    "mtime": 1792852755.6725981,
-    "seen": 1792852819.00168,
+    "mtime": 1792853322.0545995,
+    "seen": 1792858717.5862825,
     "ast_hash": "612d915662b482a1d3a69a239caf921b",
     "semantic_hash": ""
   },
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1792845639.8484905,
-    "seen": 1792852819.0017204,
-    "ast_hash": "6d6bafb085de34419e8835c6f015d6c6",
+    "mtime": 1792859554.7518928,
+    "seen": 1792859621.2868617,
+    "ast_hash": "27e077019cd1bcb7673fd5b0873746f9",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -486,8 +486,8 @@
     "semantic_hash": ""
   },
   "public/prettiva-screenshot.webp": {
-    "mtime": 1787512624.3385293,
-    "seen": 1788199336.6517682,
+    "mtime": 1792858799.5731378,
+    "seen": 1792858934.3771348,
     "ast_hash": "06c516f7c042918e31cfff4ca70cf412",
     "semantic_hash": ""
   },
@@ -534,9 +534,51 @@
     "semantic_hash": ""
   },
   "public/llms.txt": {
-    "mtime": 1792852730.0578592,
-    "seen": 1792852819.001765,
-    "ast_hash": "04c3482d87b5dc708b503108609f9f8a",
+    "mtime": 1792852843.3723392,
+    "seen": 1792858717.5863993,
+    "ast_hash": "82ffae1d15fb9c7a79708ba960e02fb8",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-catalog.webp": {
+    "mtime": 1792858587.653,
+    "seen": 1792858717.5865383,
+    "ast_hash": "66bd646ad7562694dd7df4c52032acac",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-feedback.webp": {
+    "mtime": 1792858587.632,
+    "seen": 1792858717.5865433,
+    "ast_hash": "34ae92e1b9ab9946f16536ef77b7a740",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-loyalty.webp": {
+    "mtime": 1792858587.621,
+    "seen": 1792858717.5865474,
+    "ast_hash": "9b3b833fd95bbb2369b83326717e47d0",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-product.webp": {
+    "mtime": 1792858587.65,
+    "seen": 1792858717.5865512,
+    "ast_hash": "1ef6e9e07bc8d39d8aa87eea37a388bd",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-article.webp": {
+    "mtime": 1792858827.235,
+    "seen": 1792858934.37717,
+    "ast_hash": "79140ef086fe799c19c979badbf5ab90",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-editorial.webp": {
+    "mtime": 1792858827.238,
+    "seen": 1792858934.3771756,
+    "ast_hash": "6744063c0f6862b82020157d744f328e",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-shop.webp": {
+    "mtime": 1792858827.209,
+    "seen": 1792858934.3771815,
+    "ast_hash": "0eb55cbe3fe28045c4d5621c62f8bc83",
     "semantic_hash": ""
   }
 }

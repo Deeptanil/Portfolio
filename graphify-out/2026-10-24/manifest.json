@@ -174,9 +174,9 @@
     "semantic_hash": "cd1877f445a063c661fbef2b8fbe57f5"
   },
   "app/layout.tsx": {
-    "mtime": 1792843829.054958,
-    "seen": 1792844621.4281955,
-    "ast_hash": "0139820e17f43829bec4e020d4b50f04",
+    "mtime": 1792853322.0545995,
+    "seen": 1792858717.5862825,
+    "ast_hash": "612d915662b482a1d3a69a239caf921b",
     "semantic_hash": ""
   },
   "app/page.tsx": {
@@ -222,15 +222,15 @@
     "semantic_hash": "4bf2324ac2b506ae22a187f273c913f4"
   },
   "app/work/layout.tsx": {
-    "mtime": 1792840746.0028546,
-    "seen": 1792840775.5290363,
-    "ast_hash": "a746289f72ef374bd3629f011657a2ee",
+    "mtime": 1792845639.347691,
+    "seen": 1792852819.0017173,
+    "ast_hash": "ee3c6d26823da3892bfbcddf04966377",
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1792845172.5428934,
-    "seen": 1792845232.2074757,
-    "ast_hash": "5ca9439073476a458d65bd487b6744ea",
+    "mtime": 1792858930.6484034,
+    "seen": 1792858934.3769073,
+    "ast_hash": "3f8ecf664e4f3f9b84e8adeb567ffb47",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "public/robots.txt": {
-    "mtime": 1787474779.4684577,
-    "seen": 1788199336.6516404,
-    "ast_hash": "714a568ad73d95ce7477ce25ae492617",
+    "mtime": 1792852740.9749746,
+    "seen": 1792852819.001768,
+    "ast_hash": "b7111960ee8c3a29bfaedffda07260c4",
     "semantic_hash": ""
   },
   "public/Deeptanil_Sinha_Resume.pdf": {
@@ -486,8 +486,8 @@
     "semantic_hash": ""
   },
   "public/prettiva-screenshot.webp": {
-    "mtime": 1787512624.3385293,
-    "seen": 1788199336.6517682,
+    "mtime": 1792858799.5731378,
+    "seen": 1792858934.3771348,
     "ast_hash": "06c516f7c042918e31cfff4ca70cf412",
     "semantic_hash": ""
   },
@@ -531,6 +531,54 @@
     "mtime": 1792843674.9143424,
     "seen": 1792843730.692752,
     "ast_hash": "f5e37d90f030a7545c5aab41909b69d5",
+    "semantic_hash": ""
+  },
+  "public/llms.txt": {
+    "mtime": 1792852843.3723392,
+    "seen": 1792858717.5863993,
+    "ast_hash": "82ffae1d15fb9c7a79708ba960e02fb8",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-catalog.webp": {
+    "mtime": 1792858587.653,
+    "seen": 1792858717.5865383,
+    "ast_hash": "66bd646ad7562694dd7df4c52032acac",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-feedback.webp": {
+    "mtime": 1792858587.632,
+    "seen": 1792858717.5865433,
+    "ast_hash": "34ae92e1b9ab9946f16536ef77b7a740",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-loyalty.webp": {
+    "mtime": 1792858587.621,
+    "seen": 1792858717.5865474,
+    "ast_hash": "9b3b833fd95bbb2369b83326717e47d0",
+    "semantic_hash": ""
+  },
+  "public/projects/prettiva/prettiva-product.webp": {
+    "mtime": 1792858587.65,
+    "seen": 1792858717.5865512,
+    "ast_hash": "1ef6e9e07bc8d39d8aa87eea37a388bd",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-article.webp": {
+    "mtime": 1792858827.235,
+    "seen": 1792858934.37717,
+    "ast_hash": "79140ef086fe799c19c979badbf5ab90",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-editorial.webp": {
+    "mtime": 1792858827.238,
+    "seen": 1792858934.3771756,
+    "ast_hash": "6744063c0f6862b82020157d744f328e",
+    "semantic_hash": ""
+  },
+  "public/projects/strayed/strayed-shop.webp": {
+    "mtime": 1792858827.209,
+    "seen": 1792858934.3771815,
+    "ast_hash": "0eb55cbe3fe28045c4d5621c62f8bc83",
     "semantic_hash": ""
   }
 }

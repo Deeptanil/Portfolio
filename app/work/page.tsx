@@ -189,16 +189,20 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
   if (images.length === 1) {
     return (
       <div className="pt-2">
-        <img
-          src={images[0]}
-          alt={`Screenshot of the ${title} project`}
-          className="w-full h-auto"
+        <div
+          className="relative w-full aspect-[16/10] overflow-hidden bg-black/40"
           style={{
             border: '9px solid #3b2415',
             boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
           }}
-          loading="lazy"
-        />
+        >
+          <img
+            src={images[0]}
+            alt={`Screenshot of the ${title} project`}
+            className="w-full h-full object-cover object-center block"
+            loading="lazy"
+          />
+        </div>
       </div>
     );
   }
@@ -229,7 +233,7 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
     <div className="pt-2 w-full space-y-2">
       {/* 1 image at a time scrolling container */}
       <div
-        className="relative overflow-hidden"
+        className="relative overflow-hidden w-full aspect-[16/10] bg-black/40"
         style={{
           border: '9px solid #3b2415',
           boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
@@ -238,18 +242,18 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth"
+          className="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory scroll-smooth"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
           }}
         >
           {images.map((src, i) => (
-            <div key={i} className="w-full flex-shrink-0 snap-center">
+            <div key={i} className="w-full h-full flex-shrink-0 snap-center relative">
               <img
                 src={src}
                 alt={`Screenshot ${i + 1} of ${title}`}
-                className="w-full h-auto block"
+                className="w-full h-full object-cover object-center block"
                 loading="lazy"
               />
             </div>
@@ -261,7 +265,7 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
           type="button"
           onClick={() => scrollTo(currentIndex - 1)}
           aria-label="Previous image"
-          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
           style={{
             backgroundColor: 'rgba(112, 112, 112, 0.9)',
             border: '2px solid #000000',
@@ -275,7 +279,7 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
           type="button"
           onClick={() => scrollTo(currentIndex + 1)}
           aria-label="Next image"
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-minecraft-regular text-sm sm:text-base text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer select-none active:translate-y-[-48%]"
           style={{
             backgroundColor: 'rgba(112, 112, 112, 0.9)',
             border: '2px solid #000000',
@@ -324,6 +328,13 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
+    screenshots: [
+      "/prettiva-screenshot.webp",
+      "/projects/prettiva/prettiva-catalog.webp",
+      "/projects/prettiva/prettiva-product.webp",
+      "/projects/prettiva/prettiva-feedback.webp",
+      "/projects/prettiva/prettiva-loyalty.webp",
+    ],
     tags: ["MINIMALIST", "E-COMMERCE", "ODOO ERP"],
     metrics: [
       { value: "12K+", label: "Monthly Visitors" },
@@ -348,6 +359,12 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://strayed.in",
     buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
+    screenshots: [
+      "/strayed-screenshot.webp",
+      "/projects/strayed/strayed-shop.webp",
+      "/projects/strayed/strayed-editorial.webp",
+      "/projects/strayed/strayed-article.webp",
+    ],
     tags: ["MINIMALIST", "HEADLESS DTC", "DOCKER & OCI"],
     metrics: [
       { value: "1.4K+", label: "Monthly Organic Views" },
