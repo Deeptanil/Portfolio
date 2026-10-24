@@ -336,7 +336,9 @@ const WORK_EXPERIENCE: WorkItem[] = [
     screenshot: "/strayed-screenshot.webp",
     tags: ["MINIMALIST", "HEADLESS DTC", "DOCKER & OCI"],
     metrics: [
-      { value: "1.4K+", label: "Monthly Organic Views" }
+      { value: "1.4K+", label: "Monthly Organic Views" },
+      { value: "100/100", label: "PageSpeed SEO" },
+      { value: "Self-Hosted", label: "OCI Cloud & Docker" }
     ],
     architecture: [
       { name: "Next.js 15", role: "SSR Storefront", icon: "nextjs" },
