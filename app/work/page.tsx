@@ -54,7 +54,24 @@ function EmailButton() {
   );
 }
 
-const WORK_EXPERIENCE = [
+interface SkillCategory {
+  category: string;
+  items: string;
+}
+
+interface WorkItem {
+  title: string;
+  subtitle: string;
+  date: string;
+  url?: string;
+  buttonText?: string;
+  screenshot?: string;
+  tags?: string[];
+  description: string[];
+  skillsList?: SkillCategory[];
+}
+
+const WORK_EXPERIENCE: WorkItem[] = [
   {
     title: "PRETTIVA & CO.",
     subtitle: "Co-Founder & Lead Engineer",
@@ -62,6 +79,7 @@ const WORK_EXPERIENCE = [
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
+    tags: ["WEB APPLICATION", "E-COMMERCE", "FULL-STACK", "PERFORMANCE & SEO"],
     description: [
       "Architected and deployed a 45+ product e-commerce storefront handling 12K+ monthly active visitors using Next.js & React.",
       "Achieved a 100/100 Google PageSpeed SEO score with sub-second TTFB through image optimization and server-side rendering.",
@@ -75,6 +93,7 @@ const WORK_EXPERIENCE = [
     url: "https://strayed.in",
     buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
+    tags: ["WEB PLATFORM", "SUPABASE & NEXT.JS", "PAYMENTS ARCHITECTURE", "FULL-STACK"],
     description: [
       "Built a custom e-commerce web platform from scratch, reducing overall page load latency by 90% compared to legacy templates.",
       "Integrated secure payment gateways, automated order fulfillment systems, coupon engine, and customer loyalty workflows.",
@@ -82,9 +101,31 @@ const WORK_EXPERIENCE = [
     ]
   },
   {
+    title: "EATOPIA",
+    subtitle: "Lead Mobile Architect & Product Designer",
+    date: "2026 • FEATURED MOBILE APP",
+    tags: ["MOBILE APP", "FOODTECH UX", "REACT NATIVE", "EXPO 57", "GLASSMORPHISM"],
+    description: [
+      "Architected a 13-screen mobile culinary discovery app on React Native 0.86, React 19, and Expo SDK 57 featuring fluid 60fps UI-thread animations via Reanimated and Native Stack transitions.",
+      "Crafted an Apple-inspired glassmorphism aesthetic with floating translucent dock navigation (expo-blur), custom luxury editorial typography (Casko Luxury Demo), and tactile haptic feedback (expo-haptics).",
+      "Engineered mood-driven discovery and budget filters ('Under ₹250', Late Night, Street, Healthy) alongside localized geolocation calculations (expo-location) and offline-persisted cart state (AsyncStorage)."
+    ],
+    skillsList: [
+      {
+        category: "Aesthetic & Motion Language:",
+        items: "Glassmorphism, Floating Dock Bar, BlurView, Custom Casko Typography, Haptic Tactile Engine, Confetti Cannon Celebrations"
+      },
+      {
+        category: "Architecture & Hardware APIs:",
+        items: "Multi-Provider React Context (Cart, User, Theme, Settings), AsyncStorage Offline State, Expo Location, NetInfo, Reanimated 60fps Worklets"
+      }
+    ]
+  },
+  {
     title: "MANIPAL INSTITUTE OF TECHNOLOGY, BENGALURU",
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
+    tags: ["ACADEMICS", "COMPUTER SCIENCE", "B.TECH IT"],
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
     buttonText: "Visit manipal.edu",
     description: [
@@ -96,6 +137,7 @@ const WORK_EXPERIENCE = [
     title: "GOOGLE CAREER CERTIFICATES",
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
+    tags: ["CERTIFICATION", "HUMAN-CENTERED DESIGN", "UX RESEARCH"],
     url: "https://www.coursera.org/professional-certificates/google-ux-design",
     buttonText: "View Course",
     description: [
@@ -107,15 +149,16 @@ const WORK_EXPERIENCE = [
     title: "SKILLS & TECHNOLOGIES",
     subtitle: "Technical & Product Stack",
     date: "CORE COMPETENCIES",
+    tags: ["FULL-STACK", "MOBILE", "SYSTEM DESIGN"],
     description: [],
     skillsList: [
       {
         category: "Languages & Frameworks:",
-        items: "JavaScript, TypeScript, Next.js, React, Node.js, HTML5, CSS3/Tailwind CSS, C, Python, Java, Supabase, REST APIs"
+        items: "JavaScript, TypeScript, React, React Native, Next.js, Node.js, Expo, HTML5, CSS3/Tailwind CSS, C, Python, Java, Supabase, REST APIs"
       },
       {
         category: "Engineering & Design:",
-        items: "Full-Stack Architecture, Web Performance & SEO, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+        items: "Full-Stack & Mobile Architecture, Glassmorphism & UI/UX Design, Web Performance & SEO, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
       }
     ]
   }
@@ -285,6 +328,20 @@ export default function WorkPage() {
             >
               [{item.date}]
             </p>
+            {/* Aesthetic & Tech Stack Badges */}
+            {item.tags && item.tags.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2 pt-1 pb-1">
+                {item.tags.map((tag, tIdx) => (
+                  <span
+                    key={tIdx}
+                    className="px-2.5 py-1 text-[10px] sm:text-xs font-minecraft-regular tracking-wider uppercase text-[#ffff55] bg-[#3c3c3c]/95 border border-black shadow-[inset_1px_1px_0px_#8b8b8b,inset_-1px_-1px_0px_#262626]"
+                    style={{ textShadow: '1px 1px 0px #000000' }}
+                  >
+                    {preventOrphans(tag)}
+                  </span>
+                ))}
+              </div>
+            )}
             {/* Live site screenshot with half-width brown border (9px) */}
             {item.screenshot && (
               <div className="pt-2">
