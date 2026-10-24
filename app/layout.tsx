@@ -131,14 +131,38 @@ export default function RootLayout({
       "https://linkedin.com/in/deeptanil",
       "https://github.com/Deeptanil"
     ],
-    "alumniOf": "MIT Bengaluru",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Manipal Institute of Technology, Bengaluru"
+    },
+    "worksFor": [
+      {
+        "@type": "Organization",
+        "name": "STRAYED",
+        "url": "https://strayed.in"
+      },
+      {
+        "@type": "Organization",
+        "name": "Prettiva & Co.",
+        "url": "https://prettiva.co"
+      }
+    ],
     "knowsAbout": [
       "Product Engineering",
-      "Web Development",
+      "Full-Stack Software Architecture",
       "Next.js",
       "React",
+      "React Native",
+      "Expo",
+      "Python",
+      "Flask",
+      "Headless E-commerce",
+      "Docker",
+      "PostgreSQL",
+      "Cloud Infrastructure",
+      "Cryptography & Security",
       "UI/UX Design",
-      "Full-Stack Software Architecture"
+      "Programmatic SEO & Web Performance"
     ]
   };
 

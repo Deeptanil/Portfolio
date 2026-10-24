@@ -34,4 +34,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+# Sitemaps & LLM Context
 Sitemap: https://deeptanil.com/sitemap.xml
+# LLMs context file for AI crawlers (Perplexity, ChatGPT, Claude)
+# See https://deeptanil.com/llms.txt

@@ -174,9 +174,9 @@
     "semantic_hash": "cd1877f445a063c661fbef2b8fbe57f5"
   },
   "app/layout.tsx": {
-    "mtime": 1792843829.054958,
-    "seen": 1792844621.4281955,
-    "ast_hash": "0139820e17f43829bec4e020d4b50f04",
+    "mtime": 1792852755.6725981,
+    "seen": 1792852819.00168,
+    "ast_hash": "612d915662b482a1d3a69a239caf921b",
     "semantic_hash": ""
   },
   "app/page.tsx": {
@@ -222,14 +222,14 @@
     "semantic_hash": "4bf2324ac2b506ae22a187f273c913f4"
   },
   "app/work/layout.tsx": {
-    "mtime": 1792845522.6297166,
-    "seen": 1792845576.7181363,
+    "mtime": 1792845639.347691,
+    "seen": 1792852819.0017173,
     "ast_hash": "ee3c6d26823da3892bfbcddf04966377",
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1792845508.6301808,
-    "seen": 1792845576.7181406,
+    "mtime": 1792845639.8484905,
+    "seen": 1792852819.0017204,
     "ast_hash": "6d6bafb085de34419e8835c6f015d6c6",
     "semantic_hash": ""
   },
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "public/robots.txt": {
-    "mtime": 1787474779.4684577,
-    "seen": 1788199336.6516404,
-    "ast_hash": "714a568ad73d95ce7477ce25ae492617",
+    "mtime": 1792852740.9749746,
+    "seen": 1792852819.001768,
+    "ast_hash": "b7111960ee8c3a29bfaedffda07260c4",
     "semantic_hash": ""
   },
   "public/Deeptanil_Sinha_Resume.pdf": {
@@ -531,6 +531,12 @@
     "mtime": 1792843674.9143424,
     "seen": 1792843730.692752,
     "ast_hash": "f5e37d90f030a7545c5aab41909b69d5",
+    "semantic_hash": ""
+  },
+  "public/llms.txt": {
+    "mtime": 1792852730.0578592,
+    "seen": 1792852819.001765,
+    "ast_hash": "04c3482d87b5dc708b503108609f9f8a",
     "semantic_hash": ""
   }
 }

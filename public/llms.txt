@@ -1,0 +1,53 @@
+# Deeptanil Sinha
+
+> Product Engineer, Creative Technologist, and Full-Stack Architect based in Bengaluru, India. Pursuing B.Tech in Information Technology ('28) at Manipal Institute of Technology, Bengaluru.
+
+## Core Technical Competencies
+- **Frontend & Mobile:** Next.js 15, React 19, React Native 0.86, Expo SDK 57, TypeScript, Tailwind CSS, GSAP, Three.js, React Three Fiber.
+- **Backend & Cloud Infrastructure:** Node.js, Python 3.14 (Flask), Medusa v2 (Headless E-Commerce), PostgreSQL (Neon Serverless), Redis, Docker & Docker Compose, Oracle Cloud Infrastructure (OCI ARM), Nginx, Backblaze B2 S3 Object Storage, Odoo ERP.
+- **Security & Systems:** Zero-Knowledge Architectures, SHA-256 Pre-Flight Integrity Gates, Ephemeral Data Lifecycle, Rate Limiting, Subnet Quota Gates, Automated Testing (Pytest).
+
+## Featured Projects & Ventures
+
+### 1. STRAYED
+- **Type:** Headless Direct-to-Consumer (DTC) E-Commerce Platform
+- **Role:** Co-Founder & Technical Director (2025 - Present)
+- **Live URL:** https://strayed.in
+- **Architecture:** Decoupled monorepo pairing Next.js 15 SSR storefront with a Medusa v2 Node.js backend engine. Multi-container Docker Compose deployed on Oracle Cloud Infrastructure (OCI ARM) with Nginx SSL reverse proxies and Redis caching.
+- **Performance & Traffic:** 1.4K+ organic monthly views driven entirely by autonomous programmatic SEO pipelines and AI editorial automation (zero paid or social marketing spend). 100/100 Google PageSpeed SEO score.
+- **Key Integrations:** Dual checkout gateways (Stripe Elements & Razorpay webhook signature verification) and a 3-stage automated cart recovery drip engine via Resend.
+
+### 2. FileGuard
+- **Type:** Zero-Knowledge Ephemeral File & Folder Sharing Platform
+- **Role:** Lead Security Architect & Full-Stack Developer (2026)
+- **Live URL:** https://files.deeptanil.in
+- **GitHub:** https://github.com/Deeptanil/FileGuard.git
+- **Aesthetic:** Neo-Brutalist Comic Pop-Art & Dark Cyberpunk.
+- **Architecture:** Python 3.14, Flask, Neon Serverless PostgreSQL, Backblaze B2 S3 object storage with 10-thread parallel multipart chunking, and pure ES6+ client without external JS dependencies.
+- **Security Highlights:** Strict 12-hour self-destruction TTL, streaming SHA-256 pre-flight integrity verification (HTTP 409 Anti-Tamper gate), zero-allocation in-memory directory ZIP packaging, and zero-account client ephemeral vault tracking via localStorage. 42 automated Pytest test suites.
+
+### 3. Prettiva & Co.
+- **Type:** Commercial E-Commerce Storefront
+- **Role:** Co-Founder & Digital Director (2026 - Present)
+- **Live URL:** https://prettiva.co
+- **Architecture:** 45+ product commercial catalog on Odoo ERP handling 12K+ monthly visitors. Injected custom embedded frontend code, custom styling overrides, and responsive UI components to break through native Odoo template limits.
+- **Performance:** 100/100 Google PageSpeed SEO score with sub-second TTFB.
+
+### 4. Platter
+- **Type:** Cross-Platform Mobile Culinary Discovery App
+- **Role:** Lead Mobile Architect & Product Designer (2026)
+- **Live URL:** https://platter.deeptanil.in
+- **Architecture:** React Native 0.86, React 19, Expo SDK 57, React Navigation v6, React Native Paper.
+- **UX & Motion:** Apple-inspired glassmorphism floating dock navigation with dynamic blur (expo-blur), tactile haptic feedback (expo-haptics), and fluid 60fps UI-thread transitions via Reanimated worklets.
+- **Features:** 13 interconnected native screens, mood-driven discovery filters, budget-conscious filter ("Under ₹250"), geolocation distance calculations, and offline-persisted cart state with AsyncStorage.
+
+## Education & Certifications
+- **B.Tech in Information Technology:** Manipal Institute of Technology, Bengaluru (2024 - 2028).
+- **Google UX Design Professional Certificate:** Coursera / Google Career Certificates (In Progress).
+
+## Contact & Profiles
+- **Website:** https://deeptanil.com
+- **GitHub:** https://github.com/Deeptanil
+- **LinkedIn:** https://linkedin.com/in/deeptanil
+- **Email:** deeptanilsinha27@gmail.com
+
