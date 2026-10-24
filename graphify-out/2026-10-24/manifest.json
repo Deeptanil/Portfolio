@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1792840918.8113754,
-    "seen": 1792840970.2339504,
-    "ast_hash": "d88f278cdd9e31fb80e4f5e915eb634b",
+    "mtime": 1792842540.8093362,
+    "seen": 1792842610.1819534,
+    "ast_hash": "35f359e5e9bf64e3fd4f506ab854f81f",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {

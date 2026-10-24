@@ -43,32 +43,6 @@
       "source_location": "L3"
     },
     {
-      "id": "app_stores_themestore_theme",
-      "label": "Theme",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "hero/index.tsx",
-      "file_type": "code",
-      "norm_label": "theme",
-      "source_file": "app/stores/themeStore.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "app_stores_themestore_themestore",
-      "label": "ThemeStore",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "hero/index.tsx",
-      "file_type": "code",
-      "norm_label": "themestore",
-      "source_file": "app/stores/themeStore.ts",
-      "source_location": "L17"
-    },
-    {
       "id": "app_stores_soundstore_soundstore",
       "label": "SoundStore",
       "_callable": true,
@@ -80,6 +54,58 @@
       "norm_label": "soundstore",
       "source_file": "app/stores/soundStore.ts",
       "source_location": "L4"
+    },
+    {
+      "id": "app_stores_themestore_theme",
+      "label": "Theme",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "themeStore.ts",
+      "file_type": "code",
+      "norm_label": "theme",
+      "source_file": "app/stores/themeStore.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "app_stores_themestore_themestore",
+      "label": "ThemeStore",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "themeStore.ts",
+      "file_type": "code",
+      "norm_label": "themestore",
+      "source_file": "app/stores/themeStore.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "app_work_page_architem",
+      "label": "ArchItem",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "work/page.tsx",
+      "file_type": "code",
+      "norm_label": "architem",
+      "source_file": "app/work/page.tsx",
+      "source_location": "L67"
+    },
+    {
+      "id": "app_work_page_metricitem",
+      "label": "MetricItem",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "work/page.tsx",
+      "file_type": "code",
+      "norm_label": "metricitem",
+      "source_file": "app/work/page.tsx",
+      "source_location": "L62"
     },
     {
       "id": "app_work_page_skillcategory",
@@ -105,7 +131,7 @@
       "file_type": "code",
       "norm_label": "workitem",
       "source_file": "app/work/page.tsx",
-      "source_location": "L62"
+      "source_location": "L73"
     },
     {
       "id": "app_components_experience_gridtile_gridtileprops",
@@ -577,7 +603,19 @@
       "file_type": "code",
       "norm_label": "projectgallery()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L75"
+      "source_location": "L169"
+    },
+    {
+      "id": "app_work_page_techicon",
+      "label": "TechIcon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "work/page.tsx",
+      "file_type": "code",
+      "norm_label": "techicon()",
+      "source_file": "app/work/page.tsx",
+      "source_location": "L88"
     },
     {
       "id": "app_work_page_workpage",
@@ -589,7 +627,7 @@
       "file_type": "code",
       "norm_label": "workpage()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L327"
+      "source_location": "L425"
     },
     {
       "id": "app_components_experience_gridtile_gridtile",
@@ -945,28 +983,6 @@
       "norm_label": "usescrollstore",
       "source_file": "app/stores/scrollStore.ts",
       "source_location": "L14"
-    },
-    {
-      "id": "app_stores_themestore",
-      "label": "themeStore.ts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "hero/index.tsx",
-      "file_type": "code",
-      "norm_label": "themestore.ts",
-      "source_file": "app/stores/themeStore.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_stores_themestore_availablethemes",
-      "label": "AvailableThemes",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "hero/index.tsx",
-      "file_type": "code",
-      "norm_label": "availablethemes",
-      "source_file": "app/stores/themeStore.ts",
-      "source_location": "L9"
     },
     {
       "id": "app_stores_themestore_usethemestore",
@@ -1937,6 +1953,28 @@
       "source_file": "gsap"
     },
     {
+      "id": "app_stores_themestore",
+      "label": "themeStore.ts",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "themeStore.ts",
+      "file_type": "code",
+      "norm_label": "themestore.ts",
+      "source_file": "app/stores/themeStore.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_stores_themestore_availablethemes",
+      "label": "AvailableThemes",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "themeStore.ts",
+      "file_type": "code",
+      "norm_label": "availablethemes",
+      "source_file": "app/stores/themeStore.ts",
+      "source_location": "L9"
+    },
+    {
       "id": "package_devdependencies",
       "label": "devDependencies",
       "_origin": "ast",
@@ -2231,7 +2269,7 @@
       "file_type": "code",
       "norm_label": "work_experience",
       "source_file": "app/work/page.tsx",
-      "source_location": "L211"
+      "source_location": "L305"
     },
     {
       "id": "app_components_experience_gridtile",
@@ -3034,7 +3072,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L332",
+      "source_location": "L430",
       "weight": 1.0
     },
     {
@@ -3046,7 +3084,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L433",
+      "source_location": "L531",
       "weight": 1.0
     },
     {
@@ -5600,13 +5638,24 @@
     },
     {
       "source": "app_work_page",
+      "target": "app_work_page_projectgallery",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/work/page.tsx",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "app_work_page",
       "target": "app_work_page_work_experience",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L211",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -5617,7 +5666,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L327",
+      "source_location": "L425",
       "weight": 1.0
     },
     {
@@ -5633,7 +5682,7 @@
     },
     {
       "source": "app_work_page",
-      "target": "app_work_page_workitem",
+      "target": "app_work_page_metricitem",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5644,13 +5693,24 @@
     },
     {
       "source": "app_work_page",
-      "target": "app_work_page_projectgallery",
+      "target": "app_work_page_architem",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L75",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "app_work_page",
+      "target": "app_work_page_workitem",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/work/page.tsx",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -5662,6 +5722,17 @@
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "app_work_page",
+      "target": "app_work_page_techicon",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/work/page.tsx",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -6396,5 +6467,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9f6795dfc7293f632d598ded0c55efc94f3e26b6"
+  "built_at_commit": "a3337eada3f4c51c9d3fc65017e31b8f3bde23c6"
 }

@@ -310,12 +310,11 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://prettiva.co",
     buttonText: "Visit prettiva.co",
     screenshot: "/prettiva-screenshot.webp",
-    tags: ["MINIMALIST", "E-COMMERCE", "ODOO ERP", "PERFORMANCE"],
+    tags: ["MINIMALIST", "E-COMMERCE", "ODOO ERP"],
     metrics: [
-      { value: "12K+", label: "Monthly Users" },
+      { value: "12K+", label: "Monthly Visitors" },
       { value: "100/100", label: "PageSpeed SEO" },
-      { value: "45+", label: "Live Catalog" },
-      { value: "<1s", label: "Sub-Sec TTFB" }
+      { value: "45+", label: "Catalog Products" }
     ],
     architecture: [
       { name: "Odoo ERP", role: "Store Core", icon: "odoo" },
@@ -323,9 +322,9 @@ const WORK_EXPERIENCE: WorkItem[] = [
       { name: "HTML / CSS", role: "Template Overrides", icon: "react" }
     ],
     description: [
-      "Engineered a high-converting 45+ product e-commerce storefront on Odoo ERP handling 12K+ monthly visitors.",
-      "Injected custom embedded frontend code and responsive overrides to break through rigid template boundaries.",
-      "Optimized asset pipelines and catalog flows to reach a 100/100 Google PageSpeed SEO score."
+      "Engineered a commercial storefront on Odoo ERP handling high-volume consumer traffic.",
+      "Wrote custom embedded code and responsive CSS overrides to break through rigid native template restrictions.",
+      "Optimized catalog browsing and checkout funnels to maximize customer conversions."
     ]
   },
   {
@@ -335,25 +334,23 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://strayed.in",
     buttonText: "Visit strayed.in",
     screenshot: "/strayed-screenshot.webp",
-    tags: ["MINIMALIST", "HEADLESS DTC", "DOCKER & OCI", "NEXT.JS 15"],
+    tags: ["MINIMALIST", "HEADLESS DTC", "DOCKER & OCI"],
     metrics: [
-      { value: "90%", label: "Faster Load" },
-      { value: "Headless", label: "Decoupled Arch" },
-      { value: "Docker", label: "Multi-Container" },
-      { value: "Dual", label: "Stripe + Razorpay" }
+      { value: "1.4K+", label: "Monthly Organic Views" }
     ],
     architecture: [
       { name: "Next.js 15", role: "SSR Storefront", icon: "nextjs" },
-      { name: "Medusa v2", role: "Headless Core", icon: "headless" },
+      { name: "Medusa v2", role: "Headless Engine", icon: "headless" },
       { name: "Docker", role: "Containerized", icon: "docker" },
       { name: "Oracle OCI", role: "ARM Cloud Host", icon: "oci" },
       { name: "PostgreSQL", role: "Primary DB", icon: "postgresql" },
       { name: "Redis", role: "Cache Layer", icon: "redis" }
     ],
     description: [
-      "Architected a decoupled headless monorepo pairing an SSR Next.js 15 storefront with a Medusa v2 Node.js engine.",
-      "Self-hosted and containerized multi-service infrastructure on Oracle Cloud ARM with Nginx SSL reverse proxies.",
-      "Integrated dual payment gateways with webhook signatures and automated 3-stage cart recovery drip campaigns."
+      "Generated 1.4K+ organic monthly search visitors using an autonomous programmatic SEO and AI editorial pipeline.",
+      "Architected a decoupled headless monorepo pairing an SSR Next.js 15 storefront with a Medusa v2 Node.js backend engine.",
+      "Self-hosted containerized infrastructure on Oracle Cloud (OCI ARM) with Nginx SSL reverse proxies and Redis caching.",
+      "Implemented Stripe Elements, Razorpay webhook signature verification, and a 3-stage automated cart recovery drip."
     ]
   },
   {
@@ -365,20 +362,18 @@ const WORK_EXPERIENCE: WorkItem[] = [
     tags: ["GLASSMORPHISM", "MOBILE APP", "REACT NATIVE", "EXPO 57"],
     metrics: [
       { value: "13", label: "Native Screens" },
-      { value: "60 FPS", label: "UI Thread Motion" },
-      { value: "< ₹250", label: "Budget Filter" },
-      { value: "Offline", label: "Persisted Cart" }
+      { value: "60 FPS", label: "UI Thread Motion" }
     ],
     architecture: [
-      { name: "React Native", role: "Mobile App", icon: "react" },
-      { name: "Expo 57", role: "Native Engine", icon: "mobile" },
-      { name: "Reanimated", role: "60fps Worklets", icon: "api" },
-      { name: "AsyncStorage", role: "Local Cache", icon: "database" }
+      { name: "React Native", role: "Mobile Framework", icon: "react" },
+      { name: "Expo 57", role: "Toolchain & SDK", icon: "mobile" },
+      { name: "Reanimated", role: "UI Thread Motion", icon: "api" },
+      { name: "AsyncStorage", role: "Offline State", icon: "database" }
     ],
     description: [
-      "Engineered a 13-screen culinary discovery mobile app on React Native 0.86, React 19, and Expo SDK 57.",
-      "Designed a floating translucent dock navigation bar with dynamic backdrop blur and tactile haptic feedback.",
-      "Implemented budget filters ('Under ₹250', Late Night, Street) alongside geolocation lookups and offline state."
+      "13-screen mobile culinary discovery app built on React Native 0.86, React 19, and Expo SDK 57.",
+      "Designed an Apple-inspired floating dock navigation with dynamic blur and tactile haptic feedback.",
+      "Mood-driven discovery filters with geolocation distance calculations and offline-first cart persistence."
     ]
   },
   {
@@ -386,15 +381,11 @@ const WORK_EXPERIENCE: WorkItem[] = [
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
     tags: ["ACADEMICS", "COMPUTER SCIENCE", "B.TECH IT"],
-    metrics: [
-      { value: "'28", label: "Graduating Class" },
-      { value: "IT & CS", label: "Specialization" }
-    ],
     url: "https://www.manipal.edu/mu/campuses/mahe-bengaluru/academics/institution-list/mit-blr.html",
     buttonText: "Visit manipal.edu",
     description: [
-      "Pursuing B.Tech in IT focusing on Data Structures, Algorithms, Distributed Systems, and Web Engineering.",
-      "Maintaining strong academic standing while engineering real-world scalable production web and mobile apps."
+      "Pursuing B.Tech in IT with core focus on Data Structures, Algorithms, Distributed Systems, and Web Engineering.",
+      "Applying academic principles to deploy real-world production web and mobile software."
     ]
   },
   {
@@ -402,15 +393,11 @@ const WORK_EXPERIENCE: WorkItem[] = [
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
     tags: ["CERTIFICATION", "HUMAN-CENTERED DESIGN", "UX RESEARCH"],
-    metrics: [
-      { value: "UX / UI", label: "Certification" },
-      { value: "Google", label: "Credential" }
-    ],
     url: "https://www.coursera.org/professional-certificates/google-ux-design",
     buttonText: "View Course",
     description: [
-      "Pursuing professional certification covering end-to-end UX research, wireframing, and usability testing.",
-      "Applying human-centered design principles and accessibility standards to production web applications."
+      "Undergoing professional certification covering end-to-end UX research, wireframing, high-fidelity prototyping, and usability testing.",
+      "Applying human-centered design principles and accessibility standards to modern digital products."
     ]
   },
   {
@@ -631,11 +618,11 @@ export default function WorkPage() {
 
             {/* Infographic Data Points HUD */}
             {item.metrics && item.metrics.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              <div className="flex flex-wrap justify-center gap-2.5 pt-1">
                 {item.metrics.map((m, mIdx) => (
                   <div
                     key={mIdx}
-                    className="p-2 sm:p-2.5 bg-[#1b1713]/90 border border-black shadow-[inset_1px_1px_0px_#555555,inset_-1px_-1px_0px_#111111] flex flex-col items-center justify-center text-center"
+                    className="min-w-[130px] sm:min-w-[160px] px-3.5 py-2 bg-[#1b1713]/90 border border-black shadow-[inset_1px_1px_0px_#555555,inset_-1px_-1px_0px_#111111] flex flex-col items-center justify-center text-center"
                   >
                     <span
                       className="text-base sm:text-xl font-bold font-minecraft-regular text-[#ffff55]"
