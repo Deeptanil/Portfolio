@@ -685,8 +685,11 @@ export default function WorkPage() {
                     className="min-w-[130px] sm:min-w-[160px] px-3.5 py-2 bg-[#1b1713]/90 border border-black shadow-[inset_1px_1px_0px_#555555,inset_-1px_-1px_0px_#111111] flex flex-col items-center justify-center text-center"
                   >
                     <span
-                      className="text-base sm:text-xl font-bold font-minecraft-regular text-[#ffff55]"
-                      style={{ textShadow: '1px 1px 0px #000000' }}
+                      className="text-base sm:text-2xl font-normal font-minecraft-regular text-[#ffff55]"
+                      style={{
+                        textShadow: '2px 2px 0px #000000',
+                        imageRendering: 'pixelated',
+                      }}
                     >
                       {m.value}
                     </span>

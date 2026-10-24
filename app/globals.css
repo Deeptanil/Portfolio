@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: 'MinecraftRegular';
+  src: url('/fonts/MinecraftBold-nMK1.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Minecraft';
   src: url('/fonts/MinecraftRegular-Bmg3.woff2') format('woff2');
   font-weight: 400;
