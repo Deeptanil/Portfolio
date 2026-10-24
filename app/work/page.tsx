@@ -76,6 +76,7 @@ interface WorkItem {
   date: string;
   url?: string;
   buttonText?: string;
+  githubUrl?: string;
   screenshot?: string;
   screenshots?: string[];
   tags?: string[];
@@ -155,6 +156,19 @@ function TechIcon({ name }: { name: string }) {
       return (
         <svg className={iconClass} viewBox="0 0 24 24" fill="#38bdf8">
           <path d="M12 2C6.48 2 2 3.79 2 6v12c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 2c4.42 0 8 1.34 8 2s-3.58 2-8 2-8-1.34-8-2 3.58-2 8-2zm0 16c-4.42 0-8-1.34-8-2v-2.18c2.08 1.34 5.06 2.18 8 2.18s5.92-.84 8-2.18V18c0 .66-3.58 2-8 2zm0-4c-4.42 0-8-1.34-8-2v-2.18c2.08 1.34 5.06 2.18 8 2.18s5.92-.84 8-2.18V14c0 .66-3.58 2-8 2z"/>
+        </svg>
+      );
+    case 'python':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#3776ab">
+          <path d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.006 2.75h5.8v.825H3.852S0 5.787 0 11.906c0 6.12 3.36 5.906 3.36 5.906h2.006v-2.812s-.11-3.36 3.3-3.36h5.663s3.206.052 3.206-3.118V2.656S18.008 0 11.914 0zm-3.2 1.697a1.01 1.01 0 110 2.02 1.01 1.01 0 010-2.02zM12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.006-2.75h-5.8v-.825h8.154S24 18.213 24 12.094c0-6.12-3.36-5.906-3.36-5.906h-2.006v2.812s.11 3.36-3.3 3.36H9.67s-3.206-.052-3.206 3.118v5.869S5.992 24 12.086 24zm3.2-1.697a1.01 1.01 0 110-2.02 1.01 1.01 0 010 2.02z"/>
+        </svg>
+      );
+    case 'security':
+    case 'shield':
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="#00ff66">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
         </svg>
       );
     default:
@@ -356,6 +370,33 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    title: "FILEGUARD",
+    subtitle: "Lead Security Architect & Full-Stack Developer",
+    date: "2026 • SECURITY PLATFORM",
+    url: "https://files.deeptanil.in",
+    buttonText: "Visit files.deeptanil.in",
+    githubUrl: "https://github.com/Deeptanil/FileGuard.git",
+    tags: ["NEO-BRUTALIST", "CYBERPUNK", "ZERO-KNOWLEDGE", "PYTHON & FLASK"],
+    metrics: [
+      { value: "12h", label: "Self-Destruct TTL" },
+      { value: "SHA-256", label: "Cryptographic Gate" },
+      { value: "10-Thread", label: "Parallel B2 S3" },
+      { value: "42", label: "Automated Tests" }
+    ],
+    architecture: [
+      { name: "Python 3.14", role: "Flask Engine", icon: "python" },
+      { name: "Neon Postgres", role: "Serverless DB", icon: "postgresql" },
+      { name: "Backblaze B2", role: "S3 Object Store", icon: "database" },
+      { name: "SHA-256 Gate", role: "Pre-Flight Audit", icon: "security" }
+    ],
+    description: [
+      "Zero-knowledge ephemeral file and folder sharing platform with automatic in-memory streaming ZIP bundling.",
+      "Pre-flight SHA-256 cryptographic integrity gate blocking tampered cloud storage bytes with HTTP 409 before download.",
+      "High-speed 10-thread parallel S3 multipart transfers to Backblaze B2 with IPv4/IPv6 subnet quota enforcement.",
+      "Client-side ephemeral vault maintaining full upload/view history locally with instant one-click remote revocation."
+    ]
+  },
+  {
     title: "PLATTER",
     subtitle: "Lead Mobile Architect & Product Designer",
     date: "2026 • FEATURED MOBILE APP",
@@ -411,11 +452,11 @@ const WORK_EXPERIENCE: WorkItem[] = [
     skillsList: [
       {
         category: "Languages & Frameworks:",
-        items: "JavaScript, TypeScript, React, React Native, Next.js 15, Node.js, Expo, Medusa v2, Odoo ERP, HTML5, CSS3/Tailwind CSS, PostgreSQL, Redis, Supabase, C, Python, Java, REST APIs"
+        items: "JavaScript, TypeScript, Python (Flask), React, React Native, Next.js 15, Node.js, Expo, Medusa v2, Odoo ERP, HTML5, CSS3/Tailwind CSS, PostgreSQL, Redis, Supabase, C, Java, REST APIs"
       },
       {
         category: "Engineering, Cloud & Design:",
-        items: "Full-Stack & Headless Architecture, Docker Compose, Oracle Cloud (OCI), Nginx, Web Performance & SEO, GSAP, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
+        items: "Full-Stack & Headless Architecture, Cryptographic Security & SHA-256 Gates, Docker Compose, Backblaze B2, Oracle Cloud (OCI), Neon Postgres, Pytest (42 Automated Tests), Nginx, Web Performance & SEO, GSAP, UI/UX Design, Git/GitHub, AI-Assisted Engineering (Codex, Antigravity, Claude Code)"
       }
     ]
   }
@@ -709,26 +750,47 @@ export default function WorkPage() {
               </div>
             )}
 
-            {/* Optional Website Link Button with standardized proportions */}
-            {item.url && (
-              <div className="pt-2 flex justify-center">
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[190px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
-                  style={{
-                    backgroundColor: '#707070',
-                    border: '2px solid #000000',
-                    outline: 'none',
-                    boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
-                    fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
-                    textShadow: '2px 2px 0px #373737',
-                    imageRendering: 'pixelated',
-                  }}
-                >
-                  <span>{preventOrphans(item.buttonText || "Visit Website")}</span>
-                </a>
+            {/* Optional Website Link & GitHub Buttons with standardized proportions */}
+            {(item.url || item.githubUrl) && (
+              <div className="pt-2 flex flex-wrap justify-center gap-3">
+                {item.url && (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center min-w-[160px] sm:min-w-[190px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                    style={{
+                      backgroundColor: '#707070',
+                      border: '2px solid #000000',
+                      outline: 'none',
+                      boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                      fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                      textShadow: '2px 2px 0px #373737',
+                      imageRendering: 'pixelated',
+                    }}
+                  >
+                    <span>{preventOrphans(item.buttonText || "Visit Website")}</span>
+                  </a>
+                )}
+                {item.githubUrl && (
+                  <a
+                    href={item.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
+                    style={{
+                      backgroundColor: '#505050',
+                      border: '2px solid #000000',
+                      outline: 'none',
+                      boxShadow: 'inset 2px 2px 0px 0px #ffffff, inset -2px -2px 0px 0px #373737',
+                      fontFamily: '"Minecraft Regular", "MinecraftRegular-Bmg3", monospace',
+                      textShadow: '2px 2px 0px #373737',
+                      imageRendering: 'pixelated',
+                    }}
+                  >
+                    <span>{preventOrphans("View GitHub")}</span>
+                  </a>
+                )}
               </div>
             )}
           </div>
