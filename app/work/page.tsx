@@ -393,6 +393,14 @@ const WORK_EXPERIENCE: WorkItem[] = [
     url: "https://files.deeptanil.in",
     buttonText: "Visit files.deeptanil.in",
     githubUrl: "https://github.com/Deeptanil/FileGuard.git",
+    screenshot: "/projects/fileguard/fileguard-upload.webp",
+    screenshots: [
+      "/projects/fileguard/fileguard-upload.webp",
+      "/projects/fileguard/fileguard-download.webp",
+      "/projects/fileguard/fileguard-unlock.webp",
+      "/projects/fileguard/fileguard-vault.webp",
+      "/projects/fileguard/fileguard-expired.webp",
+    ],
     tags: ["NEO-BRUTALIST", "CYBERPUNK", "ZERO-KNOWLEDGE", "PYTHON & FLASK"],
     metrics: [
       { value: "12h", label: "Self-Destruct TTL" },

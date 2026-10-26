@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1792862837.8751183,
-    "seen": 1792863089.5630057,
-    "ast_hash": "639fb8f26c025a2bed0451fa0c336910",
+    "mtime": 1793007441.635342,
+    "seen": 1793007519.939411,
+    "ast_hash": "a65c3b6e296be6571aa1b51403f0032b",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -579,6 +579,36 @@
     "mtime": 1792858827.209,
     "seen": 1792858934.3771815,
     "ast_hash": "0eb55cbe3fe28045c4d5621c62f8bc83",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-download.webp": {
+    "mtime": 1793007419.744,
+    "seen": 1793007519.9395335,
+    "ast_hash": "87f7121435bc9e9af6e83dc5cf493cbe",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-expired.webp": {
+    "mtime": 1793007419.83,
+    "seen": 1793007519.939536,
+    "ast_hash": "1435e0779ff01473b85c685db8d12607",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-unlock.webp": {
+    "mtime": 1793007419.686,
+    "seen": 1793007519.9395387,
+    "ast_hash": "2ec27100937b3fd27cbe58afaf6e9f71",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-upload.webp": {
+    "mtime": 1793007419.702,
+    "seen": 1793007519.939541,
+    "ast_hash": "3db1bccc0892fe805785520aa9f2a6dd",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-vault.webp": {
+    "mtime": 1793007419.747,
+    "seen": 1793007519.939543,
+    "ast_hash": "ad41705252b441a6a67f50e47d15b4d2",
     "semantic_hash": ""
   }
 }
