@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1793008299.8296688,
-    "seen": 1793008405.8748617,
-    "ast_hash": "f1947fbedb3b20bf4b7f8897df07da4b",
+    "mtime": 1793008705.0777845,
+    "seen": 1793008781.5800426,
+    "ast_hash": "1c09c93c06991d0d740b48b0f90c7105",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -651,6 +651,12 @@
     "mtime": 1793008114.582,
     "seen": 1793008405.8751261,
     "ast_hash": "498feb9156c43424dc363c2b0c9265fc",
+    "semantic_hash": ""
+  },
+  "public/projects/fileguard/fileguard-hero.webp": {
+    "mtime": 1793008506.428,
+    "seen": 1793008638.2713282,
+    "ast_hash": "df5a07cc7d66e0318e36dac083e059ac",
     "semantic_hash": ""
   }
 }
