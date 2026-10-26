@@ -79,6 +79,7 @@ interface WorkItem {
   githubUrl?: string;
   screenshot?: string;
   screenshots?: string[];
+  galleryAspect?: 'landscape' | 'portrait';
   tags?: string[];
   metrics?: MetricItem[];
   architecture?: ArchItem[];
@@ -180,17 +181,30 @@ function TechIcon({ name }: { name: string }) {
   }
 }
 
-function ProjectGallery({ images, title }: { images: string[]; title: string }) {
+function ProjectGallery({
+  images,
+  title,
+  aspect = 'landscape',
+}: {
+  images: string[];
+  title: string;
+  aspect?: 'landscape' | 'portrait';
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   if (!images || images.length === 0) return null;
 
+  const containerClasses =
+    aspect === 'portrait'
+      ? 'relative overflow-hidden w-full max-w-[280px] sm:max-w-[310px] mx-auto aspect-[400/860] bg-black/40'
+      : 'relative overflow-hidden w-full aspect-[16/10] bg-black/40';
+
   if (images.length === 1) {
     return (
       <div className="pt-2">
         <div
-          className="relative w-full aspect-[16/10] overflow-hidden bg-black/40"
+          className={containerClasses}
           style={{
             border: '9px solid #3b2415',
             boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
@@ -233,7 +247,7 @@ function ProjectGallery({ images, title }: { images: string[]; title: string }) 
     <div className="pt-2 w-full space-y-2">
       {/* 1 image at a time scrolling container */}
       <div
-        className="relative overflow-hidden w-full aspect-[16/10] bg-black/40"
+        className={containerClasses}
         style={{
           border: '9px solid #3b2415',
           boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
@@ -427,6 +441,17 @@ const WORK_EXPERIENCE: WorkItem[] = [
     date: "2026 • FEATURED MOBILE APP",
     url: "https://platter.deeptanil.in/",
     buttonText: "Visit platter.deeptanil.in",
+    screenshot: "/projects/platter/platter-1-splash.webp",
+    screenshots: [
+      "/projects/platter/platter-1-splash.webp",
+      "/projects/platter/platter-2-home-dark.webp",
+      "/projects/platter/platter-3-restaurant.webp",
+      "/projects/platter/platter-4-cart.webp",
+      "/projects/platter/platter-5-success.webp",
+      "/projects/platter/platter-6-home-light.webp",
+      "/projects/platter/platter-7-healthy.webp",
+    ],
+    galleryAspect: "portrait",
     tags: ["GLASSMORPHISM", "MOBILE APP", "REACT NATIVE", "EXPO 57"],
     metrics: [
       { value: "13", label: "Native Screens" },
@@ -682,6 +707,7 @@ export default function WorkPage() {
                   : []
               }
               title={item.title}
+              aspect={item.galleryAspect}
             />
 
             {/* Infographic Data Points HUD */}

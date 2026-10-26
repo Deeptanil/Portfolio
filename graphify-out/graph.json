@@ -627,7 +627,7 @@
       "file_type": "code",
       "norm_label": "projectgallery()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L183"
+      "source_location": "L184"
     },
     {
       "id": "app_work_page_techicon",
@@ -639,7 +639,7 @@
       "file_type": "code",
       "norm_label": "techicon()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L89"
+      "source_location": "L90"
     },
     {
       "id": "app_work_page_workpage",
@@ -651,7 +651,7 @@
       "file_type": "code",
       "norm_label": "workpage()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L490"
+      "source_location": "L515"
     },
     {
       "id": "app_components_experience_gridtile_gridtile",
@@ -2359,7 +2359,7 @@
       "file_type": "code",
       "norm_label": "work_experience",
       "source_file": "app/work/page.tsx",
-      "source_location": "L323"
+      "source_location": "L337"
     },
     {
       "id": "app_components_experience_gridtile",
@@ -3129,7 +3129,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L495",
+      "source_location": "L520",
       "weight": 1.0
     },
     {
@@ -3141,7 +3141,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L596",
+      "source_location": "L621",
       "weight": 1.0
     },
     {
@@ -5759,7 +5759,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L183",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -5770,7 +5770,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L323",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
@@ -5781,7 +5781,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L490",
+      "source_location": "L515",
       "weight": 1.0
     },
     {
@@ -5847,7 +5847,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -6593,5 +6593,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "099887ffb749e813dc7cd3ff267df9fbec169ba0"
+  "built_at_commit": "98b2f5e1901361be0eebe250996a80048dbf61a8"
 }

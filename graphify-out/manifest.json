@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1793007441.635342,
-    "seen": 1793007519.939411,
-    "ast_hash": "a65c3b6e296be6571aa1b51403f0032b",
+    "mtime": 1793008299.8296688,
+    "seen": 1793008405.8748617,
+    "ast_hash": "f1947fbedb3b20bf4b7f8897df07da4b",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -609,6 +609,48 @@
     "mtime": 1793007419.747,
     "seen": 1793007519.939543,
     "ast_hash": "ad41705252b441a6a67f50e47d15b4d2",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-1-splash.webp": {
+    "mtime": 1793008111.607,
+    "seen": 1793008405.8751,
+    "ast_hash": "75d0b23be04b9c799279f1c7330f624c",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-2-home-dark.webp": {
+    "mtime": 1793008112.095,
+    "seen": 1793008405.8751054,
+    "ast_hash": "ad0cd022806a8c435aa34a65a8fff9b6",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-3-restaurant.webp": {
+    "mtime": 1793008112.807,
+    "seen": 1793008405.87511,
+    "ast_hash": "1930ab02980f45a0f1295603db22825d",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-4-cart.webp": {
+    "mtime": 1793008113.245,
+    "seen": 1793008405.8751144,
+    "ast_hash": "de23540f8ebefcf1bbaf8d1977c3637a",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-5-success.webp": {
+    "mtime": 1793008113.477,
+    "seen": 1793008405.8751185,
+    "ast_hash": "72f4461e7209bd94908eadd696e86acb",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-6-home-light.webp": {
+    "mtime": 1793008113.843,
+    "seen": 1793008405.875122,
+    "ast_hash": "d7ec89b30b8d7687ad3d2194e7caf5a6",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-7-healthy.webp": {
+    "mtime": 1793008114.582,
+    "seen": 1793008405.8751261,
+    "ast_hash": "498feb9156c43424dc363c2b0c9265fc",
     "semantic_hash": ""
   }
 }
