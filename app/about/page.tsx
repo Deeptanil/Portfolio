@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import posthog from 'posthog-js';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import VideoBackground from '../components/common/VideoBackground';
 
@@ -60,6 +61,7 @@ function EmailButton() {
   const handleClick = () => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+      posthog.capture('email_copied', { location: 'about_page' });
     }
     setCopied(true);
     setTimeout(() => {

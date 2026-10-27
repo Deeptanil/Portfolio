@@ -6,8 +6,8 @@
   "4": "work/page.tsx",
   "5": "useIsMobile",
   "6": "assetPreloader.ts",
-  "7": "paths",
-  "9": "package.json",
+  "7": "include",
+  "8": "send-weekly-summary.js",
   "10": "app/layout.tsx",
   "11": "work/layout.tsx",
   "12": "about/layout.tsx",
@@ -21,6 +21,5 @@
   "20": "workflows/graphify.md",
   "21": "CLAUDE.md",
   "22": "copilot-instructions.md",
-  "23": "gsap",
-  "24": "themeStore.ts"
+  "23": "gsap"
 }

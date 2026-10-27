@@ -4,6 +4,7 @@ import { Html, Image, Text, useCursor, useScroll, useTexture } from "@react-thre
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import * as THREE from "three";
 import { FOOTER_LINKS } from "@constants";
 import { FooterLink } from "@types";
@@ -40,6 +41,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
     if (link.name.toLowerCase() === 'email' || link.url.startsWith('mailto:')) {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+        posthog.capture('email_copied', { location: 'footer' });
       }
       onToast('Copied Email Address!', clientX, clientY);
 
@@ -62,6 +64,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
     }
 
     if (link.download || link.url.endsWith('.pdf')) {
+      posthog.capture('resume_downloaded', { location: 'footer' });
       const a = document.createElement('a');
       a.href = link.url;
       a.download = 'Deeptanil_Sinha_Resume.pdf';
@@ -69,6 +72,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
       a.click();
       a.remove();
     } else {
+      posthog.capture('external_link_clicked', { link: link.name, url: link.url });
       window.open(link.url, '_blank');
     }
   };

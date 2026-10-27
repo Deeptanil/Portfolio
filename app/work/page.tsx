@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import posthog from 'posthog-js';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import VideoBackground from '../components/common/VideoBackground';
 
@@ -17,6 +18,7 @@ function EmailButton() {
   const handleClick = () => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText('deeptanilsinha27@gmail.com');
+      posthog.capture('email_copied', { location: 'work_page' });
     }
     setCopied(true);
     setTimeout(() => {
@@ -807,6 +809,11 @@ export default function WorkPage() {
                 {item.url && (
                   <a
                     href={item.url}
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        posthog.capture('project_website_clicked', { project: item.title, url: item.url });
+                      }
+                    }}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[180px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
@@ -826,6 +833,11 @@ export default function WorkPage() {
                 {item.githubUrl && (
                   <a
                     href={item.githubUrl}
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        posthog.capture('project_github_clicked', { project: item.title, url: item.githubUrl });
+                      }
+                    }}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center min-w-[150px] sm:min-w-[180px] h-[36px] sm:h-[42px] px-5 sm:px-6 select-none font-minecraft-regular text-xs sm:text-sm text-white hover:text-[#ffff55] hover:bg-[#8b8b8b] transition-colors cursor-pointer active:translate-y-[1px]"
