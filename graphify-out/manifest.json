@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1793104963.324067,
-    "seen": 1793105444.7537518,
-    "ast_hash": "c5c267f0661b3c7e7cd415de77ae1a1a",
+    "mtime": 1793195994.4567661,
+    "seen": 1793196096.098576,
+    "ast_hash": "953344bc47ae6311968886f2bd7c0f9f",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -611,48 +611,6 @@
     "ast_hash": "ad41705252b441a6a67f50e47d15b4d2",
     "semantic_hash": ""
   },
-  "public/projects/platter/platter-1-splash.webp": {
-    "mtime": 1793008111.607,
-    "seen": 1793008405.8751,
-    "ast_hash": "75d0b23be04b9c799279f1c7330f624c",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-2-home-dark.webp": {
-    "mtime": 1793008112.095,
-    "seen": 1793008405.8751054,
-    "ast_hash": "ad0cd022806a8c435aa34a65a8fff9b6",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-3-restaurant.webp": {
-    "mtime": 1793008112.807,
-    "seen": 1793008405.87511,
-    "ast_hash": "1930ab02980f45a0f1295603db22825d",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-4-cart.webp": {
-    "mtime": 1793008113.245,
-    "seen": 1793008405.8751144,
-    "ast_hash": "de23540f8ebefcf1bbaf8d1977c3637a",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-5-success.webp": {
-    "mtime": 1793008113.477,
-    "seen": 1793008405.8751185,
-    "ast_hash": "72f4461e7209bd94908eadd696e86acb",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-6-home-light.webp": {
-    "mtime": 1793008113.843,
-    "seen": 1793008405.875122,
-    "ast_hash": "d7ec89b30b8d7687ad3d2194e7caf5a6",
-    "semantic_hash": ""
-  },
-  "public/projects/platter/platter-7-healthy.webp": {
-    "mtime": 1793008114.582,
-    "seen": 1793008405.8751261,
-    "ast_hash": "498feb9156c43424dc363c2b0c9265fc",
-    "semantic_hash": ""
-  },
   "public/projects/fileguard/fileguard-hero.webp": {
     "mtime": 1793008506.428,
     "seen": 1793008638.2713282,
@@ -669,6 +627,36 @@
     "mtime": 1793105404.6378548,
     "seen": 1793105444.7537932,
     "ast_hash": "7acd29477f9600aa056faa8190140b79",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-1.webp": {
+    "mtime": 1793195956.87,
+    "seen": 1793196096.0988014,
+    "ast_hash": "aef0cb3bfbdfb7d3f401b7e728a4d6c7",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-2.webp": {
+    "mtime": 1793195956.861,
+    "seen": 1793196096.0988057,
+    "ast_hash": "3bfcf0510816a8ea9975d0d985a2f1e7",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-3.webp": {
+    "mtime": 1793195956.875,
+    "seen": 1793196096.09881,
+    "ast_hash": "a1238c9cdf5f06a43b5a5884d2c22fa2",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-4.webp": {
+    "mtime": 1793195956.879,
+    "seen": 1793196096.0988135,
+    "ast_hash": "6e201e0deb143b3a9192d1ce44f643fe",
+    "semantic_hash": ""
+  },
+  "public/projects/platter/platter-5.webp": {
+    "mtime": 1793195956.948,
+    "seen": 1793196096.0988169,
+    "ast_hash": "d37fa4a6d198242971943bf709212c5f",
     "semantic_hash": ""
   }
 }

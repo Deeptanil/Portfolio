@@ -1,0 +1,370 @@
+{
+  "communities": {
+    "0": [
+      "app_components_common_scrollhint",
+      "app_components_common_scrollhint_scrollhint",
+      "app_components_common_themeswitcher",
+      "app_components_common_themeswitcher_themeswitcher",
+      "app_components_hero_index",
+      "app_components_hero_index_hero",
+      "app_components_hero_index_skipbutton3d",
+      "app_components_hero_textwindow",
+      "app_components_hero_textwindow_textwindow",
+      "app_components_models_minecraftbee",
+      "app_components_models_minecraftbee_minecraftbee",
+      "app_components_models_minecraftphantom",
+      "app_components_models_minecraftphantom_minecraftphantom",
+      "app_components_models_minecraftsky",
+      "app_components_models_minecraftsky_cloudtreadmill",
+      "app_components_models_minecraftsky_createsceneclone",
+      "app_components_models_minecraftsky_minecraftsky",
+      "app_components_models_minecraftstars",
+      "app_components_models_minecraftstars_minecraftstars",
+      "app_components_models_stars",
+      "app_components_models_stars_starscontainer",
+      "app_components_models_windowmodel",
+      "app_components_models_windowmodel_gltfresult",
+      "app_components_models_windowmodel_windowmodel",
+      "app_stores_index",
+      "app_stores_portalstore",
+      "app_stores_portalstore_portalstore",
+      "app_stores_scrollstore",
+      "app_stores_scrollstore_scrollstore",
+      "app_stores_scrollstore_usescrollstore",
+      "app_stores_themestore",
+      "app_stores_themestore_availablethemes",
+      "app_stores_themestore_theme",
+      "app_stores_themestore_themestore",
+      "app_stores_themestore_usethemestore"
+    ],
+    "1": [
+      "ref_app_constants",
+      "ref_app_stores",
+      "ref_app_types",
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_paths_constants",
+      "tsconfig_paths_stores",
+      "tsconfig_paths_types"
+    ],
+    "2": [
+      "gsap",
+      "gsap_react",
+      "next",
+      "package_dependencies",
+      "package_dependencies_gsap",
+      "package_dependencies_gsap_react",
+      "package_dependencies_next",
+      "package_dependencies_react",
+      "package_dependencies_react_device_detect",
+      "package_dependencies_react_dom",
+      "package_dependencies_react_three_drei",
+      "package_dependencies_react_three_fiber",
+      "package_dependencies_three",
+      "package_dependencies_vercel_analytics",
+      "package_dependencies_zustand",
+      "react",
+      "react_device_detect",
+      "react_dom",
+      "react_three_drei",
+      "react_three_fiber",
+      "three",
+      "vercel_analytics",
+      "zustand"
+    ],
+    "3": [
+      "eslint",
+      "eslint_config_next",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_types_three",
+      "package_devdependencies_typescript",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "types_three",
+      "typescript"
+    ],
+    "4": [
+      "app_about_page",
+      "app_about_page_about_sections",
+      "app_about_page_aboutpage",
+      "app_about_page_credits",
+      "app_about_page_creditspopup",
+      "app_about_page_preventorphans",
+      "app_components_common_scrollwrapper",
+      "app_components_common_scrollwrapper_runautoscrolltobottom",
+      "app_components_common_scrollwrapper_scrollwrapper",
+      "app_hooks_useprefersreducedmotion",
+      "app_hooks_useprefersreducedmotion_getserversnapshot",
+      "app_hooks_useprefersreducedmotion_getsnapshot",
+      "app_hooks_useprefersreducedmotion_subscribe",
+      "app_hooks_useprefersreducedmotion_useprefersreducedmotion",
+      "app_work_page",
+      "app_work_page_preventorphans",
+      "app_work_page_work_experience",
+      "app_work_page_workpage"
+    ],
+    "5": [
+      "app_components_experience_gridtile",
+      "app_components_experience_gridtile_gridtile",
+      "app_components_experience_gridtile_gridtileprops",
+      "app_components_experience_index",
+      "app_components_experience_index_experience",
+      "app_components_experience_projects_index",
+      "app_components_experience_projects_index_projects",
+      "app_components_experience_work_index",
+      "app_components_experience_work_index_work",
+      "app_hooks_useismobile",
+      "app_hooks_useismobile_getserversnapshot",
+      "app_hooks_useismobile_getsnapshot",
+      "app_hooks_useismobile_subscribe",
+      "app_hooks_useismobile_useismobile",
+      "app_stores_portalstore_useportalstore"
+    ],
+    "6": [
+      "app_components_common_canvasloader",
+      "app_components_common_canvasloader_canvasloader",
+      "app_components_common_progressloader",
+      "app_components_common_progressloader_progressloader",
+      "app_components_common_skiptoportfoliobutton",
+      "app_components_common_skiptoportfoliobutton_skiptoportfoliobutton",
+      "app_components_common_soundtoggle",
+      "app_components_common_soundtoggle_soundtoggle",
+      "app_components_common_soundtoggle_subwoofer_lullaby_notes",
+      "app_components_scene",
+      "app_components_scene_scene",
+      "app_page",
+      "app_page_home",
+      "app_page_scene"
+    ],
+    "7": [
+      "app_components_footer_index",
+      "app_components_footer_index_footer",
+      "app_components_footer_index_footerlinkitem",
+      "app_components_footer_index_toaststate",
+      "app_constants_footer",
+      "app_constants_footer_footer_links",
+      "app_constants_index",
+      "app_types_footer",
+      "app_types_footer_footerlink",
+      "app_types_index"
+    ],
+    "8": [
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "9": [
+      "package",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_version"
+    ],
+    "10": [
+      "app_layout",
+      "app_layout_cormorant",
+      "app_layout_jakarta",
+      "app_layout_metadata",
+      "app_layout_rootlayout",
+      "app_layout_syne",
+      "app_layout_viewport"
+    ],
+    "11": [
+      "app_work_layout",
+      "app_work_layout_jsonld",
+      "app_work_layout_metadata",
+      "app_work_layout_worklayout"
+    ],
+    "12": [
+      "app_about_layout",
+      "app_about_layout_aboutlayout",
+      "app_about_layout_metadata"
+    ],
+    "13": [
+      "app_components_experience_triangle",
+      "app_components_experience_triangle_trianglegeometry"
+    ],
+    "14": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "15": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "16": [
+      "postcss_config",
+      "postcss_config_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0907563025210084,
+    "1": 0.08,
+    "2": 0.08695652173913043,
+    "3": 0.10526315789473684,
+    "4": 0.1895424836601307,
+    "5": 0.3238095238095238,
+    "6": 0.1978021978021978,
+    "7": 0.28888888888888886,
+    "8": 0.2,
+    "9": 0.2222222222222222,
+    "10": 0.2857142857142857,
+    "11": 0.5,
+    "12": 0.6666666666666666,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "app_hooks_useismobile_useismobile",
+      "label": "useIsMobile()",
+      "degree": 15
+    },
+    {
+      "id": "app_stores_themestore_usethemestore",
+      "label": "useThemeStore",
+      "degree": 15
+    },
+    {
+      "id": "app_hooks_useprefersreducedmotion_useprefersreducedmotion",
+      "label": "usePrefersReducedMotion()",
+      "degree": 10
+    },
+    {
+      "id": "tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "app_components_common_scrollwrapper_scrollwrapper",
+      "label": "ScrollWrapper()",
+      "degree": 5
+    },
+    {
+      "id": "app_stores_scrollstore_usescrollstore",
+      "label": "useScrollStore",
+      "degree": 5
+    },
+    {
+      "id": "app_stores_portalstore_useportalstore",
+      "label": "usePortalStore",
+      "degree": 5
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "app_components_common_scrollhint_scrollhint",
+      "label": "ScrollHint()",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "FooterLinkItem()",
+      "target": "useIsMobile()",
+      "source_files": [
+        "app/components/footer/index.tsx",
+        "app/hooks/useIsMobile.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities; peripheral node `FooterLinkItem()` unexpectedly reaches hub `useIsMobile()`"
+    },
+    {
+      "source": "CanvasLoader()",
+      "target": "useThemeStore",
+      "source_files": [
+        "app/components/common/CanvasLoader.tsx",
+        "app/stores/themeStore.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "MinecraftBee()",
+      "target": "useThemeStore",
+      "source_files": [
+        "app/components/models/MinecraftBee.tsx",
+        "app/stores/themeStore.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `MinecraftBee()` unexpectedly reaches hub `useThemeStore`"
+    },
+    {
+      "source": "MinecraftPhantom()",
+      "target": "useThemeStore",
+      "source_files": [
+        "app/components/models/MinecraftPhantom.tsx",
+        "app/stores/themeStore.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `MinecraftPhantom()` unexpectedly reaches hub `useThemeStore`"
+    },
+    {
+      "source": "ScrollWrapper()",
+      "target": "useScrollStore",
+      "source_files": [
+        "app/components/common/ScrollWrapper.tsx",
+        "app/stores/scrollStore.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

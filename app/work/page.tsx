@@ -199,7 +199,7 @@ function ProjectGallery({
 
   const containerClasses =
     aspect === 'portrait'
-      ? 'relative overflow-hidden w-full max-w-[280px] sm:max-w-[310px] mx-auto aspect-[400/860] bg-black/40'
+      ? 'relative overflow-hidden w-full max-w-[280px] sm:max-w-[310px] mx-auto aspect-[471/1024] bg-black/40'
       : 'relative overflow-hidden w-full aspect-[16/10] bg-black/40';
 
   if (images.length === 1) {
@@ -444,15 +444,13 @@ const WORK_EXPERIENCE: WorkItem[] = [
     date: "2026 • FEATURED MOBILE APP",
     url: "https://platter.deeptanil.in/",
     buttonText: "Visit platter.deeptanil.in",
-    screenshot: "/projects/platter/platter-1-splash.webp",
+    screenshot: "/projects/platter/platter-1.webp",
     screenshots: [
-      "/projects/platter/platter-1-splash.webp",
-      "/projects/platter/platter-2-home-dark.webp",
-      "/projects/platter/platter-6-home-light.webp",
-      "/projects/platter/platter-3-restaurant.webp",
-      "/projects/platter/platter-7-healthy.webp",
-      "/projects/platter/platter-4-cart.webp",
-      "/projects/platter/platter-5-success.webp",
+      "/projects/platter/platter-1.webp",
+      "/projects/platter/platter-2.webp",
+      "/projects/platter/platter-3.webp",
+      "/projects/platter/platter-4.webp",
+      "/projects/platter/platter-5.webp",
     ],
     galleryAspect: "portrait",
     tags: ["GLASSMORPHISM", "MOBILE APP", "REACT NATIVE", "EXPO 57"],
