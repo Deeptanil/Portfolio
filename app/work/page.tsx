@@ -671,20 +671,22 @@ export default function WorkPage() {
         {/* Work Timeline Sections */}
         {WORK_EXPERIENCE.map((item, idx) => (
           <div key={idx} id={item.id} className="w-full space-y-4 max-w-2xl scroll-mt-24">
-            <h2
-              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular group relative flex items-center justify-center gap-2"
-              style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
-            >
-              <a
-                href={`#${item.id}`}
-                className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-[#ffff55] transition-opacity absolute -left-7 sm:-left-9 p-1 hover:scale-110 active:translate-y-[1px]"
-                title={`Permanent link to ${item.title}`}
-                aria-label={`Permanent link to ${item.title}`}
+            <div className="flex items-center justify-center">
+              <h2
+                className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular group inline-flex items-center gap-1.5"
+                style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
               >
-                #
-              </a>
-              <span>{preventOrphans(item.title)}</span>
-            </h2>
+                <span>{preventOrphans(item.title)}</span>
+                <a
+                  href={`#${item.id}`}
+                  className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-[#ffff55] text-lg sm:text-xl transition-opacity hover:scale-110 active:translate-y-[1px] select-none"
+                  title={`Permanent link to ${item.title}`}
+                  aria-label={`Permanent link to ${item.title}`}
+                >
+                  #
+                </a>
+              </h2>
+            </div>
 
             {/* Distinct Subtitle Badge */}
             <div className="flex justify-center">
