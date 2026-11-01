@@ -45,6 +45,25 @@
   --foreground: #ffffff;
 }
 
+/* Allow natural text selection on text content in /work and /about while keeping root canvas non-selectable */
+.selectable-content,
+.selectable-content p,
+.selectable-content span,
+.selectable-content h1,
+.selectable-content h2,
+.selectable-content h3,
+.selectable-content li {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.selectable-content ::selection {
+  background-color: #ffff55;
+  color: #000000;
+}
+
 * {
   -webkit-touch-callout: none;
   -webkit-user-select: none;

@@ -334,7 +334,7 @@ export default function AboutPage() {
 
   return (
     <main
-      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white [text-wrap:pretty]"
+      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white selectable-content [text-wrap:pretty]"
       style={{
         backgroundColor: "#24170d",
         backgroundImage: "url('/minecraft_dirt.webp')",
