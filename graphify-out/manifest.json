@@ -12,9 +12,9 @@
     "semantic_hash": "49ef67b170238cd6347a61c288cdc090"
   },
   "app/about/page.tsx": {
-    "mtime": 1793561260.11029,
-    "seen": 1793561685.1773598,
-    "ast_hash": "96ad0b0d3e778685326da3787d928c6d",
+    "mtime": 1793562376.1577382,
+    "seen": 1793562448.1702733,
+    "ast_hash": "35582d0ea07f485e7e964c3568277b20",
     "semantic_hash": ""
   },
   "app/components/Scene.tsx": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1793561551.270307,
-    "seen": 1793561685.1775873,
-    "ast_hash": "eddd254456f07614be921ff4306022d2",
+    "mtime": 1793562377.0732143,
+    "seen": 1793562448.170624,
+    "ast_hash": "54830f5ad0663a7b0f01f985e310d895",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {

@@ -403,20 +403,29 @@ export default function AboutPage() {
         {ABOUT_SECTIONS.map((item, idx) => (
           <div key={idx} id={item.id} className="w-full space-y-5 max-w-2xl scroll-mt-24">
             <div className="flex items-center justify-center">
-              <h2
-                className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular group inline-flex items-center gap-1.5"
-                style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
+              <a
+                href={`#${item.id}`}
+                className="group inline-flex items-center gap-1.5 focus:outline-none"
+                onClick={(e) => {
+                  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                    const url = `${window.location.origin}${window.location.pathname}#${item.id}`;
+                    navigator.clipboard.writeText(url);
+                  }
+                }}
               >
-                <span>{preventOrphans(item.title)}</span>
-                <a
-                  href={`#${item.id}`}
-                  className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-[#ffff55] text-lg sm:text-xl transition-opacity hover:scale-110 active:translate-y-[1px] select-none"
-                  title={`Permanent link to ${item.title}`}
-                  aria-label={`Permanent link to ${item.title}`}
+                <h2
+                  className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular cursor-pointer group-hover:text-[#ffff55] transition-colors"
+                  style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
+                >
+                  {preventOrphans(item.title)}
+                </h2>
+                <span
+                  className="opacity-0 group-hover:opacity-60 text-white/70 text-lg sm:text-xl transition-opacity select-none font-minecraft-regular"
+                  aria-hidden="true"
                 >
                   #
-                </a>
-              </h2>
+                </span>
+              </a>
             </div>
             <h3
               className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"
