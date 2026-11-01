@@ -605,7 +605,7 @@ export default function WorkPage() {
 
   return (
     <main
-      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white select-none [text-wrap:pretty]"
+      className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center text-white [text-wrap:pretty]"
       style={{
         backgroundColor: "#24170d",
         backgroundImage: "url('/minecraft_dirt.webp')",
