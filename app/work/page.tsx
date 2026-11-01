@@ -73,6 +73,7 @@ interface ArchItem {
 }
 
 interface WorkItem {
+  id: string;
   title: string;
   subtitle: string;
   date: string;
@@ -338,6 +339,7 @@ function ProjectGallery({
 
 const WORK_EXPERIENCE: WorkItem[] = [
   {
+    id: "prettiva",
     title: "PRETTIVA & CO.",
     subtitle: "Co-Founder & Digital Director",
     date: "2026 - PRESENT",
@@ -369,6 +371,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "strayed",
     title: "STRAYED",
     subtitle: "Co-Founder & Technical Director",
     date: "2025 - PRESENT",
@@ -403,6 +406,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "fileguard",
     title: "FILEGUARD",
     subtitle: "Lead Security Architect & Full-Stack Developer",
     date: "2026 • SECURITY PLATFORM",
@@ -439,6 +443,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "platter",
     title: "PLATTER",
     subtitle: "Lead Mobile Architect & Product Designer",
     date: "2026 • FEATURED MOBILE APP",
@@ -471,6 +476,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "mit-bengaluru",
     title: "MANIPAL INSTITUTE OF TECHNOLOGY, BENGALURU",
     subtitle: "B.Tech in Information Technology ('28)",
     date: "2024 - 2028",
@@ -483,6 +489,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "google-ux-design",
     title: "GOOGLE CAREER CERTIFICATES",
     subtitle: "Google UX Design Professional Certificate",
     date: "IN PROGRESS",
@@ -495,6 +502,7 @@ const WORK_EXPERIENCE: WorkItem[] = [
     ]
   },
   {
+    id: "skills",
     title: "SKILLS & TECHNOLOGIES",
     subtitle: "Core Engineering & Design Stack",
     date: "COMPETENCIES",
@@ -554,6 +562,10 @@ export default function WorkPage() {
     };
 
     const timer = setTimeout(() => {
+      // If user navigated directly to a specific section anchor, do not auto-scroll
+      if (typeof window !== 'undefined' && window.location.hash) {
+        return;
+      }
       isAutoScrollingRef.current = true;
       lastTimeRef.current = null;
       scrollAccumulatorRef.current = 0;
@@ -658,12 +670,20 @@ export default function WorkPage() {
 
         {/* Work Timeline Sections */}
         {WORK_EXPERIENCE.map((item, idx) => (
-          <div key={idx} className="w-full space-y-4 max-w-2xl">
+          <div key={idx} id={item.id} className="w-full space-y-4 max-w-2xl scroll-mt-24">
             <h2
-              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
+              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular group relative flex items-center justify-center gap-2"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
-              {preventOrphans(item.title)}
+              <a
+                href={`#${item.id}`}
+                className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-[#ffff55] transition-opacity absolute -left-7 sm:-left-9 p-1 hover:scale-110 active:translate-y-[1px]"
+                title={`Permanent link to ${item.title}`}
+                aria-label={`Permanent link to ${item.title}`}
+              >
+                #
+              </a>
+              <span>{preventOrphans(item.title)}</span>
             </h2>
 
             {/* Distinct Subtitle Badge */}

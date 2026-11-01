@@ -225,6 +225,7 @@ function CreditsPopup() {
 
 const ABOUT_SECTIONS = [
   {
+    id: "my-journey",
     title: "MY JOURNEY",
     subtitle: "Full-Stack Product Engineer",
     text: [
@@ -233,6 +234,7 @@ const ABOUT_SECTIONS = [
     ]
   },
   {
+    id: "what-drives-me",
     title: "WHAT DRIVES ME",
     subtitle: "Performance, Simplicity & Scale",
     text: [
@@ -240,6 +242,7 @@ const ABOUT_SECTIONS = [
     ]
   },
   {
+    id: "current-focus",
     title: "CURRENT FOCUS",
     subtitle: "Open to Engineering Opportunities",
     text: [
@@ -290,6 +293,10 @@ export default function AboutPage() {
     };
 
     const timer = setTimeout(() => {
+      // If user navigated directly to a specific section anchor, do not auto-scroll
+      if (typeof window !== 'undefined' && window.location.hash) {
+        return;
+      }
       isAutoScrollingRef.current = true;
       lastTimeRef.current = null;
       scrollAccumulatorRef.current = 0;
@@ -394,12 +401,20 @@ export default function AboutPage() {
 
         {/* About Sections */}
         {ABOUT_SECTIONS.map((item, idx) => (
-          <div key={idx} className="w-full space-y-5 max-w-2xl">
+          <div key={idx} id={item.id} className="w-full space-y-5 max-w-2xl scroll-mt-24">
             <h2
-              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular"
+              className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest font-minecraft-regular group relative flex items-center justify-center gap-2"
               style={{ textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000' }}
             >
-              {preventOrphans(item.title)}
+              <a
+                href={`#${item.id}`}
+                className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-[#ffff55] transition-opacity absolute -left-7 sm:-left-9 p-1 hover:scale-110 active:translate-y-[1px]"
+                title={`Permanent link to ${item.title}`}
+                aria-label={`Permanent link to ${item.title}`}
+              >
+                #
+              </a>
+              <span>{preventOrphans(item.title)}</span>
             </h2>
             <h3
               className="text-lg sm:text-xl font-medium text-white uppercase tracking-wider font-sans opacity-95"

@@ -65,6 +65,7 @@ const FooterLinkItem = ({ link, onToast }: { link: FooterLink; onToast: (msg: st
 
     if (link.download || link.url.endsWith('.pdf')) {
       posthog.capture('resume_downloaded', { location: 'footer' });
+      window.open(link.url, '_blank');
       const a = document.createElement('a');
       a.href = link.url;
       a.download = 'Deeptanil_Sinha_Resume.pdf';
