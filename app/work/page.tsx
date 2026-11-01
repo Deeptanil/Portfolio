@@ -217,6 +217,7 @@ function ProjectGallery({
             src={images[0]}
             alt={`Screenshot of the ${title} project`}
             className="w-full h-full object-cover object-center block"
+            style={{ imageRendering: 'auto' }}
             loading="lazy"
           />
         </div>
@@ -271,6 +272,7 @@ function ProjectGallery({
                 src={src}
                 alt={`Screenshot ${i + 1} of ${title}`}
                 className="w-full h-full object-cover object-center block"
+                style={{ imageRendering: 'auto' }}
                 loading="lazy"
               />
             </div>

@@ -651,7 +651,7 @@
       "file_type": "code",
       "norm_label": "workpage()",
       "source_file": "app/work/page.tsx",
-      "source_location": "L524"
+      "source_location": "L526"
     },
     {
       "id": "app_components_experience_gridtile_gridtile",
@@ -2473,7 +2473,7 @@
       "file_type": "code",
       "norm_label": "work_experience",
       "source_file": "app/work/page.tsx",
-      "source_location": "L340"
+      "source_location": "L342"
     },
     {
       "id": "app_components_experience_gridtile",
@@ -3199,7 +3199,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L529",
+      "source_location": "L531",
       "weight": 1.0
     },
     {
@@ -3211,7 +3211,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/work/page.tsx",
-      "source_location": "L634",
+      "source_location": "L636",
       "weight": 1.0
     },
     {
@@ -5876,7 +5876,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L340",
+      "source_location": "L342",
       "weight": 1.0
     },
     {
@@ -5887,7 +5887,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/work/page.tsx",
-      "source_location": "L524",
+      "source_location": "L526",
       "weight": 1.0
     },
     {
@@ -6754,5 +6754,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2071098c48b1cd62f08da75c8b699d0870b6a486"
+  "built_at_commit": "334f239442dca83f8e237bb52e003ca11fe114fc"
 }

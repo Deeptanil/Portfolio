@@ -12,8 +12,8 @@
     "semantic_hash": "49ef67b170238cd6347a61c288cdc090"
   },
   "app/about/page.tsx": {
-    "mtime": 1793561176.8763304,
-    "seen": 1793561242.910235,
+    "mtime": 1793561260.11029,
+    "seen": 1793561685.1773598,
     "ast_hash": "96ad0b0d3e778685326da3787d928c6d",
     "semantic_hash": ""
   },
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   "app/work/page.tsx": {
-    "mtime": 1793561169.9520895,
-    "seen": 1793561242.9103818,
-    "ast_hash": "97e4161f7bf4d6c3bf0250e77ff2ca7e",
+    "mtime": 1793561551.270307,
+    "seen": 1793561685.1775873,
+    "ast_hash": "eddd254456f07614be921ff4306022d2",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -540,81 +540,81 @@
     "semantic_hash": ""
   },
   "public/projects/prettiva/prettiva-catalog.webp": {
-    "mtime": 1792858587.653,
-    "seen": 1792858717.5865383,
-    "ast_hash": "66bd646ad7562694dd7df4c52032acac",
+    "mtime": 1793561509.342,
+    "seen": 1793561685.1778636,
+    "ast_hash": "db7651f17b7ee99c462007e0a96121b2",
     "semantic_hash": ""
   },
   "public/projects/prettiva/prettiva-feedback.webp": {
-    "mtime": 1792858587.632,
-    "seen": 1792858717.5865433,
-    "ast_hash": "34ae92e1b9ab9946f16536ef77b7a740",
+    "mtime": 1793561509.912,
+    "seen": 1793561685.177868,
+    "ast_hash": "9c787c2f3b901aa6e10324eeffdcd845",
     "semantic_hash": ""
   },
   "public/projects/prettiva/prettiva-loyalty.webp": {
-    "mtime": 1792858587.621,
-    "seen": 1792858717.5865474,
-    "ast_hash": "9b3b833fd95bbb2369b83326717e47d0",
+    "mtime": 1793561509.899,
+    "seen": 1793561685.1778724,
+    "ast_hash": "884249ab11ec0fcfc3f1cede5108d4bd",
     "semantic_hash": ""
   },
   "public/projects/prettiva/prettiva-product.webp": {
-    "mtime": 1792858587.65,
-    "seen": 1792858717.5865512,
-    "ast_hash": "1ef6e9e07bc8d39d8aa87eea37a388bd",
+    "mtime": 1793561509.565,
+    "seen": 1793561685.1778762,
+    "ast_hash": "0ba4714991d50368cbbd8037ab3af910",
     "semantic_hash": ""
   },
   "public/projects/strayed/strayed-article.webp": {
-    "mtime": 1792858827.235,
-    "seen": 1792858934.37717,
-    "ast_hash": "79140ef086fe799c19c979badbf5ab90",
+    "mtime": 1793561510.431,
+    "seen": 1793561685.1778805,
+    "ast_hash": "05b5784a4d3ef79db186af993ddfe519",
     "semantic_hash": ""
   },
   "public/projects/strayed/strayed-editorial.webp": {
-    "mtime": 1792858827.238,
-    "seen": 1792858934.3771756,
-    "ast_hash": "6744063c0f6862b82020157d744f328e",
+    "mtime": 1793561510.035,
+    "seen": 1793561685.1778846,
+    "ast_hash": "e46e118c583c1250b4cbdb526e9c487d",
     "semantic_hash": ""
   },
   "public/projects/strayed/strayed-shop.webp": {
-    "mtime": 1792858827.209,
-    "seen": 1792858934.3771815,
-    "ast_hash": "0eb55cbe3fe28045c4d5621c62f8bc83",
+    "mtime": 1793561509.947,
+    "seen": 1793561685.1778884,
+    "ast_hash": "251b999dfa33a5ce6d56c772e8701c83",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-download.webp": {
-    "mtime": 1793007419.744,
-    "seen": 1793007519.9395335,
-    "ast_hash": "87f7121435bc9e9af6e83dc5cf493cbe",
+    "mtime": 1793561508.903,
+    "seen": 1793561685.177817,
+    "ast_hash": "3df4a47bace8d1dcf839821d63d7489c",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-expired.webp": {
-    "mtime": 1793007419.83,
-    "seen": 1793007519.939536,
-    "ast_hash": "1435e0779ff01473b85c685db8d12607",
+    "mtime": 1793561509.546,
+    "seen": 1793561685.1778219,
+    "ast_hash": "145dcc873df68410ec0fffd800d331f3",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-unlock.webp": {
-    "mtime": 1793007419.686,
-    "seen": 1793007519.9395387,
-    "ast_hash": "2ec27100937b3fd27cbe58afaf6e9f71",
+    "mtime": 1793561508.697,
+    "seen": 1793561685.1778305,
+    "ast_hash": "42a6eae1bb6964dedda500dbb4cfda71",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-upload.webp": {
-    "mtime": 1793007419.702,
-    "seen": 1793007519.939541,
-    "ast_hash": "3db1bccc0892fe805785520aa9f2a6dd",
+    "mtime": 1793561508.802,
+    "seen": 1793561685.1778345,
+    "ast_hash": "086b2d49dc422d09e60987be1becc1e9",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-vault.webp": {
-    "mtime": 1793007419.747,
-    "seen": 1793007519.939543,
-    "ast_hash": "ad41705252b441a6a67f50e47d15b4d2",
+    "mtime": 1793561509.56,
+    "seen": 1793561685.1778388,
+    "ast_hash": "24622848992b08176b33b0bc588cd4f8",
     "semantic_hash": ""
   },
   "public/projects/fileguard/fileguard-hero.webp": {
-    "mtime": 1793008506.428,
-    "seen": 1793008638.2713282,
-    "ast_hash": "df5a07cc7d66e0318e36dac083e059ac",
+    "mtime": 1793561509.085,
+    "seen": 1793561685.1778264,
+    "ast_hash": "951b3754b4f756a0335db8319d95891c",
     "semantic_hash": ""
   },
   "scripts/send-weekly-summary.js": {
@@ -630,33 +630,33 @@
     "semantic_hash": ""
   },
   "public/projects/platter/platter-1.webp": {
-    "mtime": 1793195956.87,
-    "seen": 1793196096.0988014,
-    "ast_hash": "aef0cb3bfbdfb7d3f401b7e728a4d6c7",
+    "mtime": 1793561510.257,
+    "seen": 1793561685.177843,
+    "ast_hash": "88252239d027136aacbfe014324c9610",
     "semantic_hash": ""
   },
   "public/projects/platter/platter-2.webp": {
-    "mtime": 1793195956.861,
-    "seen": 1793196096.0988057,
-    "ast_hash": "3bfcf0510816a8ea9975d0d985a2f1e7",
+    "mtime": 1793561510.328,
+    "seen": 1793561685.1778474,
+    "ast_hash": "d5c21c6d193ae8b63554697fd1ed9145",
     "semantic_hash": ""
   },
   "public/projects/platter/platter-3.webp": {
-    "mtime": 1793195956.875,
-    "seen": 1793196096.09881,
-    "ast_hash": "a1238c9cdf5f06a43b5a5884d2c22fa2",
+    "mtime": 1793561510.469,
+    "seen": 1793561685.1778512,
+    "ast_hash": "8ce61c5226766191393581163d5d22c0",
     "semantic_hash": ""
   },
   "public/projects/platter/platter-4.webp": {
-    "mtime": 1793195956.879,
-    "seen": 1793196096.0988135,
-    "ast_hash": "6e201e0deb143b3a9192d1ce44f643fe",
+    "mtime": 1793561510.78,
+    "seen": 1793561685.1778555,
+    "ast_hash": "d7bd1efd260bf9fd0842b3a2aa3dbb1e",
     "semantic_hash": ""
   },
   "public/projects/platter/platter-5.webp": {
-    "mtime": 1793195956.948,
-    "seen": 1793196096.0988169,
-    "ast_hash": "d37fa4a6d198242971943bf709212c5f",
+    "mtime": 1793561510.878,
+    "seen": 1793561685.1778598,
+    "ast_hash": "e91f55a5d301c82ea0eb00d393ef6c3b",
     "semantic_hash": ""
   }
 }
